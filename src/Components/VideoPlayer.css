@@ -1,0 +1,10 @@
+.art-video-player {
+  height: 100% !important;
+}
+
+@media (max-width: 630px) {
+  .art-controls {
+    overflow-x: scroll;
+    overflow-y: visible;
+  }
+}

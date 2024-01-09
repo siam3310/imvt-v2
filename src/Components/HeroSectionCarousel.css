@@ -1,0 +1,92 @@
+.Carousel .embla {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --slide-height: 100dvh;
+  /* padding: 1.6rem; */
+}
+.Carousel .embla__viewport {
+  overflow: hidden;
+  height: 100%;
+}
+.Carousel .embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.Carousel .embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  position: relative;
+}
+.Carousel .embla__slide:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #ffffff00 0%, #151517 100%);
+  height: 100%;
+  z-index: 0;
+}
+.Carousel .embla__slide__img {
+  display: block;
+  height: var(--slide-height);
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+.Carousel .embla-thumbs {
+  --thumbs-slide-spacing: 0.8rem;
+  --thumbs-slide-height: 9rem;
+  /* margin-top: var(--thumbs-slide-spacing); */
+  margin-top: -9rem;
+  padding: 0 1rem;
+}
+.Carousel .embla-thumbs__viewport {
+  overflow: hidden;
+}
+.Carousel .embla-thumbs__container {
+  display: flex;
+  flex-direction: row;
+  margin-left: calc(var(--thumbs-slide-spacing) * -1);
+}
+.Carousel .embla-thumbs__slide {
+  flex: 0 0 calc(33.33% - var(--thumbs-slide-spacing) / 3);
+  min-width: 0;
+  padding-left: var(--thumbs-slide-spacing);
+  position: relative;
+}
+@media (min-width: 1000px) {
+  .Carousel .embla-thumbs__slide {
+    flex: 0 0 calc(20% - var(--thumbs-slide-spacing) / 5);
+  }
+}
+.Carousel .embla-thumbs__slide__button {
+  background-color: transparent;
+  touch-action: manipulation;
+  /* display: block; */
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  filter: brightness(30%);
+  /* opacity: 0.2; */
+  transition: all 0.2s;
+  border-radius: 15px;
+}
+.Carousel .embla-thumbs__slide--selected .embla-thumbs__slide__button {
+  filter: brightness(100%);
+  /* opacity: 1; */
+}
+
+.Carousel .embla-thumbs__slide__img {
+  display: block;
+  height: var(--thumbs-slide-height);
+  width: 100%;
+  flex-shrink: 0;
+  object-fit: cover;
+}

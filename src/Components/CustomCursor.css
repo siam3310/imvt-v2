@@ -1,0 +1,31 @@
+* {
+  cursor: none !important;
+}
+.cursor-style {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+  transform-origin: 100% 100%;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  pointer-events: none;
+  z-index: 100000;
+}
+
+@media (max-width: 600px) {
+  * {
+    cursor: default !important;
+  }
+  a,
+  button,
+  input {
+    cursor: pointer !important;
+  }
+  .clickable {
+    cursor: pointer !important;
+  }
+  .cursor-style {
+    display: none;
+    opacity: 0;
+  }
+}
