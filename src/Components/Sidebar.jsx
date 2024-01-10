@@ -1,4 +1,4 @@
-import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, TrendingUp, Clapperboard, Film, PanelRightClose, PanelLeftClose } from "lucide-react"
+import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose } from "lucide-react"
 import { useContext, createContext, useState } from "react"
 import Logo from "./logo.png";
 const SidebarContext = createContext()
@@ -44,11 +44,10 @@ export default function Sidebar({ children }) {
                     <ul className="flex-1 px-3 flex flex-col justify-center">
 
                         <SidebarItem link="/" text="Home" icon={<HomeIcon />} />
-                        <SidebarItem link="/trending" text="Trending" icon={<TrendingUp />} />
-                        <SidebarItem link="/popular" text="Popular" icon={<Flame />} />
+                        <SidebarItem link="/trending" text="Trending" icon={<Flame />} />
+                        <SidebarItem link="/discover" text="Discover" icon={<Search />} />
                         <SidebarItem link="/movies" text="Movies" icon={<Clapperboard />} />
-                        <SidebarItem link="/series" text="Series" icon={<Film />} />
-
+                        <SidebarItem link="/tv" text="Series" icon={<Film />} />
                         {children}
                     </ul>
                 </SidebarContext.Provider>
