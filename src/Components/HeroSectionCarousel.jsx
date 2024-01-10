@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Star } from "lucide-react"
+import { Star, Users } from "lucide-react"
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import "./HeroSectionCarousel.css"
 const HeroSectionCarousel = ({ data, loading }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
-    const [emblaMainRef, emblaMainApi] = useEmblaCarousel({}, [Autoplay()])
+    const [emblaMainRef, emblaMainApi] = useEmblaCarousel({})
     const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
         containScroll: 'keepSnaps',
         dragFree: true
@@ -48,10 +48,13 @@ const HeroSectionCarousel = ({ data, loading }) => {
                                 />
                                 <div className='flex items-center gap-3 absolute top-0 right-0 z-10 w-full h-[80%] p-[3rem]'>
                                     <div className='w-full flex flex-col justify-center gap-y-3 text-white select-none'>
-                                        <h3 className='font-bold text-[1.5rem] sm:text-[2rem] lg:text-[3rem]'>{post.media_type === "tv" ? post.name : post.title}</h3>
+                                        <h3 className='font-bold text-[1.5rem] sm:text-[2rem] lg:text-[3rem]'>{post.name || post.title || "unknown"}</h3>
                                         <div className='flex flex-wrap items-center gap-3'>
+                                            <span className='bg-red-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                                {post.title ? "Movie" : "TV"}
+                                            </span>
                                             <span className='bg-yellow-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                                <Star fill="white" color='white' width={16} />&nbsp;{parseFloat(post.vote_average).toFixed(1)}
+                                                <Star fill="white" color='white' width={16} />&nbsp;{parseFloat(post?.vote_average).toFixed(1)}&nbsp;•&nbsp;<Users fill="white" color='white' width={16} />&nbsp;{post?.vote_count}
                                             </span>
                                             {post.adult && <span className='bg-red-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                                                 NSFW
@@ -117,7 +120,7 @@ const Thumb = (props) => {
                     src={imgSrc}
                     alt="Your alt text"
                 />
-                <span className='group-hover:flex items-center justify-center h-full w-full hidden absolute top-0 left-0 text-white font-bold text-lg py-1 px-2 clickable'>{post.media_type === "tv" ? post.name : post.title}</span>
+                <span className='group-hover:flex items-center justify-center h-full w-full hidden absolute top-0 left-0 text-white font-bold text-lg py-1 px-2 clickable'>{post.name || post.title || "unknown"}</span>
             </button>
             <button
                 onClick={onClick}
