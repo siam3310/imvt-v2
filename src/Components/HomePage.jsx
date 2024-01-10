@@ -1,7 +1,6 @@
 import React from 'react'
 import HeroSectionCarousel from './HeroSectionCarousel.jsx'
 import MediaSwiper from './MediaSwiper.jsx'
-import PeopleSwiper from './PeopleSwiper.jsx'
 import { gql, useQuery } from "@apollo/client";
 
 const query = gql`
@@ -38,6 +37,7 @@ query GetHomeData {
       media_type
       genre_ids
       vote_average
+      vote_count
     }
     ... on TV {
       backdrop_path
@@ -48,9 +48,10 @@ query GetHomeData {
       media_type
       genre_ids
       vote_average
+      vote_count
     }
   }
-  getMoviePopular {
+  getMovieTrendingWeek {
     backdrop_path
     id
     title
@@ -60,7 +61,7 @@ query GetHomeData {
     genre_ids
     vote_average
   }
-  getTvPopular {
+  getTvTrendingWeek {
     backdrop_path
     id
     name
@@ -89,12 +90,12 @@ const HomePage = () => {
   if (loading) return <div>Loading...</div>
 
   return (
-    <div className='flex flex-col w-[100%] h-full overflow-y-scroll'>
+    <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getAnyTrendingToday} loading={loading} />
       <MediaSwiper data={data?.getAnyTrendingWeek} loading={loading} heading="Trending" />
-      <MediaSwiper data={data?.getMoviePopular} loading={loading} heading="Popular Movies" />
-      <MediaSwiper data={data?.getTvPopular} loading={loading} heading="Popular Series" />
-      <PeopleSwiper data={data?.getPeopleTrendingWeek} loading={loading} heading="Trending People" />
+      <MediaSwiper data={data?.getMovieTrendingWeek} loading={loading} heading="Trending Movies" />
+      <MediaSwiper data={data?.getTvTrendingWeek} loading={loading} heading="Trending Series" />
+      <MediaSwiper data={data?.getPeopleTrendingWeek} loading={loading} heading="Trending People" />
     </div>
   )
 }
