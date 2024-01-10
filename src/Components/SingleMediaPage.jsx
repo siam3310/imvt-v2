@@ -135,29 +135,29 @@ const SingleMediaPage = () => {
     <div className='overflow-y-scroll w-full h-[100dvh]'>
       <div className="flex w-full h-[40dvh] sm:h-[100dvh] movie-backdrop sm:bg-fixed" style={{ backgroundImage: `URL(${movieData?.backdrop_path})`, backgroundRepeat: `no-repeat`, backgroundPosition: `center`, backgroundSize: `cover` }}>
       </div>
-      <div className=' flex flex-col gap-y-5 lg:gap-y-14'>
-        <div className='flex sm:flex-row flex-col items-start w-full h-fit relative -mt-[30dvh] z-2'>
+      <div className='flex flex-col gap-y-5 lg:gap-y-14'>
+        <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[30dvh] z-2'>
           <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex justify-center'>
-            <img className='w-[40%] sm:w-[60%] lg:w-[70%] poster-box-shadow' src={movieData?.poster_path} alt="no image" />
+            <img className='min-w-[150px] w-[40%] sm:w-[60%] lg:w-[50%] poster-box-shadow' src={movieData?.poster_path} alt="no image" />
           </div>
-          <div className='w-full sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
-            <h1 className='text-[2.5rem] font-bold'>{movieData?.title}</h1>
+          <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
+            <h1 className='text-[2rem] lg:text-[2.5rem] font-bold'>{movieData?.title}</h1>
             <h2 className='text-[1.2rem] font-serif'>{movieData?.tagline}</h2>
             <div className='flex flex-wrap items-center gap-3 mt-3'>
-              {movieData?.adult && <span className='bg-red-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+              {movieData?.adult && <span className='bg-red-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                 NSFW
               </span>}
-              <span className='bg-yellow-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+              <span className='bg-yellow-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
                 <Star fill="white" color='white' width={16} />&nbsp;{parseFloat(movieData?.vote_average).toFixed(1)}&nbsp;•&nbsp;<Users fill="white" color='white' width={16} />&nbsp;{movieData?.vote_count}
               </span>
-              <span className='bg-blue-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+              <span className='bg-blue-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
                 {new Date(movieData?.release_date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
-              <span className='bg-blue-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+              <span className='bg-blue-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
                 <ClockIcon color='white' width={16} />&nbsp;{movieData?.runtime % 60 === 0 ? `${movieData?.runtime}m` : `${Math.floor(movieData?.runtime / 60)}h ${movieData?.runtime % 60}m`}
               </span>
               {movieData?.genres.map((genre, index) => (
-                <span key={index} className='bg-green-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                <span key={index} className='bg-green-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                   {genre}
                 </span>
               ))}
