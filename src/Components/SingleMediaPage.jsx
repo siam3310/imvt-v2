@@ -1,10 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { gql, useQuery } from "@apollo/client";
-import { Star, ClockIcon, Users } from "lucide-react"
-import MediaDetailsTabs from './MediaDetailsTabs'
-import axios from 'axios';
-import './SingleMediaPage.css'
+import { Star, ClockIcon, Users } from "lucide-react";
+import MediaDetailsTabs from './MediaDetailsTabs';
+import './SingleMediaPage.css';
 const query = gql`
 query GetMoviebyId($tmdbId: ID!) {
     getMoviebyId(tmdbId: $tmdbId) {
@@ -100,35 +99,31 @@ query GetMoviebyId($tmdbId: ID!) {
           rating
           releaseDate
         }
+        reviews {
+          author
+          content
+          created_at
+          id
+          updated_at
+          url
+          author_details {
+            name
+            username
+            avatar_path
+            rating
+          }
+        }
     }
   }
 `;
 const SingleMediaPage = () => {
   const { id } = useParams();
-  const [streamingData, setStreamingData] = React.useState(null)
   const tmdbId = id;
   const { data, loading } = useQuery(query, {
     variables: { tmdbId },
   });
   const movieData = data?.getMoviebyId;
-  const getStreamingData = async () => {
-    if (movieData?.streamingId) {
-      const array = movieData?.streamingId.split("-");
-      const episodeId = array.length > 1 ? array[array.length - 1] : null;
-      const data = (await axios.get(`${import.meta.env.VITE_CONSUMET_API_URL}/movies/flixhq/watch?episodeId=${episodeId}&mediaId=${movieData?.streamingId}`)).data;
-      setStreamingData(data)
-    }
-  }
 
-  React.useEffect(() => {
-    getStreamingData()
-    console.log("movieData")
-    console.log(movieData)
-    return () => {
-      console.log("streamingData")
-      console.log(streamingData);
-    }
-  }, [data])
 
   if (loading || !movieData) return <div>Loading...</div>
   return (<>
@@ -166,7 +161,7 @@ const SingleMediaPage = () => {
           </div>
         </div>
         <p className='text-lg text-white px-3 sm:px-10 lg:hidden'>{movieData?.overview}</p>
-        <div className='flex justify-center'><MediaDetailsTabs streamingData={streamingData} movieData={movieData} /></div>
+        <div className='flex justify-center'><MediaDetailsTabs movieData={movieData} /></div>
       </div>
     </div>
   </>

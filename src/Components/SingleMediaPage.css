@@ -16,5 +16,5 @@
 .poster-box-shadow {
   border-radius: 20px;
   background: linear-gradient(145deg, #131315, #161619);
-  box-shadow: 50px 50px 100px #080809, -50px -50px 100px #222225;
+  box-shadow: 20px 20px 50px #080809, -20px -20px -50px #222225;
 }

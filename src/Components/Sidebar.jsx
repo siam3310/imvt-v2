@@ -1,4 +1,4 @@
-import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose } from "lucide-react"
+import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
 import { useContext, createContext, useState } from "react"
 import Logo from "./logo.png";
 const SidebarContext = createContext()
@@ -12,7 +12,7 @@ export default function Sidebar({ children }) {
             {hideSidebar && <button
                 onClick={() => { setHideSidebar((curr) => !curr); setExpanded(false) }}
                 className={`absolute top-4 left-4 z-10 clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}>
-                <ChevronLast />
+                <PanelRightClose />
             </button>}
             <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm ${expanded && "absolute z-10 top-0 left-0 bg-[#151517]"} ${hideSidebar ? "absolute z-10 top-0 right-[100vw] bg-[#151517]" : "lg:static "}`}>
                 <div className={`p-4 pb-2 flex justify-between items-center`}>
@@ -24,19 +24,25 @@ export default function Sidebar({ children }) {
                             alt="Logo"
                         />
                     </Link>
-                    <button
-                        onClick={() => {
-                            if (expanded) { setHideSidebar(true); setExpanded(false) }
-                            else setExpanded(true)
-                        }}
-                        className={`clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}
-                    >
-                        {expanded ? <ChevronFirst /> : <img
-                            src={Logo}
-                            className={`overflow-hidden transition-all w-8 h-8 object-contain`}
-                            alt=""
-                        />}
-                    </button>
+                    <div className="flex gap-x-3">
+                        {expanded && <button onClick={() => setExpanded(false)} className={`clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}>
+                            <PanelLeftClose />
+                        </button>}
+                        <button
+                            onClick={() => {
+                                if (expanded) { setHideSidebar(true); setExpanded(false) }
+                                else setExpanded(true)
+                            }}
+                            className={`clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}
+                        >
+                            {expanded ? <XCircle /> : <img
+                                src={Logo}
+                                className={`overflow-hidden transition-all w-8 h-8 object-contain`}
+                                alt=""
+                            />}
+                        </button>
+                    </div>
+
                 </div>
 
 

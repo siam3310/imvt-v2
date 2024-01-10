@@ -50,23 +50,23 @@ const HeroSectionCarousel = ({ data, loading }) => {
                                     <div className='w-full flex flex-col justify-center gap-y-3 text-white select-none'>
                                         <h3 className='font-bold text-[1.5rem] sm:text-[2rem] lg:text-[3rem]'>{post.name || post.title || "unknown"}</h3>
                                         <div className='flex flex-wrap items-center gap-3'>
-                                            <span className='bg-red-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                                {post.title ? "Movie" : "TV"}
-                                            </span>
-                                            <span className='bg-yellow-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                            <span className='bg-yellow-500 py-1 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
                                                 <Star fill="white" color='white' width={16} />&nbsp;{parseFloat(post?.vote_average).toFixed(1)}&nbsp;•&nbsp;<Users fill="white" color='white' width={16} />&nbsp;{post?.vote_count}
                                             </span>
-                                            {post.adult && <span className='bg-red-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                                            {post.adult && <span className='bg-red-500 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                                                 NSFW
                                             </span>}
                                             {post.genre_ids.map((genre, index) => (
-                                                <span key={index} className='bg-green-500 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                                                <span key={index} className='bg-green-500 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                                                     {genre}
                                                 </span>
                                             ))}
+                                            <span className='bg-purple-500 py-2 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                                {post.title ? "Movie" : "TV"}
+                                            </span>
                                         </div>
                                         <span className='text-lg max-h-[115px] text-[0.9rem] sm:text-[1rem] overflow-hidden'>{post.overview}...</span>
-                                        <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className='bg-blue-500 cursor-pointer w-24 sm:w-32 py-1 px-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl'>More details</Link>
+                                        <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className='bg-blue-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center'>More details</Link>
                                     </div>
                                     <img
                                         className="w-56 hidden sm:block h-80 object-cover rounded-3xl clickable"
