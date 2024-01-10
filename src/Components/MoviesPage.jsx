@@ -14,6 +14,7 @@ query GetMovieData {
       media_type
       genre_ids
       vote_average
+      vote_count
     }
     getMovieTrendingWeek {
       backdrop_path
@@ -63,12 +64,12 @@ const MoviesPage = () => {
     if (loading) return <div>Loading...</div>
 
     return (
-        <div className='flex flex-col w-[100%] h-full overflow-y-scroll'>
+        <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
             <HeroSectionCarousel data={data?.getMovieTrendingToday} loading={loading} />
-            <MediaSwiper data={data?.getMovieTrendingWeek} loading={loading} heading="Trending Movies" />
-            <MediaSwiper data={data?.getMoviePopular} loading={loading} heading="Popular Movies" />
-            <MediaSwiper data={data?.getMovieTopRated} loading={loading} heading="Top Rated Movies" />
-            <MediaSwiper data={data?.getMovieUpcoming} loading={loading} heading="Upcoming Movies" />
+            <MediaSwiper data={data?.getMovieTrendingWeek} loading={loading} heading="Trending Now" />
+            <MediaSwiper data={data?.getMoviePopular} loading={loading} heading="What's Popular" />
+            <MediaSwiper data={data?.getMovieTopRated} loading={loading} heading="Top Rated" />
+            <MediaSwiper data={data?.getMovieUpcoming} loading={loading} upcoming={true} heading="Upcoming Indian" />
         </div>
     )
 }
