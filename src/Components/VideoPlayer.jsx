@@ -10,7 +10,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
         if (subtitle.lang === media?.subtitles[0]?.lang) {
             return {
                 default: true,
-                html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -22,7 +22,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             }
         } else {
             return {
-                html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -104,7 +104,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
                     width: 200,
                     html: 'Subtitle',
                     tooltip: `${media?.subtitles[0]?.lang}`,
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-subtitles"><path d="M7 13h4"/><path d="M15 13h2"/><path d="M7 9h2"/><path d="M13 9h4"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>`,
+                    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-subtitles"><path d="M7 13h4"/><path d="M15 13h2"/><path d="M7 9h2"/><path d="M13 9h4"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>`,
                     selector: [{
                         html: 'Display',
                         tooltip: 'Show',
@@ -135,7 +135,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             icons: {
                 // state: 'play Icon',
                 // loading: 'loading Icon',
-                indicator: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>',
+                indicator: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>',
             },
         };
         const art = new Artplayer({

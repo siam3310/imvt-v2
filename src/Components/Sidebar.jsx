@@ -1,6 +1,6 @@
 import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
 import { useContext, createContext, useState } from "react"
-import Logo from "./logo.png";
+import Logo from "./logo.svg";
 const SidebarContext = createContext()
 import { Link } from "react-router-dom";
 export default function Sidebar({ children }) {
@@ -15,11 +15,11 @@ export default function Sidebar({ children }) {
                 <PanelRightClose />
             </button>}
             <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm ${expanded && "absolute z-10 top-0 left-0 bg-[#151517]"} ${hideSidebar ? "absolute z-10 top-0 right-[100vw] bg-[#151517]" : "lg:static "}`}>
-                <div className={`p-4 pb-2 flex justify-between items-center`}>
+                <div className={`p-4 flex justify-between items-center`}>
                     <Link to={`/`}>
                         <img
                             src={Logo}
-                            className={`overflow-hidden clickable transition-all rounded-lg bg-gray-50 hover:bg-gray-100 ${expanded ? "w-28  p-1.5" : "w-0"
+                            className={`clickable transition-all rounded-lg bg-gray-50 hover:bg-gray-100 object-cover aspect-[1.5/1] ${expanded ? "w-28" : "w-0"
                                 }`}
                             alt="Logo"
                         />
@@ -33,11 +33,11 @@ export default function Sidebar({ children }) {
                                 if (expanded) { setHideSidebar(true); setExpanded(false) }
                                 else setExpanded(true)
                             }}
-                            className={`clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}
+                            className={`clickable p-1 rounded-lg bg-gray-50 hover:bg-gray-100`}
                         >
                             {expanded ? <XCircle /> : <img
                                 src={Logo}
-                                className={`overflow-hidden transition-all w-8 h-8 object-contain`}
+                                className={`overflow-hidden transition-all w-8 h-8 object-cover`}
                                 alt=""
                             />}
                         </button>
