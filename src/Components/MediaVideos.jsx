@@ -56,13 +56,34 @@ const MediaVideos = ({ mediaData, type }) => {
 
     return (
         <Card key={episodeId} className="h-fit flex lg:flex-row-reverse flex-col gap-3 lg:max-h-[80dvh]">
-            <div className=' w-full'>
+            {/* Movie Player */}
+            {type === "movie" && <>
+                {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
+                {isMediaPlayer && streamingData && streamingData.sources && <VideoPlayer
+                    media={{
+                        urls: streamingData?.sources,
+                        subtitles: streamingData?.subtitles,
+                        thumbnail: mediaData?.backdrop_path,
+                    }}
+                    className='w-[99%] aspect-[1.85/1]'
+                />}
+                {isMediaPlayer && streamingData && !streamingData.sources && <VideoPlayer
+                    media={{
+                        urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
+                        subtitles: [],
+                        thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04174dbc-fe2f-4983-824a-6d80412e917e/de1s9he-1e5476f3-0ea2-49d0-a7fc-f6a182624850.png/v1/fill/w_960,h_540,q_80,strp/404_not_found__08th_phonak_movie_night_style__by_xxneojadenxx_de1s9he-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTQwIiwicGF0aCI6IlwvZlwvMDQxNzRkYmMtZmUyZi00OTgzLTgyNGEtNmQ4MDQxMmU5MTdlXC9kZTFzOWhlLTFlNTQ3NmYzLTBlYTItNDlkMC1hN2ZjLWY2YTE4MjYyNDg1MC5wbmciLCJ3aWR0aCI6Ijw9OTYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.UXpWTdFPNrYsKY5zOeIT2Hgv_GzyqXYkxWg0VgrlmrQ",
+                    }}
+                    className='w-full aspect-[1.85/1]'
+                />}
+            </>}
 
+{/* Tv Player */}
+            {type === "tv" && <div className=' w-full'>
                 <ResizablePanelGroup
                     direction="horizontal"
-                    className=" rounded-lg border w-full h-full"
+                    className=" rounded-lg border w-full"
                 >
-                    <ResizablePanel defaultSize={70} className='flex justify-center items-center min-w-[300px]'>
+                    <ResizablePanel defaultSize={70} className='flex justify-center items-center w-full h-full min-w-[300px]'>
                         {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
                         {isMediaPlayer && streamingData && streamingData.sources && <VideoPlayer
                             media={{
@@ -70,7 +91,7 @@ const MediaVideos = ({ mediaData, type }) => {
                                 subtitles: streamingData?.subtitles,
                                 thumbnail: mediaData?.backdrop_path,
                             }}
-                            className='w-full aspect-[1.85/1]'
+                            className='w-[99%] aspect-[1.85/1]'
                         />}
                         {isMediaPlayer && streamingData && !streamingData.sources && <VideoPlayer
                             media={{
@@ -81,38 +102,40 @@ const MediaVideos = ({ mediaData, type }) => {
                             className='w-full aspect-[1.85/1]'
                         />}
                     </ResizablePanel>
-                    <ResizableHandle />
-                    <ResizablePanel defaultSize={20} className='max-w-[200px] hidden lg:block'>
-                        <ResizablePanelGroup direction="vertical">
-                            <ResizablePanel defaultSize={30} className='max-h-fit'>
-                                <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Seasons</h1>
-                                <ScrollArea className="h-full w-full rounded-md border p-4">
-                                    {mediaData?.seasons && <div className="flex flex-col gap-3">
-                                        <div className="flex flex-col gap-3">
-                                            {mediaData?.seasons.map((season, index) => (
-                                                <Button key={index} variant={seasonNumber === index + 1 ? "" : "secondary"} onClick={() => { setSeasonNumber(index + 1); setEpisodeNumber(1) }} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">Season {season.season}</Button>
-                                            ))}
-                                        </div>
-                                    </div>}
-                                </ScrollArea>
-                            </ResizablePanel>
-                            <ResizableHandle withHandle />
-                            <ResizablePanel defaultSize={70}>
-                                <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Episodes</h1>
-                                <ScrollArea className="h-full w-full rounded-md border p-4 pb-12">
-                                    {mediaData?.seasons && <div className="flex flex-col gap-3">
-                                        <div className="flex flex-col gap-3">
-                                            {mediaData?.seasons[seasonNumber - 1].episodes.map((episode, index) => (
-                                                <Button key={index} variant={episodeNumber === index + 1 ? "" : "secondary"} onClick={() => { setEpisodeNumber(index + 1); setEpisodeId(episode.id) }} title={episode.title || `Episode ${episode.episode}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">{episode.title || `Episode ${episode.episode}`}</Button>
-                                            ))}
-                                        </div>
-                                    </div>}
-                                </ScrollArea>
-                            </ResizablePanel>
-                        </ResizablePanelGroup>
-                    </ResizablePanel>
+
+                    <> <ResizableHandle />
+                        <ResizablePanel defaultSize={20} className='max-w-[200px] hidden lg:block'>
+                            <ResizablePanelGroup direction="vertical">
+                                <ResizablePanel defaultSize={30} className='max-h-fit'>
+                                    <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Seasons</h1>
+                                    <ScrollArea className="h-full w-full rounded-md border p-4">
+                                        {mediaData?.seasons && <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-3">
+                                                {mediaData?.seasons.map((season, index) => (
+                                                    <Button key={index} variant={seasonNumber === index + 1 ? "" : "secondary"} onClick={() => { setSeasonNumber(index + 1); setEpisodeNumber(1) }} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">Season {season.season}</Button>
+                                                ))}
+                                            </div>
+                                        </div>}
+                                    </ScrollArea>
+                                </ResizablePanel>
+                                <ResizableHandle withHandle />
+                                <ResizablePanel defaultSize={70}>
+                                    <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Episodes</h1>
+                                    <ScrollArea className="h-full w-full rounded-md border p-4 pb-12">
+                                        {mediaData?.seasons && <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-3">
+                                                {mediaData?.seasons[seasonNumber - 1].episodes.map((episode, index) => (
+                                                    <Button key={index} variant={episodeNumber === index + 1 ? "" : "secondary"} onClick={() => { setEpisodeNumber(index + 1); setEpisodeId(episode.id) }} title={episode.title || `Episode ${episode.episode}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">{episode.title || `Episode ${episode.episode}`}</Button>
+                                                ))}
+                                            </div>
+                                        </div>}
+                                    </ScrollArea>
+                                </ResizablePanel>
+                            </ResizablePanelGroup>
+                        </ResizablePanel></>
                 </ResizablePanelGroup>
-            </div>
+            </div>}
+
             <CardFooter className="flex lg:flex-col overflow-y-scroll flex-shrink gap-3 pt-3">
                 <Button className="w-28" id="video-btn-1" title="FlixHq" variant={isMediaPlayer ? "" : "secondary"} onClick={() => { setIsMediaPlayer(true); setIsYoutubeEmbed(false) }}>FlixHq</Button>
                 {IframeButtonDetails.map((button, index) => {
@@ -125,7 +148,8 @@ const MediaVideos = ({ mediaData, type }) => {
                 }
                 )}
             </CardFooter>
-            <ResizablePanelGroup direction="horizontal" className="lg:max-w-0">
+
+            {type === "tv" && <ResizablePanelGroup direction="horizontal" className="lg:max-w-0">
                 <ResizablePanel defaultSize={30} className='max-h-fit'>
                     <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Seasons</h1>
                     <ScrollArea className="h-full w-full rounded-md border p-4">
@@ -151,7 +175,7 @@ const MediaVideos = ({ mediaData, type }) => {
                         </div>}
                     </ScrollArea>
                 </ResizablePanel>
-            </ResizablePanelGroup>
+            </ResizablePanelGroup>}
         </Card >
     )
 }
