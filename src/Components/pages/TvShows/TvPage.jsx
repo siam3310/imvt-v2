@@ -1,6 +1,6 @@
 import React from 'react'
-import HeroSectionCarousel from './HeroSectionCarousel'
-import MediaSwiper from './MediaSwiper'
+import HeroSectionCarousel from '../../utils/HeroSectionCarousel'
+import MediaSwiper from '../../utils/MediaSwiper'
 import { gql, useQuery } from "@apollo/client";
 
 const query = gql`

@@ -6,7 +6,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "./ui/tabs"
+} from "../ui/tabs"
 import MediaVideos from "./MediaVideos"
 export default function MediaDetailsTabs({ mediaData, type }) {
   const [basis, setBasis] = React.useState('50%'); // initial basis

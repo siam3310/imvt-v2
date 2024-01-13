@@ -7,9 +7,9 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-} from "./ui/carousel"
+} from "../ui/carousel"
 
-export default function MediaSwiper({ data, loading, heading, upcoming }) {
+export default function MediaSwiper({ data, loading, heading, upcoming, link }) {
     const [basis, setBasis] = React.useState('50%'); // initial basis
 
     React.useEffect(() => {
@@ -43,7 +43,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming }) {
         >
             <div>
                 <h1 className='text-[1.5rem] sm:text-[2rem] lg:text-[2.5rem] text-white font-bold pt-5 mb-3 overflow-hidden whitespace-nowrap text-ellipsis'>{heading}</h1>
-                <span className='clickable bg-white px-3 py-[6.4px] text-sm sm:py-[6.4px] sm:text-md text-black font-normal rounded-xl'>View more</span>
+                <Link to={link} ><span className='clickable bg-white px-3 py-[6.4px] text-sm sm:py-[6.4px] sm:text-md text-black font-normal rounded-xl'>View more</span></Link>
             </div>
             <CarouselContent className="">
                 {data[0]?.profile_path ? data?.map((post, index) => (

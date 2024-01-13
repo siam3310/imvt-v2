@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import { Button } from "./ui/button"
-import { ScrollArea } from "./ui/scroll-area"
+import { Button } from "../ui/button"
+import { ScrollArea } from "../ui/scroll-area"
 import {
     Card,
     CardFooter,
-} from "./ui/card"
-import VideoPlayer from "./VideoPlayer"
+} from "../ui/card"
+import MediaPlayer from "./MediaPlayer"
 import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
-} from "./ui/resizable"
+} from "../ui/resizable"
 
 const MediaVideos = ({ mediaData, type }) => {
     const [episodeId, setEpisodeId] = useState(null)
@@ -59,7 +59,7 @@ const MediaVideos = ({ mediaData, type }) => {
             {/* Movie Player */}
             {type === "movie" && <>
                 {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
-                {isMediaPlayer && streamingData && streamingData.sources && <VideoPlayer
+                {isMediaPlayer && streamingData && streamingData.sources && <MediaPlayer
                     media={{
                         urls: streamingData?.sources,
                         subtitles: streamingData?.subtitles,
@@ -67,7 +67,7 @@ const MediaVideos = ({ mediaData, type }) => {
                     }}
                     className='w-[99%] min-h-[320px] aspect-[1.85/1]'
                 />}
-                {isMediaPlayer && (!streamingData || !streamingData.sources) && <VideoPlayer
+                {isMediaPlayer && (!streamingData || !streamingData.sources) && <MediaPlayer
                     media={{
                         urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                         subtitles: [],
@@ -85,7 +85,7 @@ const MediaVideos = ({ mediaData, type }) => {
                 >
                     <ResizablePanel defaultSize={70} className='flex justify-center items-center w-full h-full min-w-[300px]'>
                         {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
-                        {isMediaPlayer && streamingData && streamingData.sources && <VideoPlayer
+                        {isMediaPlayer && streamingData && streamingData.sources && <MediaPlayer
                             media={{
                                 urls: streamingData?.sources,
                                 subtitles: streamingData?.subtitles,
@@ -93,7 +93,7 @@ const MediaVideos = ({ mediaData, type }) => {
                             }}
                             className='w-[99%] min-h-[320px] aspect-[1.85/1]'
                         />}
-                        {isMediaPlayer && (!streamingData || !streamingData.sources) && <VideoPlayer
+                        {isMediaPlayer && (!streamingData || !streamingData.sources) && <MediaPlayer
                             media={{
                                 urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                                 subtitles: [],

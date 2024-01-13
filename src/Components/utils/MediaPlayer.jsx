@@ -2,15 +2,17 @@ import { useEffect, useRef } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-import './VideoPlayer.css';
+import './MediaPlayer.css';
 export default function VideoPlayer({ media, getInstance, ...rest }) {
     const artRef = useRef();
     let SubtitleObj
+    let QualityObj
     SubtitleObj = media?.subtitles?.map((subtitle) => {
         if (subtitle.lang === media?.subtitles[0]?.lang) {
             return {
                 default: true,
-                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-center" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: subtitle.lang,
+                // html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -22,7 +24,8 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             }
         } else {
             return {
-                html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-center" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                // html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: subtitle.lang,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -34,13 +37,27 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             }
         }
     })
-
+    QualityObj = media?.urls?.map((quality) => {
+        if (quality?.quality === "auto") {
+            return {
+                default: true,
+                html: 'Auto',
+                url: quality?.url,
+            }
+        } else {
+            return {
+                html: quality?.quality || 'Auto',
+                url: quality?.url,
+            }
+        }
+    })
     useEffect(() => {
         const option = {
             container: '.artplayer-app',
             url: `${media?.urls[media.urls.length - 1].url}`,
             poster: `${media?.thumbnail}`,
             type: 'm3u8',
+            quality: [QualityObj],
             customType: {
                 m3u8: function playM3u8(video, url, art) {
                     if (Hls.isSupported()) {
@@ -117,7 +134,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
                     }, ...SubtitleObj],
                     onSelect: function (item) {
                         art.subtitle.switch(item.url, {
-                            // name: item.html,
+                            name: item.html,
                         });
                         return item.html;
                     },

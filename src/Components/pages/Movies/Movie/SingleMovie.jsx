@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { gql, useQuery } from "@apollo/client";
-import SingleMediaPage from './SingleMediaPage';
+import SingleMediaPage from '../../../utils/SingleMediaPage';
 const query = gql`
 query GetMoviebyId($tmdbId: ID!) {
     getMoviebyId(tmdbId: $tmdbId) {

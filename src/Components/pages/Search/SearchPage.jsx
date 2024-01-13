@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "./ui/input"
+import { Input } from "../../ui/input"
 import { LayoutGrid, LayoutPanelLeft, LayoutList } from "lucide-react"
 import {
     Select,
@@ -9,12 +9,11 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "./ui/select"
-import MediaGrid from "./MediaGrid"
+} from "../../ui/select"
+import SearchResults from "./SearchResults"
 
 export default function DiscoverPage() {
     const [query, setQuery] = useState("")
-    const [page, setPage] = useState(1)
     const [searchType, setSearchType] = useState("any")
     return (
         <div className="w-full h-full overflow-scroll">
@@ -45,7 +44,7 @@ export default function DiscoverPage() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-4 w-full overflow-scroll h-full">
-                    <MediaGrid query={query} page={page} setPage={setPage} searchType={searchType} />
+                    <SearchResults query={query} searchType={searchType} />
                 </div>
             </div>
         </div>
