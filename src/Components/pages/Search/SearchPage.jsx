@@ -14,6 +14,7 @@ import SearchResults from "./SearchResults"
 
 export default function DiscoverPage() {
     const [query, setQuery] = useState("")
+    const [page, setPage] = useState(1)
     const [searchType, setSearchType] = useState("any")
     return (
         <div className="w-full h-full max-h-[100dvh] overflow-scroll">
@@ -44,7 +45,7 @@ export default function DiscoverPage() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-4 w-full overflow-scroll h-full">
-                    <SearchResults query={query} searchType={searchType} />
+                    <SearchResults query={query} searchType={searchType} page={page} setPage={setPage} />
                 </div>
             </div>
         </div>

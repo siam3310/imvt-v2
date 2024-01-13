@@ -95,8 +95,7 @@ getpeoplebyQuery(query: $query, page: $page) {
 }
 }
 `;
-const SearchResults = ({ query, searchType }) => {
-    const [page, setPage] = useState(1)
+const SearchResults = ({ query, searchType, page, setPage }) => {
     const { data, loading } = useQuery(search, {
         variables: { query, page },
     });
