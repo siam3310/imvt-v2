@@ -3,8 +3,47 @@
 }
 
 @media (max-width: 630px) {
-  .art-controls {
-    overflow-x: scroll;
-    overflow-y: visible;
+  /* .art-controls {
+    height: 40px !important;
+    transform: translateY(-20px) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
   }
+  .art-progress {
+    transform: translateY(-40px) !important;
+  }
+  .art-layer{
+    transform: translateY(-40px) !important;
+  } */
+  .art-control {
+    margin-right: 0px !important;
+  }
+  .art-control-screenshot {
+    display: none !important;
+  }
+  .art-control-pip {
+    display: none !important;
+  }
+  .art-control-fullscreenWeb {
+    display: none !important;
+  }
+  .art-control-volume {
+    display: none !important;
+  }
+}
+.art-setting-panel {
+  min-width: fit-content !important;
+}
+.art-setting-item-right-tooltip {
+  max-width: 100px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.art-setting-item-left-text {
+  max-width: 150px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }

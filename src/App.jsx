@@ -14,12 +14,14 @@ import SingleMovie from "./Components/pages/Movies/Movie/SingleMovie";
 import SingleTv from "./Components/pages/TvShows/Tv/SingleTv";
 import CustomCursor from "./Components/utils/CustomCursor";
 import "./App.css"
+import BottomNav from "./Components/BottomNav.jsx";
 
 function App() {
   return (
     // <CustomCursor>
-    <div className="app flex bg-[#151517] max-h-[100dvh] overflow-y-hidden select-none">
-      <div className="w-fit">
+    <div className="app flex bg-[#151517] max-h-[100svh] overflow-y-hidden select-none sm:pb-0 pb-[50px]">
+      <BottomNav />
+      <div className="w-fit sm:block hidden">
         <Sidebar />
       </div>
       <Routes>

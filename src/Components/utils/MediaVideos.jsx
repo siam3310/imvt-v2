@@ -55,26 +55,27 @@ const MediaVideos = ({ mediaData, type }) => {
     }, [mediaData, episodeId]);
 
     return (
-        <Card key={episodeId} className="h-fit flex lg:flex-row-reverse flex-col gap-3 lg:max-h-[80dvh]">
+        <Card key={episodeId} className="h-fit flex lg:flex-row-reverse flex-col gap-3 lg:max-h-fit">
             {/* Movie Player */}
             {type === "movie" && <>
                 {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
-                {isMediaPlayer && streamingData && streamingData.sources && <MediaPlayer
+                {isMediaPlayer && streamingData?.sources && <MediaPlayer
                     media={{
                         urls: streamingData?.sources,
                         subtitles: streamingData?.subtitles,
                         thumbnail: mediaData?.backdrop_path,
                     }}
-                    className='w-[99%] min-h-[320px] aspect-[1.85/1]'
+                    className='w-[99%] min-h-[350px] aspect-[1.85/1]'
                 />}
-                {isMediaPlayer && (!streamingData || !streamingData.sources) && <MediaPlayer
+                {isMediaPlayer && streamingData && !streamingData.sources && <MediaPlayer
                     media={{
                         urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                         subtitles: [],
                         thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04174dbc-fe2f-4983-824a-6d80412e917e/de1s9he-1e5476f3-0ea2-49d0-a7fc-f6a182624850.png/v1/fill/w_960,h_540,q_80,strp/404_not_found__08th_phonak_movie_night_style__by_xxneojadenxx_de1s9he-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTQwIiwicGF0aCI6IlwvZlwvMDQxNzRkYmMtZmUyZi00OTgzLTgyNGEtNmQ4MDQxMmU5MTdlXC9kZTFzOWhlLTFlNTQ3NmYzLTBlYTItNDlkMC1hN2ZjLWY2YTE4MjYyNDg1MC5wbmciLCJ3aWR0aCI6Ijw9OTYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.UXpWTdFPNrYsKY5zOeIT2Hgv_GzyqXYkxWg0VgrlmrQ",
                     }}
-                    className='w-full min-h-[320px]  aspect-[1.85/1]'
+                    className='w-full min-h-[350px]  aspect-[1.85/1]'
                 />}
+                {isMediaPlayer && !streamingData && <div className='w-[99%] min-h-[350px] aspect-[1.85/1] flex items-center justify-center'>Loading...</div>}
             </>}
 
             {/* Tv Player */}
@@ -85,26 +86,27 @@ const MediaVideos = ({ mediaData, type }) => {
                 >
                     <ResizablePanel defaultSize={70} className='flex justify-center items-center w-full h-full min-w-[300px]'>
                         {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${isYoutubeEmbed ? `https://www.youtube.com/embed/${youtubeKey}` : iframeSrc}`} allowFullScreen></iframe>}
-                        {isMediaPlayer && streamingData && streamingData.sources && <MediaPlayer
+                        {isMediaPlayer && streamingData?.sources && <MediaPlayer
                             media={{
                                 urls: streamingData?.sources,
                                 subtitles: streamingData?.subtitles,
                                 thumbnail: mediaData?.backdrop_path,
                             }}
-                            className='w-[99%] min-h-[320px] aspect-[1.85/1]'
+                            className='w-[99%] min-h-[350px] aspect-[1.85/1]'
                         />}
-                        {isMediaPlayer && (!streamingData || !streamingData.sources) && <MediaPlayer
+                        {isMediaPlayer && streamingData && !streamingData.sources && <MediaPlayer
                             media={{
                                 urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                                 subtitles: [],
                                 thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04174dbc-fe2f-4983-824a-6d80412e917e/de1s9he-1e5476f3-0ea2-49d0-a7fc-f6a182624850.png/v1/fill/w_960,h_540,q_80,strp/404_not_found__08th_phonak_movie_night_style__by_xxneojadenxx_de1s9he-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTQwIiwicGF0aCI6IlwvZlwvMDQxNzRkYmMtZmUyZi00OTgzLTgyNGEtNmQ4MDQxMmU5MTdlXC9kZTFzOWhlLTFlNTQ3NmYzLTBlYTItNDlkMC1hN2ZjLWY2YTE4MjYyNDg1MC5wbmciLCJ3aWR0aCI6Ijw9OTYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.UXpWTdFPNrYsKY5zOeIT2Hgv_GzyqXYkxWg0VgrlmrQ",
                             }}
-                            className='w-full min-h-[320px]  aspect-[1.85/1]'
+                            className='w-full min-h-[350px] aspect-[1.85/1]'
                         />}
+                        {isMediaPlayer && !streamingData && <div className='w-[99%] min-h-[350px] aspect-[1.85/1] flex items-center justify-center'>Loading...</div>}
                     </ResizablePanel>
 
                     <> <ResizableHandle />
-                        <ResizablePanel defaultSize={20} className='max-w-[200px] hidden lg:block'>
+                        <ResizablePanel defaultSize={20} className='max-w-[500px] hidden lg:block'>
                             <ResizablePanelGroup direction="vertical">
                                 <ResizablePanel defaultSize={30} className='max-h-fit'>
                                     <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Seasons</h1>
@@ -136,7 +138,7 @@ const MediaVideos = ({ mediaData, type }) => {
                 </ResizablePanelGroup>
             </div>}
 
-            <CardFooter className="flex lg:flex-col overflow-y-scroll flex-shrink gap-3 pt-3">
+            <CardFooter className="flex lg:flex-col overflow-y-scroll max-h-[70dvh] gap-3 pt-3">
                 <Button className="w-28" id="video-btn-1" title="FlixHq" variant={isMediaPlayer ? "" : "secondary"} onClick={() => { setIsMediaPlayer(true); setIsYoutubeEmbed(false) }}>FlixHq</Button>
                 {IframeButtonDetails.map((button, index) => {
                     return <Button variant={(!isMediaPlayer && !isYoutubeEmbed && iframeSrc === button.url) ? "" : "secondary"} id={`video-btn-${index + 2}`} key={index} title={button.name} onClick={() => { setIframeSrc(button.url); setIsMediaPlayer(false); setIsYoutubeEmbed(false) }} className="w-28">{button.name}</Button>
