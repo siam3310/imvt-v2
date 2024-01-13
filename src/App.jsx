@@ -47,7 +47,7 @@ function App() {
         <Route path="/tv" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <TvPage />
         </div>} />
-        <Route path="/tv/:category" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
+        <Route path="/tv-shows/:category" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <TvCategoryPages />
         </div>} />
         <Route path="/tv/:id" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">

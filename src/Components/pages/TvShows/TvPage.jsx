@@ -111,11 +111,11 @@ const TvPage = () => {
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getTvTrendingToday?.results} loading={loading} />
-      <MediaSwiper data={data?.getTvAiringToday?.results} loading={loading} heading="Airing Today" link="Airing Today" />
-      <MediaSwiper data={data?.getTvOnTheAir?.results} loading={loading} heading="On the Air" link="On the Air" />
-      <MediaSwiper data={data?.getTvTrendingWeek?.results} loading={loading} heading="Trending Now" link="Trending" />
-      <MediaSwiper data={data?.getTvPopular?.results} loading={loading} heading="What's Popular" link="Popular" />
-      <MediaSwiper data={data?.getTvTopRated?.results} loading={loading} heading="Top Rated" link="Top Rated" />
+      <MediaSwiper data={data?.getTvAiringToday?.results} loading={loading} heading="Airing Today" link="/tv-shows/Airing Today" />
+      <MediaSwiper data={data?.getTvOnTheAir?.results} loading={loading} heading="On the Air" link="/tv-shows/On the Air" />
+      <MediaSwiper data={data?.getTvTrendingWeek?.results} loading={loading} heading="Trending Now" link="/tv-shows/Trending" />
+      <MediaSwiper data={data?.getTvPopular?.results} loading={loading} heading="What's Popular" link="/tv-shows/Popular" />
+      <MediaSwiper data={data?.getTvTopRated?.results} loading={loading} heading="Top Rated" link="/tv-shows/Top Rated" />
     </div>
   )
 }
