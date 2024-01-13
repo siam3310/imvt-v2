@@ -33,7 +33,7 @@ const MediaGrid = ({ mediaData }) => {
                     {mediaData?.results.map((post, index) => (
                         (post.__typename !== "People") ? <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
                             <div className="group clickable">
-                                <Link to={`/${post.title ? "movie" : "tv"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                                <Link to={`/${post.title ? "movie" : "tv"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
                                     <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                                 </Link>
                                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
@@ -52,7 +52,7 @@ const MediaGrid = ({ mediaData }) => {
                             </div>
                         </div> : <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
                             <div className="group clickable">
-                                <Link to={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                                <Link to={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
                                     <span className="z-[3] clickable"><ExternalLink size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                                 </Link>
                                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>

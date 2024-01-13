@@ -49,7 +49,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }) 
                 {data[0]?.profile_path ? data?.map((post, index) => (
                     <CarouselItem key={index} style={{ flexBasis: basis }} className={`pl-5 relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`}>
                         <div className="group clickable" key={index}>
-                            <Link to={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                            <Link to={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
                                 <span className="z-[3] clickable"><ExternalLink size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                             </Link>
                             <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
@@ -67,7 +67,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }) 
                     </CarouselItem>
                 )) : data?.map((post, index) => (<CarouselItem key={index} style={{ flexBasis: basis }} className={`pl-5 relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`}>
                     <div className="group clickable" key={index}>
-                        <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                        <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
                             <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                         </Link>
                         {!upcoming && <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>

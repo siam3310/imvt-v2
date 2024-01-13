@@ -16,7 +16,7 @@ export default function DiscoverPage() {
     const [query, setQuery] = useState("")
     const [searchType, setSearchType] = useState("any")
     return (
-        <div className="w-full h-full overflow-scroll">
+        <div className="w-full h-full max-h-[100dvh] overflow-scroll">
             <div className="flex gap-y-10 flex-col min-h-[100dvh] h-fit items-center justify-start p-6">
                 <span className="font-bold text-white text-3xl lg:text-[2.5rem] mt-[30dvh] text-center">What would you like to<br /> watch tonight?</span>
                 <Input type="text" onChange={(e) => setQuery(e.target.value)} value={query} placeholder="Search" className="max-w-[600px] rounded-3xl" />
