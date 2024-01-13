@@ -115,19 +115,18 @@ query GetMoviebyId($tmdbId: ID!) {
   }
 `;
 const SingleMovie = () => {
-    const { id } = useParams();
-    const tmdbId = id;
-    const { data, loading } = useQuery(query, {
-        variables: { tmdbId },
-    });
-    const movieData = data?.getMoviebyId;
+  const { id } = useParams();
+  const tmdbId = id;
+  const { data, loading } = useQuery(query, {
+    variables: { tmdbId },
+  });
+  const movieData = data?.getMoviebyId;
+  console.log(data);
 
-
-    if (loading || !movieData) return <div>Loading...</div>
-    return (<>
-        <SingleMediaPage mediaData={movieData} loading={loading} type="movie"/>
-    </>
-    )
+  return (<>
+    <SingleMediaPage mediaData={movieData} loading={loading} type="movie" />
+  </>
+  )
 }
 
 export default SingleMovie

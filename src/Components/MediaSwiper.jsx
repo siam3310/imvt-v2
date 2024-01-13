@@ -32,6 +32,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming }) {
         // Remove event listener on cleanup
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+    if (!data) return <div>Loading...</div>
 
     return (
         <Carousel
@@ -45,15 +46,15 @@ export default function MediaSwiper({ data, loading, heading, upcoming }) {
                 <span className='clickable bg-white px-3 py-[6.4px] text-sm sm:py-[6.4px] sm:text-md text-black font-normal rounded-xl'>View more</span>
             </div>
             <CarouselContent className="">
-                {data[0].profile_path ? data?.map((post, index) => (
+                {data[0]?.profile_path ? data?.map((post, index) => (
                     <CarouselItem key={index} style={{ flexBasis: basis }} className={`pl-5 relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`}>
                         <div className="group clickable" key={index}>
                             <Link to={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
                                 <span className="z-[3] clickable"><ExternalLink size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                             </Link>
-                            {!upcoming && <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                            <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                 {(post.known_for_department === "Acting" && "Actor") || (post.known_for_department === "Writing" && "Writer") || (post.known_for_department === "Directing" && "Director") || (post.known_for_department === "Production" && "Producer") || post.known_for_department}
-                            </span>}
+                            </span>
                             <div className='w-full h-full'>
                                 <img
                                     className="rounded-t-md overflow-hidden group-hover:cursor-pointer group-hover:blur relative group-hover:scale-90 h-full aspect-[2/3] transition-all duration-300 ease-in-out"
@@ -71,6 +72,9 @@ export default function MediaSwiper({ data, loading, heading, upcoming }) {
                         </Link>
                         {!upcoming && <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                             <Star fill="white" color='white' width={12} />&nbsp;{parseFloat(post.vote_average).toFixed(1)}
+                        </span>}
+                        {upcoming && <span className='bg-yellow-500 text-white absolute top-1 left-6 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                            {new Date(post.release_date || post.air_date || post.first_air_date).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
                         </span>}
                         <div className='w-full h-fulll'>
                             <div className="aspect-[2/3]">

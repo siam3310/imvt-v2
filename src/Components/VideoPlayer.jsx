@@ -10,7 +10,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
         if (subtitle.lang === media?.subtitles[0]?.lang) {
             return {
                 default: true,
-                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-center" title="${subtitle.lang}">${subtitle.lang}</span>`,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -22,7 +22,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             }
         } else {
             return {
-                html: `<span className="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-start" title="${subtitle.lang}">${subtitle.lang}</span>`,
+                html: `<span class="px-3 block w-40 whitespace-nowrap overflow-hidden text-ellipsis text-center" title="${subtitle.lang}">${subtitle.lang}</span>`,
                 url: subtitle.url,
                 type: 'vtt',
                 encoding: 'utf-8',
@@ -62,7 +62,7 @@ export default function VideoPlayer({ media, getInstance, ...rest }) {
             setting: true,
             plugins: [
                 artplayerPluginHlsQuality({
-                    control: true,
+                    control: false,
                     setting: true,
                     getResolution: (level) => level.height + 'P',
                     title: 'Quality',

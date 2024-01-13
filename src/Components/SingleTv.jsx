@@ -118,7 +118,6 @@ query GetTvbyId($tmdbId: ID!) {
         still_path
       }
       languages
-      next_episode_to_air
       number_of_seasons
       number_of_episodes
       videos {
@@ -146,8 +145,6 @@ const SingleTv = () => {
   });
   const tvData = data?.getTvbyId;
 
-
-  if (loading || !tvData) return <div>Loading...</div>
   return (<>
     <SingleMediaPage mediaData={tvData} loading={loading} type="tv" />
   </>

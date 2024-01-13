@@ -34,7 +34,7 @@ const MediaVideos = ({ mediaData, type }) => {
     ]
     useEffect(() => {
         if (type === "movie") {
-            const array = mediaData?.streamingId.split("-");
+            const array = mediaData?.streamingId?.split("-");
             console.log(array);
             setEpisodeId(array.length > 1 ? array[array.length - 1] : null);
         }
@@ -65,19 +65,19 @@ const MediaVideos = ({ mediaData, type }) => {
                         subtitles: streamingData?.subtitles,
                         thumbnail: mediaData?.backdrop_path,
                     }}
-                    className='w-[99%] aspect-[1.85/1]'
+                    className='w-[99%] min-h-[320px] aspect-[1.85/1]'
                 />}
-                {isMediaPlayer && streamingData && !streamingData.sources && <VideoPlayer
+                {isMediaPlayer && (!streamingData || !streamingData.sources) && <VideoPlayer
                     media={{
                         urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                         subtitles: [],
                         thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04174dbc-fe2f-4983-824a-6d80412e917e/de1s9he-1e5476f3-0ea2-49d0-a7fc-f6a182624850.png/v1/fill/w_960,h_540,q_80,strp/404_not_found__08th_phonak_movie_night_style__by_xxneojadenxx_de1s9he-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTQwIiwicGF0aCI6IlwvZlwvMDQxNzRkYmMtZmUyZi00OTgzLTgyNGEtNmQ4MDQxMmU5MTdlXC9kZTFzOWhlLTFlNTQ3NmYzLTBlYTItNDlkMC1hN2ZjLWY2YTE4MjYyNDg1MC5wbmciLCJ3aWR0aCI6Ijw9OTYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.UXpWTdFPNrYsKY5zOeIT2Hgv_GzyqXYkxWg0VgrlmrQ",
                     }}
-                    className='w-full aspect-[1.85/1]'
+                    className='w-full min-h-[320px]  aspect-[1.85/1]'
                 />}
             </>}
 
-{/* Tv Player */}
+            {/* Tv Player */}
             {type === "tv" && <div className=' w-full'>
                 <ResizablePanelGroup
                     direction="horizontal"
@@ -91,15 +91,15 @@ const MediaVideos = ({ mediaData, type }) => {
                                 subtitles: streamingData?.subtitles,
                                 thumbnail: mediaData?.backdrop_path,
                             }}
-                            className='w-[99%] aspect-[1.85/1]'
+                            className='w-[99%] min-h-[320px] aspect-[1.85/1]'
                         />}
-                        {isMediaPlayer && streamingData && !streamingData.sources && <VideoPlayer
+                        {isMediaPlayer && (!streamingData || !streamingData.sources) && <VideoPlayer
                             media={{
                                 urls: [{ url: "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" }],
                                 subtitles: [],
                                 thumbnail: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/04174dbc-fe2f-4983-824a-6d80412e917e/de1s9he-1e5476f3-0ea2-49d0-a7fc-f6a182624850.png/v1/fill/w_960,h_540,q_80,strp/404_not_found__08th_phonak_movie_night_style__by_xxneojadenxx_de1s9he-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTQwIiwicGF0aCI6IlwvZlwvMDQxNzRkYmMtZmUyZi00OTgzLTgyNGEtNmQ4MDQxMmU5MTdlXC9kZTFzOWhlLTFlNTQ3NmYzLTBlYTItNDlkMC1hN2ZjLWY2YTE4MjYyNDg1MC5wbmciLCJ3aWR0aCI6Ijw9OTYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.UXpWTdFPNrYsKY5zOeIT2Hgv_GzyqXYkxWg0VgrlmrQ",
                             }}
-                            className='w-full aspect-[1.85/1]'
+                            className='w-full min-h-[320px]  aspect-[1.85/1]'
                         />}
                     </ResizablePanel>
 
@@ -111,7 +111,7 @@ const MediaVideos = ({ mediaData, type }) => {
                                     <ScrollArea className="h-full w-full rounded-md border p-4">
                                         {mediaData?.seasons && <div className="flex flex-col gap-3">
                                             <div className="flex flex-col gap-3">
-                                                {mediaData?.seasons.map((season, index) => (
+                                                {mediaData?.seasons?.map((season, index) => (
                                                     <Button key={index} variant={seasonNumber === index + 1 ? "" : "secondary"} onClick={() => { setSeasonNumber(index + 1); setEpisodeNumber(1) }} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">Season {season.season}</Button>
                                                 ))}
                                             </div>
@@ -124,7 +124,7 @@ const MediaVideos = ({ mediaData, type }) => {
                                     <ScrollArea className="h-full w-full rounded-md border p-4 pb-12">
                                         {mediaData?.seasons && <div className="flex flex-col gap-3">
                                             <div className="flex flex-col gap-3">
-                                                {mediaData?.seasons[seasonNumber - 1].episodes.map((episode, index) => (
+                                                {mediaData?.seasons[seasonNumber - 1]?.episodes?.map((episode, index) => (
                                                     <Button key={index} variant={episodeNumber === index + 1 ? "" : "secondary"} onClick={() => { setEpisodeNumber(index + 1); setEpisodeId(episode.id) }} title={episode.title || `Episode ${episode.episode}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">{episode.title || `Episode ${episode.episode}`}</Button>
                                                 ))}
                                             </div>
@@ -148,14 +148,13 @@ const MediaVideos = ({ mediaData, type }) => {
                 }
                 )}
             </CardFooter>
-
-            {type === "tv" && <ResizablePanelGroup direction="horizontal" className="lg:max-w-0">
+            {type === "tv" && <ResizablePanelGroup direction="horizontal" className="lg:max-w-0 max-h-[50dvh]">
                 <ResizablePanel defaultSize={30} className='max-h-fit'>
                     <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Seasons</h1>
                     <ScrollArea className="h-full w-full rounded-md border p-4">
                         {mediaData?.seasons && <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-3">
-                                {mediaData?.seasons.map((season, index) => (
+                                {mediaData?.seasons?.map((season, index) => (
                                     <Button key={index} variant={seasonNumber === index + 1 ? "" : "secondary"} onClick={() => { setSeasonNumber(index + 1); setEpisodeNumber(1) }} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">Season {season.season}</Button>
                                 ))}
                             </div>
@@ -168,7 +167,7 @@ const MediaVideos = ({ mediaData, type }) => {
                     <ScrollArea className="h-full w-full rounded-md border p-4 pb-12">
                         {mediaData?.seasons && <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-3">
-                                {mediaData?.seasons[seasonNumber - 1].episodes.map((episode, index) => (
+                                {mediaData?.seasons[seasonNumber - 1]?.episodes?.map((episode, index) => (
                                     <Button key={index} variant={episodeNumber === index + 1 ? "" : "secondary"} onClick={() => { setEpisodeNumber(index + 1); setEpisodeId(episode.id) }} title={episode.title || `Episode ${episode.episode}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis">{episode.title || `Episode ${episode.episode}`}</Button>
                                 ))}
                             </div>

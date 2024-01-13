@@ -53,7 +53,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
       <TabsContent value="casts" className="p-5 max-h-[85dvh] overflow-y-scroll">
         <div className="flex flex-wrap justify-between items-center gap-y-5">
           {mediaData?.casts.map((cast, index) => (<div key={index} className="flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
-            <img className="rounded-full w-24 h-24 aspect-square object-cover" src={cast.profile_path !== "https://image.tmdb.org/t/p/originalnull" ? cast.profile_path : "https://st4.depositphotos.com/9998432/24428/v/450/depositphotos_244284796-stock-illustration-person-gray-photo-placeholder-man.jpg"} alt="cast image" />
+            <img className="rounded-full w-24 h-24 aspect-square object-cover" src={cast.profile_path} alt="cast image" />
             <div className="flex flex-col justify-start items-start text-white gap-y-1">
               <h3 className="text-lg font-bold text-[#5179ff]">{cast.name || cast.original_name}</h3>
               <h2 className="text-md font-semibold font-sans">as {cast.character}</h2>
@@ -70,7 +70,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
           <div className="flex flex-wrap justify-start items-center">
             {mediaData?.similar.map((post, index) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
               <div className="group clickable" key={index}>
-                <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                <Link to={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
                   <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                 </Link>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
@@ -99,7 +99,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
           <div className="flex flex-wrap justify-start items-center">
             {mediaData?.recommendations.map((post, index) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
               <div className="group clickable">
-                <Link to={`/${post.name ? "tv" : "movie"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
+                <Link to={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
                   <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                 </Link>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
@@ -131,9 +131,9 @@ export default function MediaDetailsTabs({ mediaData, type }) {
                 <img className="rounded-full min-w-24 min-h-24 max-w-24 max-h-24 aspect-square object-cover" src={review.author_details.avatar_path ? `https://image.tmdb.org/t/p/original${review.author_details.avatar_path}` : "https://st4.depositphotos.com/9998432/24428/v/450/depositphotos_244284796-stock-illustration-person-gray-photo-placeholder-man.jpg"} alt="user image" />
                 <h3 className="text-lg font-bold text-[#5179ff]">{review.author_details.username}</h3>
                 <h2 className="text-md font-semibold text-white font-sans">{review.author_details.author || review.author}</h2>
-                <span className=' text-white font-mono py-[2px] px-2 text-[1rem] rounded-3xl whitespace-nowrap flex items-center'>
+                {review.author_details.rating && <span className=' text-white font-mono py-[2px] px-2 text-[1rem] rounded-3xl whitespace-nowrap flex items-center'>
                   Rated {review.author_details.rating} out of 10
-                </span>
+                </span>}
               </div>
               <div className="flex flex-col w-[90%] sm:w-2/3 justify-start items-start text-white gap-y-1">
                 <h3 className="text-sm max-h-[200px] overflow-hidden">{review.content}</h3>

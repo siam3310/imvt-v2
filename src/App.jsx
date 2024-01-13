@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Sidebar from "./Components/Sidebar";
 import HomePage from "./Components/HomePage";
 import TrendingPage from "./Components/TrendingPage";
+import SearchPage from "./Components/SearchPage";
 import MoviesPage from "./Components/MoviesPage";
 import TvPage from "./Components/TvPage";
 import SingleMovie from "./Components/SingleMovie";
@@ -24,6 +25,9 @@ function App() {
         </div>} />
         <Route path="/trending" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <TrendingPage />
+        </div>} />
+        <Route path="/search" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
+          <SearchPage />
         </div>} />
         <Route path="/movies" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <MoviesPage />

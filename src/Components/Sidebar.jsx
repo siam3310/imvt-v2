@@ -14,7 +14,7 @@ export default function Sidebar({ children }) {
                 className={`absolute top-4 left-4 z-10 clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}>
                 <PanelRightClose />
             </button>}
-            <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm ${expanded && "absolute z-10 top-0 left-0 bg-[#151517]"} ${hideSidebar ? "absolute z-10 top-0 right-[100vw] bg-[#151517]" : "lg:static "}`}>
+            <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm bg-[#0b0b0b] ${expanded && "absolute z-[100000] top-0 left-0 bg-[#0b0b0b]"} ${hideSidebar ? "absolute z-10 top-0 right-[100vw] bg-[#151517]" : "lg:static "}`}>
                 <div className={`p-4 flex justify-between items-center`}>
                     <Link to={`/`}>
                         <img
@@ -51,7 +51,7 @@ export default function Sidebar({ children }) {
 
                         <SidebarItem link="/" text="Home" icon={<HomeIcon />} />
                         <SidebarItem link="/trending" text="Trending" icon={<Flame />} />
-                        <SidebarItem link="/discover" text="Discover" icon={<Search />} />
+                        <SidebarItem link="/search" text="Search" icon={<Search />} />
                         <SidebarItem link="/movies" text="Movies" icon={<Clapperboard />} />
                         <SidebarItem link="/tv" text="Series" icon={<Film />} />
                         {children}
