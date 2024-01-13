@@ -21,7 +21,7 @@ export default function DiscoverPage() {
             <div className="flex gap-y-10 flex-col min-h-[100dvh] h-fit items-center justify-start p-6">
                 <span className="font-bold text-white text-3xl lg:text-[2.5rem] mt-[30dvh] text-center">What would you like to<br /> watch tonight?</span>
                 <Input type="text" onChange={(e) => setQuery(e.target.value)} value={query} placeholder="Search" className="max-w-[600px] rounded-3xl" />
-                <div className="flex gap-x-2 justify-between items-center text-white max-w-[600px] w-full">
+                <div className="flex gap-x-2 justify-between items-center text-white max-w-[600px] w-full z-[4]">
                     <div className="shrink-1">
                         <Select onValueChange={(e) => { setSearchType(e); setPage(1); }}>
                             <SelectTrigger className="w-fit sm:w-[180px]">
