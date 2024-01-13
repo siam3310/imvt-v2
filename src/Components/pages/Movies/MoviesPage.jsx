@@ -96,10 +96,10 @@ const MoviesPage = () => {
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getMovieTrendingToday?.results} loading={loading} />
-      <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Now" />
-      <MediaSwiper data={data?.getMoviePopular?.results} loading={loading} heading="What's Popular" />
-      <MediaSwiper data={data?.getMovieTopRated?.results} loading={loading} heading="Top Rated" />
-      <MediaSwiper data={data?.getMovieUpcoming?.results} loading={loading} upcoming={true} heading="Upcoming" />
+      <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Now" link="Trending" />
+      <MediaSwiper data={data?.getMoviePopular?.results} loading={loading} heading="What's Popular" link="Popular" />
+      <MediaSwiper data={data?.getMovieTopRated?.results} loading={loading} heading="Top Rated" link="Top Rated" />
+      <MediaSwiper data={data?.getMovieUpcoming?.results} loading={loading} upcoming={true} heading="Upcoming" link="Upcoming" />
     </div>
   )
 }

@@ -7,7 +7,9 @@ import TrendingPage from "./Components/pages/Trending/TrendingPage";
 import TrendingMediaPages from "./Components/pages/Trending/TrendingMediaPages";
 import SearchPage from "./Components/pages/Search/SearchPage";
 import MoviesPage from "./Components/pages/Movies/MoviesPage";
+import MovieCategoryPages from "./Components/pages/Movies/MoviesCategoryPages.jsx";
 import TvPage from "./Components/pages/TvShows/TvPage";
+import TvCategoryPages from "./Components/pages/TvShows/TvCategoryPages.jsx";
 import SingleMovie from "./Components/pages/Movies/Movie/SingleMovie";
 import SingleTv from "./Components/pages/TvShows/Tv/SingleTv";
 import CustomCursor from "./Components/utils/CustomCursor";
@@ -36,11 +38,17 @@ function App() {
         <Route path="/movies" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <MoviesPage />
         </div>} />
+        <Route path="/movies/:category" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
+          <MovieCategoryPages />
+        </div>} />
         <Route path="/movie/:id" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <SingleMovie />
         </div>} />
         <Route path="/tv" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <TvPage />
+        </div>} />
+        <Route path="/tv/:category" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
+          <TvCategoryPages />
         </div>} />
         <Route path="/tv/:id" element={<div className="w-full bg-[#151517] rounded-l-lg overflow-hidden">
           <SingleTv />

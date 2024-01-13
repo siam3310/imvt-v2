@@ -36,7 +36,7 @@ query GetTrendingData(
     total_pages
     total_results
   }
-  getMovieTrendingWeek {
+  getMovieTrendingWeek(page: $page) {
     results {
       backdrop_path
       id
@@ -52,7 +52,7 @@ query GetTrendingData(
     total_pages
     total_results
   }
-  getTvTrendingWeek {
+  getTvTrendingWeek(page: $page) {
     results {
       backdrop_path
       id
@@ -68,7 +68,7 @@ query GetTrendingData(
     total_pages
     total_results
   }
-  getPeopleTrendingWeek {
+  getPeopleTrendingWeek(page: $page) {
     results {
       adult
       biography
