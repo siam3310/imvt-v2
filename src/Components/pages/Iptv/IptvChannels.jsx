@@ -31,7 +31,6 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
         const url = `${import.meta.env.VITE_IPTV_API_URL}/${searchBy}?group=${group}&search=${query}&page=${page}`
         const res = await fetch(url)
         const data = await res.json()
-        console.log(data);
         setIptvData(data);
     }), [searchBy, group, query, page]);
 

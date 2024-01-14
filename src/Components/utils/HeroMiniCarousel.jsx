@@ -38,7 +38,7 @@ export default function HeroMiniCarousel({ data, loading }) {
                         </div>
                         <div className="relative flex flex-col items-center justify-center gap-y-3 z-1 text-white">
                             <img
-                                className="w-44 block h-64 object-cover rounded-3xl clickable"
+                                className="w-52 block h-72 poster-box-shadow object-cover rounded-3xl clickable"
                                 src={post.poster_path}
                                 alt="Movie logo"
                             />

@@ -43,7 +43,6 @@ export default function IptvPage() {
     }, [query, group, searchBy])
 
     const onSubmit = (data) => {
-        console.log(data);
         setQuery(data.search)
     };
     return (

@@ -121,7 +121,6 @@ const SingleMovie = () => {
     variables: { tmdbId },
   });
   const movieData = data?.getMoviebyId;
-  console.log(data);
 
   return (<>
     <SingleMediaPage mediaData={movieData} loading={loading} type="movie" />

@@ -35,7 +35,6 @@ const MediaVideos = ({ mediaData, type }) => {
     useEffect(() => {
         if (type === "movie") {
             const array = mediaData?.streamingId?.split("-");
-            console.log(array);
             setEpisodeId(array.length > 1 ? array[array.length - 1] : null);
         }
         else {
