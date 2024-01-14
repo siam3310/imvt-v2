@@ -1,5 +1,6 @@
 import React from 'react'
 import HeroSectionCarousel from '../../utils/HeroSectionCarousel'
+import HeroMiniCarousel from '../../utils/HeroMiniCarousel'
 import MediaSwiper from '../../utils/MediaSwiper'
 import { gql, useQuery } from "@apollo/client";
 
@@ -96,6 +97,7 @@ const MoviesPage = () => {
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getMovieTrendingToday?.results} loading={loading} />
+      <HeroMiniCarousel data={data?.getMovieTrendingToday?.results} loading={loading} />
       <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Now" link="Trending" />
       <MediaSwiper data={data?.getMoviePopular?.results} loading={loading} heading="What's Popular" link="Popular" />
       <MediaSwiper data={data?.getMovieTopRated?.results} loading={loading} heading="Top Rated" link="Top Rated" />

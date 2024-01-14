@@ -2,6 +2,7 @@ import React from 'react'
 import HeroSectionCarousel from '../../utils/HeroSectionCarousel.jsx'
 import MediaSwiper from '../../utils/MediaSwiper.jsx'
 import { gql, useQuery } from "@apollo/client";
+import HeroMiniCarousel from '../../utils/HeroMiniCarousel.jsx';
 
 const query = gql`
 query GetHomeData {
@@ -122,6 +123,7 @@ const HomePage = () => {
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getAnyTrendingToday?.results} loading={loading} />
+      <HeroMiniCarousel data={data?.getAnyTrendingToday?.results} loading={loading} />
       <MediaSwiper data={data?.getAnyTrendingWeek?.results} loading={loading} heading="Trending" />
       <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Movies" />
       <MediaSwiper data={data?.getTvTrendingWeek?.results} loading={loading} heading="Trending Series" />

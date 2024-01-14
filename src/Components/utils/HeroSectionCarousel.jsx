@@ -34,7 +34,7 @@ const HeroSectionCarousel = ({ data, loading }) => {
     }, [emblaMainApi, onSelect])
     if (loading) return <div>Loading...</div>
     return (
-        <div className='Carousel'>
+        <div className='Carousel hidden sm:block'>
             <div className="embla">
                 <div className="embla__viewport" ref={emblaMainRef}>
                     <div className="embla__container">
