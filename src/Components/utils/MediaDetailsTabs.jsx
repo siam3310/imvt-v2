@@ -33,7 +33,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
   }, []);
 
   return (
-    <Tabs defaultValue="casts" className="w-[95%] sm:w-[90%] dark mb-10">
+    <Tabs defaultValue="casts" className="w-[95%] sm:w-[90%] dark pb-20">
 
 
       <TabsList className=" w-full flex justify-start overflow-scroll">
@@ -50,8 +50,8 @@ export default function MediaDetailsTabs({ mediaData, type }) {
       </TabsContent>
 
 
-      <TabsContent value="casts" className="p-5 max-h-[85dvh] overflow-y-scroll">
-        <div className="flex flex-wrap justify-between items-center gap-y-5">
+      <TabsContent value="casts" className="p-5 max-h-[85dvh]">
+        <div className="flex flex-wrap justify-between items-center gap-y-5 pb-20">
           {mediaData?.casts.map((cast, index) => (<div key={index} className="flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
             <img className="rounded-full w-24 h-24 aspect-square object-cover" src={cast.profile_path} alt="cast image" />
             <div className="flex flex-col justify-start items-start text-white gap-y-1">
@@ -67,7 +67,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
 
       {mediaData?.similar && <TabsContent value="similar">
         <div className="w-full h-full flex justify-center">
-          <div className="flex flex-wrap justify-start items-center">
+          <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.similar.map((post, index) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
               <div className="group clickable" key={index}>
                 <Link to={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
@@ -96,7 +96,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
 
       {mediaData?.recommendations && <TabsContent value="recommendations">
         <div className="w-full h-full flex justify-center">
-          <div className="flex flex-wrap justify-start items-center">
+          <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.recommendations.map((post, index) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
               <div className="group clickable">
                 <Link to={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
@@ -123,7 +123,7 @@ export default function MediaDetailsTabs({ mediaData, type }) {
       </TabsContent>}
 
 
-      {mediaData?.reviews && mediaData?.reviews.length > 0 && <TabsContent value="reviews" className="p-5 max-h-[85dvh] overflow-y-scroll">
+      {mediaData?.reviews && mediaData?.reviews.length > 0 && <TabsContent value="reviews" className="p-5 max-h-[85dvh]">
         <div className="flex flex-wrap justify-between items-center gap-y-5">
           {mediaData?.reviews.map((review, index) => (
             <div key={index} className="flex flex-wrap sm:flex-nowrap justify-center items-center gap-x-5 w-[100%] h-fit">

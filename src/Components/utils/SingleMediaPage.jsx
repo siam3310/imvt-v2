@@ -45,7 +45,7 @@ const SingleMediaPage = ({ mediaData, loading, type }) => {
           </div>
         </div>
         <p className='text-lg text-white px-3 sm:px-10 lg:hidden'>{mediaData?.overview}</p>
-        <div className='flex justify-center'><MediaDetailsTabs mediaData={mediaData} type={type}/></div>
+        <div className='flex justify-center'><MediaDetailsTabs mediaData={mediaData} type={type} /></div>
       </div>
     </div>
   </>
