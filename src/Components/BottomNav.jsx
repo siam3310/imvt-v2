@@ -1,5 +1,5 @@
 import React from 'react'
-import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
+import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, Tv, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
 import { Link } from "react-router-dom";
 const BottomNav = () => {
     return (
@@ -27,14 +27,22 @@ const BottomNav = () => {
                     <div className="tooltip-arrow" data-popper-arrow></div>
                 </div>
 
-                <Link to="trending" data-tooltip-target="tooltip-post" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                <Link to="iptv" data-tooltip-target="tooltip-post" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                    <Tv color='rgb(107 114 128 / 1)' />
+                    <span className="sr-only">Trending</span>
+                </Link>
+                <div id="tooltip-post" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Live TV
+                    <div className="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                {/* <Link to="trending" data-tooltip-target="tooltip-post" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                     <Flame color='rgb(107 114 128 / 1)' />
                     <span className="sr-only">Trending</span>
                 </Link>
                 <div id="tooltip-post" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Trending
                     <div className="tooltip-arrow" data-popper-arrow></div>
-                </div>
+                </div> */}
                 <Link to="search" data-tooltip-target="tooltip-search" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
                     <Search color='rgb(107 114 128 / 1)' />
                     <span className="sr-only">Search</span>

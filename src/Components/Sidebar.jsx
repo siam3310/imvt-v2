@@ -1,4 +1,4 @@
-import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
+import { MoreVertical, ChevronLast, ChevronFirst, HomeIcon, Flame, Tv, Search, Clapperboard, Film, PanelRightClose, PanelLeftClose, ArrowLeftFromLine, XCircle } from "lucide-react"
 import { useContext, createContext, useState } from "react"
 import Logo from "./logo.svg";
 const SidebarContext = createContext()
@@ -50,7 +50,8 @@ export default function Sidebar({ children }) {
                     <ul className="flex-1 px-3 flex flex-col justify-center">
 
                         <SidebarItem link="/" text="Home" icon={<HomeIcon />} />
-                        <SidebarItem link="/trending" text="Trending" icon={<Flame />} />
+                        <SidebarItem link="/iptv" text="Live TV" icon={<Tv />} />
+                        {/* <SidebarItem link="/trending" text="Trending" icon={<Flame />} /> */}
                         <SidebarItem link="/search" text="Search" icon={<Search />} />
                         <SidebarItem link="/movies" text="Movies" icon={<Clapperboard />} />
                         <SidebarItem link="/tv" text="Series" icon={<Film />} />
@@ -99,7 +100,7 @@ export function SidebarItem({ icon, text, active, alert, link }) {
         >
             {icon}
             <span
-                className={`overflow-hidden transition-all ${expanded ? "w-56 ml-3" : "w-0"
+                className={`overflow-hidden whitespace-nowrap transition-all ${expanded ? "w-56 ml-3" : "w-0"
                     }`}
             >
                 {text}
@@ -114,7 +115,7 @@ export function SidebarItem({ icon, text, active, alert, link }) {
             {!expanded && (
                 <div
                     className={`
-          absolute left-full rounded-md px-2 py-1 ml-6
+          absolute left-full rounded-md px-2 whitespace-nowrap py-1 ml-6
           bg-indigo-100 text-indigo-800 text-sm
           invisible opacity-20 -translate-x-3 transition-all
           group-hover:visible group-hover:opacity-100 group-hover:translate-x-0

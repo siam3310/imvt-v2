@@ -124,10 +124,10 @@ const HomePage = () => {
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
       <HeroSectionCarousel data={data?.getAnyTrendingToday?.results} loading={loading} />
       <HeroMiniCarousel data={data?.getAnyTrendingToday?.results} loading={loading} />
-      <MediaSwiper data={data?.getAnyTrendingWeek?.results} loading={loading} heading="Trending" />
-      <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Movies" />
-      <MediaSwiper data={data?.getTvTrendingWeek?.results} loading={loading} heading="Trending Series" />
-      <MediaSwiper data={data?.getPeopleTrendingWeek?.results} loading={loading} heading="Trending People" />
+      <MediaSwiper data={data?.getAnyTrendingWeek?.results} loading={loading} heading="Weekly Trending" link="trending/all" />
+      <MediaSwiper data={data?.getMovieTrendingWeek?.results} loading={loading} heading="Trending Movies" link="trending/movies" />
+      <MediaSwiper data={data?.getTvTrendingWeek?.results} loading={loading} heading="Trending Series" link="trending/tv shows" />
+      <MediaSwiper data={data?.getPeopleTrendingWeek?.results} loading={loading} heading="Trending People" link="trending/people" />
     </div>
   )
 }

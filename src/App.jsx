@@ -2,6 +2,7 @@ import "./App.css";
 import React from 'react'
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./Components/Sidebar";
+import BottomNav from "./Components/BottomNav.jsx";
 import HomePage from "./Components/pages/Home/HomePage";
 import TrendingPage from "./Components/pages/Trending/TrendingPage";
 import TrendingMediaPages from "./Components/pages/Trending/TrendingMediaPages";
@@ -12,10 +13,9 @@ import TvPage from "./Components/pages/TvShows/TvPage";
 import TvCategoryPages from "./Components/pages/TvShows/TvCategoryPages.jsx";
 import SingleMovie from "./Components/pages/Movies/Movie/SingleMovie";
 import SingleTv from "./Components/pages/TvShows/Tv/SingleTv";
-import IptvPage from "./Components/pages/Iptv/iptvPage.jsx";
+import IptvPage from "./Components/pages/Iptv/IptvPage.jsx";
 import CustomCursor from "./Components/utils/CustomCursor";
 import "./App.css"
-import BottomNav from "./Components/BottomNav.jsx";
 
 function App() {
   return (
