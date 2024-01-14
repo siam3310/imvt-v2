@@ -26,7 +26,7 @@ export default function HeroMiniCarousel({ data, loading }) {
                 }),
             ]}
         >
-            <CarouselContent className="pt-5">
+            <CarouselContent className="">
                 {data?.map((post, index) => (
                     <CarouselItem key={index} className={`h-fit transition-none`}>
                         <div className="movie-backdrop absolute top-0 w-full h-full z-0">
@@ -36,7 +36,7 @@ export default function HeroMiniCarousel({ data, loading }) {
                                 alt="Backdrop"
                             />
                         </div>
-                        <div className="relative flex flex-col items-center justify-center gap-y-3 z-1 text-white">
+                        <div className="relative flex flex-col items-center justify-center gap-y-3 z-1 text-white pt-5">
                             <img
                                 className="w-52 block h-72 poster-box-shadow object-cover rounded-3xl clickable"
                                 src={post.poster_path}
