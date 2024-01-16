@@ -3,7 +3,8 @@ import HeroSectionCarousel from '../../utils/HeroSectionCarousel.jsx'
 import MediaSwiper from '../../utils/MediaSwiper.jsx'
 import { gql, useQuery } from "@apollo/client";
 import HeroMiniCarousel from '../../utils/HeroMiniCarousel.jsx';
-
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 const query = gql`
 query GetHomeData {
   getAnyTrendingWeek {
@@ -118,7 +119,27 @@ query GetHomeData {
 `;
 const HomePage = () => {
   const { data, loading } = useQuery(query);
-  if (loading) return <div>Loading...</div>
+  // return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444">
+  //   <div className="embla">
+  //     <div className="embla-thumbs">
+  //       <div className="embla-thumbs__viewport">
+  //         <div className="embla-thumbs__container">
+  //           <div
+  //             className='embla-thumbs__slide'
+  //           >
+  //             <div
+  //               className="hidden sm:block group embla-thumbs__slide__button overflow-hidden transition-all duration-500 ease-in-out"
+  //               type="button"
+  //             >
+  //               <Skeleton className="embla-thumbs__slide__img group-hover:scale-[1.2] transition-all duration-500 ease-in-out" />
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+
+  // </SkeletonTheme>
 
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>

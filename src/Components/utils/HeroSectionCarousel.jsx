@@ -32,7 +32,7 @@ const HeroSectionCarousel = ({ data, loading }) => {
         emblaMainApi.on('select', onSelect)
         emblaMainApi.on('reInit', onSelect)
     }, [emblaMainApi, onSelect])
-    if (loading) return <div>Loading...</div>
+    if (loading) return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444"><HeroSkeleton /></SkeletonTheme>
     return (
         <div className='Carousel hidden sm:block'>
             <div className="embla">
@@ -95,7 +95,8 @@ const HeroSectionCarousel = ({ data, loading }) => {
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
+        </div>
     )
 }
 
@@ -135,4 +136,29 @@ const Thumb = (props) => {
             </button>
         </div>
     )
+}
+
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const HeroSkeleton = ({ className }) => {
+    return <div className='Carousel sm:block hidden'>
+        <div className="embla">
+            <div className="embla__viewport">
+                <div className="embla__container">
+                    <div className="embla__slide">
+                        <Skeleton className="embla__slide__img" />
+                        <div className='flex items-center gap-3 absolute top-0 right-0 z-10 w-full h-[80%] p-[3rem]'>
+                            <div className='w-full flex flex-col justify-center gap-y-3 text-white select-none'>
+                                <Skeleton className='w-[90%] text-[1.2rem] sm:text-[1.8rem] lg:text-[2.5rem]' />
+                                <Skeleton className='w-[80%] text-[1.2rem] sm:text-[1.8rem] lg:text-[2.5rem]' />
+                                <Skeleton className='w-[70%] text-[1rem] sm:text-[1.5rem] lg:text-[2.2rem]' />
+                                <Skeleton className='w-[60%] text-[1rem] sm:text-[1.5rem] lg:text-[2.2rem]' />
+                            </div>
+                            <Skeleton className="w-56 hidden sm:block h-80 object-cover rounded-3xl clickable" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }

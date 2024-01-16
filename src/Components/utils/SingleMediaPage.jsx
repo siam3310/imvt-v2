@@ -5,8 +5,8 @@ import './SingleMediaPage.css';
 
 const SingleMediaPage = ({ mediaData, loading, type }) => {
 
+  if (loading || !mediaData) return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444"><SingleMediaSkeleton /></SkeletonTheme>
 
-  if (loading || !mediaData) return <div>Loading...</div>
   return (<>
     <div className='overflow-y-scroll w-full h-[100dvh]'>
       <div className="flex w-full h-[40dvh] sm:h-[100dvh] movie-backdrop sm:bg-fixed" style={{ backgroundImage: `URL(${mediaData?.backdrop_path})`, backgroundRepeat: `no-repeat`, backgroundPosition: `center`, backgroundSize: `cover` }}>
@@ -53,3 +53,27 @@ const SingleMediaPage = ({ mediaData, loading, type }) => {
 }
 
 export default SingleMediaPage
+
+
+
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const SingleMediaSkeleton = ({ className }) => {
+  return <div className='overflow-y-scroll h-[100dvh] pb-10'>
+    <Skeleton className='flex pointer-events-none sm:absolute z-0 top-0 left-0 w-[100vw] h-[40dvh] sm:h-[100dvh] opacity-50 sm:bg-fixed rounded-2xl' />
+    <div className='flex flex-col gap-y-5 lg:gap-y-14'>
+      <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[20dvh] sm:mt-[70dvh] z-2'>
+        <div className='w-[100vw] sm:w-[50vw] lg:w-1/3 h-full flex justify-center'>
+          <Skeleton className='block w-[200px] aspect-[2/3] rounded-2xl' />
+        </div>
+        <div className='max-w-[800px] w-[100vw] gap-y-5 sm:w-[50vw] lg:w-2/3 h-fit flex flex-col sm:items-start items-center justify-start text-white px-5'>
+          <Skeleton className='w-[300px] lg:w-[500px] text-[3rem]' />
+          <Skeleton className='w-[300px] lg:w-[550px] text-[2.5rem]' />
+          <Skeleton className='w-[300px] lg:w-[575px] text-[2rem]' />
+          <Skeleton className='w-[300px] lg:w-[600px] text-[8rem]' />
+        </div>
+      </div>
+      <div className='flex justify-center'><Skeleton className='w-[90vw] h-[90dvh] text-[1.2rem] sm:text-[1.8rem] lg:text-[2.5rem] rounded-xl' /></div>
+    </div>
+  </div>
+}

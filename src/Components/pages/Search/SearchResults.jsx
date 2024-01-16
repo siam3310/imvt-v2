@@ -114,13 +114,13 @@ const SearchResults = ({ query, searchType, page, setPage }) => {
             setMediaData(data?.getpeoplebyQuery)
         }
     }, [data, query, searchType, page])
-    if (loading) return <div>Loading...</div>
+    // if (loading) return <div>Loading...</div>
     return (
         <>
             <div className="w-full  max-h-[100dvh] flex flex-col gap-y-3">
                 {query && <h1 className="text-white text-start font-semibold text-[1rem]">{mediaData?.total_results} results found for {query}</h1>}
                 <div className="overflow-scroll h-full">
-                    <MediaGrid mediaData={mediaData} />
+                    <MediaGrid mediaData={mediaData} loading={loading} />
                     <PaginationComponent mediaData={mediaData} page={page} setPage={setPage} />
                 </div>
             </div>

@@ -11,8 +11,7 @@ import {
 
 export default function HeroMiniCarousel({ data, loading }) {
 
-    if (!data) return <div>Loading...</div>
-
+    if (loading || !data) return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444"><HeroMiniSkeleton /></SkeletonTheme>
     return (
         <Carousel
             opts={{
@@ -52,4 +51,20 @@ export default function HeroMiniCarousel({ data, loading }) {
 
         </Carousel >
     )
+}
+
+
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const HeroMiniSkeleton = ({ className }) => {
+    return <div className='h-fit transition-none sm:hidden'>
+        <div className="movie-backdrop absolute top-0 w-full h-full z-0">
+            <Skeleton className='w-full h-full object-cover' />
+        </div>
+        <div className="relative flex flex-col items-center justify-center gap-y-3 z-1 text-white pt-5">
+            <Skeleton className='w-52 block h-72 poster-box-shadow object-cover rounded-3xl clickable' />
+            <h3 className='font-bold w-[250px] text-center overflow-hidden text-ellipsis whitespace-nowrap text-[1.2rem]'><Skeleton /></h3>
+            <p className="w-[250px] text-center overflow-hidden text-ellipsis whitespace-nowrap"><Skeleton /></p>
+        </div>
+    </div>
 }

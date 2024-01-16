@@ -118,7 +118,6 @@ query GetTrendingData {
 `;
 const TrendingPage = () => {
   const { data, loading } = useQuery(query);
-  if (loading) return <div>Loading...</div>
 
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { Star, PlayCircle, ExternalLink } from "lucide-react"
 
-const MediaGrid = ({ mediaData }) => {
+const MediaGrid = ({ mediaData, loading }) => {
     const [basis, setBasis] = React.useState('50%'); // initial basis
 
     useEffect(() => {
@@ -25,6 +25,7 @@ const MediaGrid = ({ mediaData }) => {
         // Remove event listener on cleanup
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+    if (loading) return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444"><MediaGridSkeleton basis={basis} /></SkeletonTheme>
 
     return (
         <div className="w-full h-fit">
@@ -74,9 +75,30 @@ const MediaGrid = ({ mediaData }) => {
                     )}
                 </div>
             </div>
-
         </div>
     )
 }
 
 export default MediaGrid
+
+
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const MediaGridSkeleton = ({ className, basis }) => {
+    return <div className="w-full h-fit">
+        <div className="w-full h-full flex justify-start">
+            <div className="flex flex-wrap w-full justify-start items-center">
+                {Array(35).fill().map((_, i) => (
+                    <div key={i} style={{ flexBasis: basis }} className={`pl-5 relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`}>
+                        <div className="group clickable">
+                            <span className='bg-yellow-500 w-[50px] h-[25px] text-white absolute top-2 left-7 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                            </span>
+                            <Skeleton className="rounded-t-md overflow-hidden group-hover:cursor-pointer group-hover:blur relative group-hover:scale-90 h-full aspect-[2/3] transition-all duration-300 ease-in-out" />
+                            <Skeleton className="rounded-b-md text-[1.5rem] border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+}

@@ -96,14 +96,14 @@ const MovieCategoryPages = () => {
       setMediaData(data?.getMovieUpcoming)
     }
   }, [data, page])
-  if (loading) return <div>Loading...</div>
-  if (mediaData?.results?.length === 0) return <div>404 Not Found</div>
+  // if (loading) return <div>Loading...</div>
+  // if (mediaData?.results?.length === 0) return <div>404 Not Found</div>
   return (
     <>
       <div className="w-full h-[100dvh] flex flex-col gap-y-3 p-5 ">
         <h1 className="text-white text-center font-bold text-[2rem]">{category} Movies</h1>
         <div className="overflow-scroll h-full">
-          <MediaGrid mediaData={mediaData} />
+          <MediaGrid mediaData={mediaData} loading={loading}/>
           <PaginationComponent mediaData={mediaData} page={page} setPage={setPage} />
         </div>
       </div>

@@ -32,7 +32,8 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }) 
         // Remove event listener on cleanup
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    if (!data) return <div>Loading...</div>
+
+    if (loading || !data) return <SkeletonTheme className="overflow-scroll" baseColor="#202020" highlightColor="#444"><MediaSwiperSkeleton basis={basis} heading={heading} link={link} /></SkeletonTheme>
 
     return (
         <Carousel
@@ -96,4 +97,34 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }) 
 
         </Carousel >
     )
+}
+
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+const MediaSwiperSkeleton = ({ className, basis, heading, link }) => {
+    return <Carousel
+        className="w-full flex flex-col h-fit gap-y-5 pl-3 pr-5"
+    >
+        <div>
+            <h1 className='text-[1.5rem] sm:text-[2rem] lg:text-[2.5rem] text-white font-bold pt-5 mb-3 overflow-hidden whitespace-nowrap text-ellipsis'>{heading}</h1>
+            <Link to={link} ><span className='clickable bg-white px-3 py-[6.4px] text-sm sm:py-[6.4px] sm:text-md text-black font-normal rounded-xl'>View more</span></Link>
+        </div>
+        <CarouselContent className="">
+            {Array(20).fill().map((_, i) => (
+                <CarouselItem key={i} style={{ flexBasis: basis }} className={`pl-5 relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`}>
+                    <div className="group clickable">
+                        <span className='bg-yellow-500 w-[50px] h-[25px] text-white absolute top-2 left-7 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                        </span>
+                        <Skeleton className="rounded-t-md overflow-hidden group-hover:cursor-pointer group-hover:blur relative group-hover:scale-90 h-full aspect-[2/3] transition-all duration-300 ease-in-out" />
+                        <Skeleton className="rounded-b-md text-[1.5rem] border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" />
+                    </div>
+                </CarouselItem>
+            ))}
+        </CarouselContent>
+        <div className="absolute right-16 top-20">
+            <CarouselPrevious className="right-1 top-1/2 -translate-y-1/2" />
+            <CarouselNext className="left-0 top-1/2 -translate-y-1/2" />
+        </div>
+
+    </Carousel >
 }
