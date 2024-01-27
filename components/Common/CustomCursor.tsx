@@ -1,7 +1,6 @@
 "use client"
 import { ArrowBigUp, MousePointer2, MousePointerClick } from "lucide-react"
 import React, { useState, useEffect, useRef } from "react";
-import { Variants, motion, useAnimationControls, useScroll } from 'framer-motion';
 import './CustomCursor.css'
 function App({ children }: { children: React.ReactNode }) {
     const cursor = useRef<HTMLDivElement | null>(null);
