@@ -6,7 +6,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client"
 
 export default function Provider({ children }: IChildren) {
   const client = new ApolloClient({
-    uri: "http://localhost:8000/graphql",
+    uri: `${process.env.NEXT_PUBLIC_GRAPHQL_URL}`,
     cache: new InMemoryCache(),
   })
 

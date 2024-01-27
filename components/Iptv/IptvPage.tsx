@@ -18,12 +18,12 @@ export default function IptvPage(): React.JSX.Element {
     const [categoriesList, setCategoriesList] = useState([])
     useEffect(() => {
         const fetchIptvCountries = async () => {
-            const res = await fetch(`http://localhost:5000/iptv/countries`)
+            const res = await fetch(`${process.env.NEXT_PUBLIC_IPTV_API_URL}/countries`)
             const data = await res.json()
             setCountriesList(data)
         }
         const fetchIptvCategories = async () => {
-            const res = await fetch(`http://localhost:5000/iptv/categories`)
+            const res = await fetch(`${process.env.NEXT_PUBLIC_IPTV_API_URL}/categories`)
             const data = await res.json()
             setCategoriesList(data)
         }

@@ -37,7 +37,7 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
     }, []);
 
     const fetchIptvChannels = useMemo(() => (async () => {
-        const url = `http://localhost:5000/iptv/${searchBy}?group=${group}&search=${query}&page=${page}`
+        const url = `${process.env.NEXT_PUBLIC_IPTV_API_URL}/${searchBy}?group=${group}&search=${query}&page=${page}`
         const res = await fetch(url)
         const data = await res.json()
         setIptvData(data);

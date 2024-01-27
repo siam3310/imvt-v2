@@ -34,7 +34,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
     useEffect(() => {
         const getMediaData = async () => {
             setLoading(true)
-            const res = await fetch(`https://imvt-server.vercel.app/api/meta/tmdb/info/${id}?type=${type}`)
+            const res = await fetch(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${id}?type=${type}`)
             const data = await res.json()
             setmediaData(data)
             setStreamingId(data.id)
@@ -64,8 +64,8 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
             const servers = ['', 'vidcloud', 'mixdrop', 'upcloud'];
             const requests = servers.map((server, index) => {
                 const url = index === 0
-                    ? `https://imvt-server.vercel.app/api/meta/tmdb/watch/${episodeId}?id=${streamingId}`
-                    : `https://imvt-server.vercel.app/api/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
+                    ? `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`
+                    : `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
                 return fetch(url).then(res => res.json());
             });
 
