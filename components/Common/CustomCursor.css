@@ -9,8 +9,9 @@
   transform: translate(-50%, -50%);
   position: fixed;
   pointer-events: none;
-  z-index: 100000;
+  z-index: 111111111;
 }
+
 
 @media (max-width: 600px) {
   * {

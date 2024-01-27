@@ -1,8 +1,10 @@
-import { MousePointer2, MousePointerClick } from "lucide-react"
-import React, { useState, useRef } from "react";
-// import './CustomCursor.css'
+"use client"
+import { ArrowBigUp, MousePointer2, MousePointerClick } from "lucide-react"
+import React, { useState, useEffect, useRef } from "react";
+import { Variants, motion, useAnimationControls, useScroll } from 'framer-motion';
+import './CustomCursor.css'
 function App({ children }: { children: React.ReactNode }) {
-    const cursor = useRef(null)
+    const cursor = useRef<HTMLDivElement | null>(null);
     const [isclickable, setIsclickable] = useState(false)
     const changePosition = (e: { clientX: any; clientY: any; }) => {
         const { clientX, clientY } = e;
@@ -17,13 +19,18 @@ function App({ children }: { children: React.ReactNode }) {
         }
         // Hide the cursor when it's at the edge of the browser
         if (clientX <= 0 || clientY <= 0 || clientX >= innerWidth || clientY >= innerHeight) {
-            cursor.current.style.display = 'none';
+            if (cursor.current) {
+                cursor.current.style.display = 'none';
+            }
         } else {
-            cursor.current.style.display = 'block';
-            cursor.current.style.top = `${clientY + 12}px`; // Subtract half the height of the icon
-            cursor.current.style.left = `${clientX + 12}px`;
+            if (cursor.current) {
+                cursor.current.style.display = 'block';
+                cursor.current.style.top = `${clientY + 12}px`; // Subtract half the height of the icon
+                cursor.current.style.left = `${clientX + 12}px`;
+            }
         }
     }
+
     const [colorIndex, setColorIndex] = useState(0);
     const colors = ['white', 'cyan', 'red', 'lime', 'yellow', 'orange', 'black', 'gray'];
 
@@ -32,14 +39,18 @@ function App({ children }: { children: React.ReactNode }) {
         setColorIndex((colorIndex + 1) % colors.length);
     }
     return (
-        <div
-            className="App"
-            style={{ minHeight: "100vh", "minWidth": "100vw" }}
-            onMouseMove={changePosition}
-            onContextMenu={changeColor}
-        >
-            {children}
-            <div className="cursor-style" ref={cursor} >{isclickable ? <MousePointerClick fill={colors[colorIndex]} color={colors[colorIndex]} /> : <MousePointer2 fill={colors[colorIndex]} color={colors[colorIndex]} />}</div>        </div>
+        <>
+            <div
+                className="w-full h-full"
+                onMouseMove={changePosition}
+                onContextMenu={changeColor}
+            >
+                {children}
+                <div className="cursor-style" ref={cursor} >{isclickable ? <MousePointerClick fill={colors[colorIndex]} color={colors[colorIndex]} /> : <MousePointer2 fill={colors[colorIndex]} color={colors[colorIndex]} />}
+                </div>
+            </div>
+        </>
+
     )
 }
 
