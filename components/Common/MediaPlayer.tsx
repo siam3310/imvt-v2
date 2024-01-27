@@ -5,7 +5,6 @@ import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
 import './MediaPlayer.css';
 export default function VideoPlayer({ media, getInstance, className }: { media: {urls: {quality: string, url: string}[], subtitles: {lang: string, url: string}[], thumbnail: string}, getInstance?: any, className: any }) {
     const artRef: RefObject<HTMLDivElement> = useRef(null);
-    console.log(media);
     
     let SubtitleObj: any
     let QualityObj: any
