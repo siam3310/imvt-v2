@@ -137,7 +137,7 @@ export default function Sidebar() {
                       </NavigationMenuLink>
                     </li>
                     <ListItem href="/trending/all" title="Weekly Trending">
-                      Discover what's trending this week
+                      Discover what&apos;s trending this week
                     </ListItem>
                     <ListItem href="/trending/movies" title="Trending Movies">
                       Explore the most popular movies
@@ -227,8 +227,8 @@ export default function Sidebar() {
                     <ListItem href="/movies/trending" title="Trending Now">
                       Dive into the movies that are making waves right now
                     </ListItem>
-                    <ListItem href="/movies/popular" title="What's Popular">
-                      Check out the movies that everyone's talking about
+                    <ListItem href="/movies/popular" title="What&apos;s Popular">
+                      Check out the movies that everyone&apos;s talking about
                     </ListItem>
                     <ListItem href="/movies/top-rated" title="Top Rated">
                       Browse through the highest-rated TV shows
@@ -274,7 +274,7 @@ export default function Sidebar() {
                     <ListItem href="/tv-shows/trending" title="Trending Now">
                       Browse the Top Rated TV shows
                     </ListItem>
-                    <ListItem href="/tv-shows/popular" title="What's Popular">
+                    <ListItem href="/tv-shows/popular" title="What&apos;s Popular">
                       Discover the popular TV shows
                     </ListItem>
                     <ListItem href="/tv-shows/top-rated" title="Top Rated">
