@@ -43,7 +43,7 @@ export default function IptvPage(): React.JSX.Element {
     return (
         <div className="w-full h-full max-h-[100dvh] overflow-scroll">
             <div className="flex gap-y-10 flex-col w-full min-h-[100dvh] h-fit items-center justify-start p-6">
-                <div className={`font-bold text-3xl lg:text-[2.5rem] text-center ${iptvPlayerData.url === "" ? " mt-[30dvh]" : "iptv-player-app p-10 min-w-[50vw] min-h-[50dvh] "}`}>Search TV channel to stream</div>
+                <div className={`font-bold text-3xl lg:text-[2.5rem] text-center ${iptvPlayerData.url === "" ? " mt-[30dvh]" : "iptv-player-app p-5 sm:p-10 min-w-[50vw] min-h-[50dvh] "}`}>Search TV channel to stream</div>
                 {iptvPlayerData.url !== "" && <IptvPlayer playerData={iptvPlayerData} />}
                 <form onSubmit={handleSubmit(onSubmit)} className="relative w-full max-w-[600px] flex h-fit items-center justify-center">
                     <Input {...register('search')} placeholder="Enter channel name" className="w-full rounded-3xl dark:bg-white dark:text-black" />

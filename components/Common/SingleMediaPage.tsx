@@ -16,7 +16,6 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
 
   return (<>
     <div className='overflow-y-scroll w-full h-[100dvh] pb-[150px] sm:pb-[30px]'>
-      {/* <div className="flex w-full h-[40dvh] sm:h-[100dvh] relative movie-backdrop sm:bg-fixed" style={{ backgroundImage: `URL(${mediaData?.backdrop_path})`, backgroundRepeat: `no-repeat`, backgroundPosition: `center`, backgroundSize: `cover` }}> */}
       <div className="flex w-full h-[40dvh] sm:h-[100dvh] relative movie-backdrop sm:bg-fixed">
         <Image
           className='w-full h-full object-cover'
@@ -31,14 +30,14 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
         <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[30dvh] z-2'>
           <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-center gap-y-3 justify-center'>
             <Image
-              className='min-w-[150px] w-[40%] sm:w-[60%] lg:w-[50%] poster-box-shadow'
+              className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] poster-box-shadow'
               src={mediaData?.poster_path} alt={`${mediaData.name || mediaData.title} poster`}
               width={400}
               height={600}
               loading={"eager"}
               placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`} />
             <div className='w-full flex flex-col items-center justify-center'>
-              <Link href={`/${!mediaData?.name ? "movie" : "tv"}/${mediaData.id}/play`}><Button className='min-w-[150px] w-[40%] sm:w-[60%] lg:w-[50%] gap-x-1'><PlayCircle /> Watch Now</Button></Link></div>
+              <Link href={`/${!mediaData?.name ? "movie" : "tv"}/${mediaData.id}/play`}><Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1'><PlayCircle /> Watch Now</Button></Link></div>
           </div>
           <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
             <h1 className='text-[2rem] lg:text-[2.5rem] font-bold'>{mediaData?.name || mediaData?.title}</h1>
@@ -91,8 +90,8 @@ const SingleMediaSkeleton = () => {
       <div className='flex flex-col gap-y-5 lg:gap-y-14'>
         <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[30dvh] z-2'>
           <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-center gap-y-3 justify-center'>
-            <Skeleton className="min-w-[150px] w-full" width={250} height={400} />
-            <Skeleton className='min-w-[150px] w-full' width={250} height={50} />
+            <Skeleton className="min-w-[150px] w-[50%] sm:w-[70%] lg:w-[80%] aspect-[2/3]" />
+            <Skeleton className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%]' height={30} />
           </div>
           <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5 gap-3'>
             <Skeleton className='text-[2rem] lg:text-[2.5rem] font-bold' height={50} width={300} />

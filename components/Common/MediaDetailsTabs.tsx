@@ -161,7 +161,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
 
       <TabsContent value="casts" className="p-5">
         <div className="flex flex-wrap justify-between items-center gap-y-5">
-          {mediaData?.casts.map((cast, index: React.Key | number) => (<div key={index} className="flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
+          {mediaData?.casts.map((cast, index: React.Key | number) => (<Link href={`/people/${cast.id}`} key={index} className="hover:bg-slate-800/50 transition-all duration-300 ease-in-out rounded-l-full flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
             <Image
               className="rounded-full flex justify-center items-center w-24 h-24 aspect-square object-cover"
               src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
@@ -175,7 +175,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
               <h2 className="text-md font-semibold font-sans">as {cast.character}</h2>
               <h3 className="text-sm">{(cast.known_for_department === "Acting" && "Actor") || (cast.known_for_department === "Writing" && "Writer") || (cast.known_for_department === "Directing" && "Director") || (cast.known_for_department === "Production" && "Producer") || cast.known_for_department}</h3>
             </div>
-          </div>)
+          </Link>)
           )}
         </div>
       </TabsContent>
