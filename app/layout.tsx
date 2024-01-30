@@ -6,6 +6,7 @@ import Sidebar from '@/components/Sidebar'
 import Provider from '@/configs/Provider'
 import { siteInfo } from '@/configs/site'
 import { twMerge } from 'tailwind-merge'
+import { Toaster } from "@/components/ui/sonner"
 import './globals.css'
 import './styles.css'
 const inter = Nunito({ subsets: ['latin'] })
@@ -26,24 +27,27 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: IChildren) {
   return (
     <html lang='en' suppressHydrationWarning>
-      <CustomCursor>
-        <body
-          className={twMerge(
-            inter.className,
-            'flex max-h-[100svh] overflow-y-hidden select-none sm:pb-0 pb-[50px] text-[#dcdad7] dark:text-white bg-[#282b2d] dark:bg-[#151517]'
-          )}
-        >
-          <div className='z-[11111111]'>
-            <BottomNav />
+      <body>
+        <CustomCursor>
+          <div
+            className={twMerge(
+              inter.className,
+              'flex w-full max-h-[100svh] overflow-y-hidden select-none sm:pb-0 pb-[50px] text-[#dcdad7] dark:text-white bg-[#282b2d] dark:bg-[#151517]'
+            )}
+          >
+            <div className='z-[11111111]'>
+              <BottomNav />
+            </div>
+            <div className="w-fit sm:block hidden z-[11111111]">
+              <Sidebar />
+            </div>
+            <Provider>
+              {children}
+              <Toaster />
+            </Provider>
           </div>
-          <div className="w-fit sm:block hidden z-[11111111]">
-            <Sidebar />
-          </div>
-          <Provider>
-            {children}
-          </Provider>
-        </body>
-      </CustomCursor>
+        </CustomCursor>
+      </body>
     </html>
   )
 }
