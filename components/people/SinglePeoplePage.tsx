@@ -4,12 +4,7 @@ import Image from 'next/image'
 import { shimmerBlurDataUrl } from "@/utils/blurDataUrl"
 import { handleDownload } from "@/utils/downloadImage"
 import { gql, useQuery } from "@apollo/client";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PlayCircle, Star, Users } from 'lucide-react';
@@ -17,83 +12,13 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import Link from 'next/link'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
-const query = gql`
-query GetpeoplebyId($Id: ID!) {
-  getpeoplebyId(id: $Id) {
-    adult
-    biography
-    id
-    name
-    original_name
-    popularity
-    gender
-    known_for_department
-    profile_path
-    birthday
-    deathday
-    place_of_birth
-    also_known_as
-    images {
-      profiles {
-        file_path
-        aspect_ratio
-        width
-        vote_average
-        vote_count
-      }
-    }
-    combined_credits {
-      cast {
-        adult
-        backdrop_path
-        id
-        name
-        title
-        original_language
-        original_title
-        overview
-        poster_path
-        original_name
-        media_type
-        popularity
-        gender
-        known_for_department
-        profile_path
-        character
-        credit_id
-        order
-        genres
-      }
-      crew {
-        adult
-        id
-        name
-        title
-        original_language
-        original_title
-        overview
-        backdrop_path
-        poster_path
-        media_type
-        popularity
-        gender
-        profile_path
-        credit_id
-        job
-        department
-        genres
-      }
-    }
-  }
-}
-`;
+import GetpeoplebyId from '@/graphql/queries/getpeoplebyId.gql';
 
 const SinglePeoplePage = ({ id }: { id: string }) => {
   const [basis, setBasis] = useState('50%');
 
   const Id = id;
-  const { data, loading } = useQuery(query, {
+  const { data, loading } = useQuery(GetpeoplebyId, {
     variables: { Id },
   });
   const peopleData = data?.getpeoplebyId;

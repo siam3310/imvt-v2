@@ -1,0 +1,116 @@
+query GetHomeData {
+  getAnyTrendingToday {
+    results {
+      ... on Movie {
+        backdrop_path
+        adult
+        id
+        title
+        overview
+        poster_path
+        media_type
+        genre_ids
+        vote_average
+        vote_count
+      }
+      ... on TV {
+        backdrop_path
+        adult
+        id
+        name
+        overview
+        poster_path
+        media_type
+        genre_ids
+        vote_average
+        vote_count
+      }
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getAnyTrendingWeek {
+    results {
+      ... on Movie {
+        backdrop_path
+        adult
+        id
+        title
+        overview
+        poster_path
+        media_type
+        genre_ids
+        vote_average
+      }
+      ... on TV {
+        backdrop_path
+        adult
+        id
+        name
+        overview
+        poster_path
+        media_type
+        genre_ids
+        vote_average
+      }
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getMovieTrendingWeek {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getTvTrendingWeek {
+    results {
+      backdrop_path
+      adult
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getPeopleTrendingWeek {
+    results {
+      adult
+      biography
+      id
+      name
+      original_name
+      media_type
+      popularity
+      gender
+      known_for_department
+      profile_path
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+}

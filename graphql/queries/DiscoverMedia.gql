@@ -1,0 +1,130 @@
+query DiscoverMedia(
+  $type: String
+  $dategte: String
+  $datelte: String
+  $votesAvglte: Float
+  $votesAvggte: Float
+  $votesCountlte: Int
+  $votesCountgte: Int
+  $sort: String
+  $genres: String
+  $page: Int
+) {
+  discoverMedia(
+    type: $type
+    dategte: $dategte
+    datelte: $datelte
+    votesAvglte: $votesAvglte
+    votesAvggte: $votesAvggte
+    votesCountlte: $votesCountlte
+    votesCountgte: $votesCountgte
+    sort: $sort
+    genres: $genres
+    page: $page
+  ) {
+    currentPage
+    hasNextPage
+    results {
+      ... on Movie {
+        adult
+        backdrop_path
+        id
+        title
+        original_language
+        original_title
+        overview
+        poster_path
+        media_type
+        genre_ids
+        popularity
+        release_date
+        video
+        vote_average
+        vote_count
+        streamingId
+      }
+      ... on TV {
+        adult
+        backdrop_path
+        id
+        name
+        original_language
+        original_name
+        overview
+        poster_path
+        media_type
+        genre_ids
+        popularity
+        first_air_date
+        vote_average
+        vote_count
+        origin_country
+        streamingId
+      }
+      ... on People {
+        adult
+        biography
+        id
+        name
+        original_name
+        media_type
+        popularity
+        gender
+        known_for_department
+        profile_path
+        known_for {
+          ... on Movie {
+            adult
+            backdrop_path
+            id
+            title
+            original_language
+            original_title
+            overview
+            poster_path
+            media_type
+            genre_ids
+            popularity
+            release_date
+            video
+            vote_average
+            vote_count
+            streamingId
+          }
+          ... on TV {
+            adult
+            backdrop_path
+            id
+            name
+            original_language
+            original_name
+            overview
+            poster_path
+            media_type
+            genre_ids
+            popularity
+            first_air_date
+            vote_average
+            vote_count
+            origin_country
+            streamingId
+          }
+          ... on People {
+            adult
+            biography
+            id
+            name
+            original_name
+            media_type
+            popularity
+            gender
+            known_for_department
+            profile_path
+          }
+        }
+      }
+    }
+    total_pages
+    total_results
+  }
+}
