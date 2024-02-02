@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import PaginationComponent from '@/components/Common/PaginationComponent'
 import { XCircle, PlayCircle } from "lucide-react"
-const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, page, setPage, loading, setLoading }: {
+import { gql, useQuery } from "@apollo/client";
+import { GET_IPTV_CATEGORY_DATA, GET_IPTV_COUNTRY_DATA } from "@/graphql/queries/GetIptvData.gql";
+import { paginatedIptvDataType } from "@/types/mediaData"
+
+const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, page, setPage, loadingPage, setLoadingPage }: {
     query: string,
     setQuery: React.Dispatch<React.SetStateAction<string>>,
     setIptvPlayerData: React.Dispatch<React.SetStateAction<any>>,
@@ -9,10 +13,10 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
     group: string,
     page: number,
     setPage: React.Dispatch<React.SetStateAction<number>>
-    loading: boolean
-    setLoading: React.Dispatch<React.SetStateAction<any>>,
+    loadingPage: boolean
+    setLoadingPage: React.Dispatch<React.SetStateAction<any>>,
 }) => {
-    const [iptvData, setIptvData] = useState({ results: [{ inf: { title: "", groupTitle: "", tvgLogo: "" } }], totalPages: 0, totalResults: 0 })
+    const [iptvData, setIptvData] = useState<paginatedIptvDataType>({ results: [{ url: "", inf: { title: "", groupTitle: "", tvgLogo: "" } }], totalPages: 0, totalResults: 0 })
     const [basis, setBasis] = React.useState('');
 
     useEffect(() => {
@@ -36,19 +40,32 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const fetchIptvChannels = useMemo(() => (async () => {
-        const url = `${process.env.NEXT_PUBLIC_IPTV_API_URL}/${searchBy}?group=${group}&search=${query}&page=${page}`
-        const res = await fetch(url)
-        const data = await res.json()
-        setIptvData(data);
-        setLoading(false);
-    }), [searchBy, group, query, page]);
+    const search = query
+    const { data: countryData, loading: countryLoading } = useQuery(GET_IPTV_COUNTRY_DATA, {
+        variables: { search, group, page },
+        skip: searchBy !== 'country',  // Skip this query if searchBy is not 'country'
+    });
+
+    const { data: categoryData, loading: categoryLoading } = useQuery(GET_IPTV_CATEGORY_DATA, {
+        variables: { search, group, page },
+        skip: searchBy !== 'category',  // Skip this query if searchBy is not 'category'
+    });
 
     useEffect(() => {
-        setLoading(true);
-        fetchIptvChannels();
-    }, [fetchIptvChannels]);
-    if (loading) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><ChannelsGridSkeleton basis={basis} /></SkeletonTheme>
+        if (searchBy === 'country') {
+            setIptvData(countryData?.iptvCountry);
+        } else {
+            setIptvData(categoryData?.iptvCategory);
+        }
+    }, [searchBy, countryData, categoryData]);
+
+    useEffect(() => {
+        setLoadingPage(countryLoading || categoryLoading);
+    }, [countryLoading, categoryLoading]);
+
+
+
+    if (loadingPage || !iptvData) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><ChannelsGridSkeleton basis={basis} /></SkeletonTheme>
 
     return (
         <div className="w-full max-h-[100dvh] flex flex-col gap-y-3">
@@ -99,7 +116,6 @@ export default IptvChannels
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { set } from 'react-hook-form'
 import Image from 'next/image'
 import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
 const ChannelsGridSkeleton = ({ basis }: { basis: string }) => {

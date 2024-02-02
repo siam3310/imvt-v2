@@ -1,0 +1,36 @@
+query GET_IPTV_CATEGORY_DATA($search: String, $group: String, $page: Int) {
+  iptvCategory(page: $page, group: $group, search: $search, pageSize: 32) {
+    currentPage
+    hasNextPage
+    totalPages
+    totalResults
+    results {
+      url
+      inf {
+        duration
+        groupTitle
+        title
+        tvgId
+        tvgLogo
+      }
+    }
+  }
+  }
+query GET_IPTV_COUNTRY_DATA($search: String, $group: String, $page: Int) {
+  iptvCountry(page: $page, group: $group, search: $search, pageSize: 32) {
+    currentPage
+    hasNextPage
+    totalPages
+    totalResults
+    results {
+      url
+      inf {
+        duration
+        groupTitle
+        title
+        tvgId
+        tvgLogo
+      }
+    }
+  }
+}

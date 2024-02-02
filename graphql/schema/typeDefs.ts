@@ -331,7 +331,32 @@ type PaginatedPeople {
   total_results: Int
 }
 
+type IPTVResponse {
+  currentPage: Int
+  totalPages: Int
+  hasNextPage: Boolean
+  totalResults: Int
+  results: [Segment]
+}
+
+type Segment {
+  url: String
+  inf: SegmentInfo
+}
+
+type SegmentInfo {
+  duration: String
+  title: String
+  tvgId: String
+  tvgLogo: String
+  groupTitle: String 
+}
+
 type Query {
+  iptvCountry(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
+  iptvCategory(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
+  iptvCountries: [String]
+  iptvCategories: [String]
   discoverMedia(
     type: String
     dategte: String

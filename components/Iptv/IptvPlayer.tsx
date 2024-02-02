@@ -3,13 +3,15 @@ import Artplayer from 'artplayer';
 import { type Option } from 'artplayer/types/option';
 import Hls from 'hls.js';
 import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-export default function IptvPlayer({ playerData }: { playerData: any }, getInstance: any, ...rest: any) {
+import { iptvDataType } from "@/types/mediaData"
+
+export default function IptvPlayer({ playerData }: { playerData: iptvDataType }, getInstance: any, ...rest: any) {
 
     useEffect(() => {
         const option: Option = {
             container: `.iptv-player-app`,
             url: `${playerData.url}`,
-            poster: `${playerData.inf.logo}`,
+            poster: `${playerData.inf.tvgLogo}`,
             type: 'm3u8',
             customType: {
                 m3u8: function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer) {
