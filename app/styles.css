@@ -1,108 +1,259 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    -webkit-tap-highlight-color: transparent;
-    /* transparent with keyword */
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    /* transparent with rgba */
-    -webkit-tap-highlight-color: #00000000;
-    /* transparent with hex with alpha */
-    -webkit-tap-highlight-color: #0000;
-    /* transparent with short hex with alpha */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  /* transparent with keyword */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* transparent with rgba */
+  -webkit-tap-highlight-color: #00000000;
+  /* transparent with hex with alpha */
+  -webkit-tap-highlight-color: #0000;
+  /* transparent with short hex with alpha */
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  overflow: hidden;
+  max-height: 100dvh;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background-color: #161619;
+  font-family:
+    'Ubuntu',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+a,
+button {
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+}
+
+
+/************************* Carousel CSS *************************/
+.Carousel .embla {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --slide-height: 100dvh !important;
+  /* padding: 1.6rem; */
+}
+.Carousel .embla__viewport {
+  overflow: hidden;
+  height: 100% !important;
+}
+.Carousel .embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.Carousel .embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0 !important;
+  padding-left: var(--slide-spacing);
+  position: relative;
+}
+.Carousel .embla__slide:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #ffffff00 0%, #151517 100%);
+  height: 100% !important;
+  z-index: 0;
+}
+.Carousel .embla__slide__img {
+  display: block;
+  height: var(--slide-height);
+  width: 100% !important;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+.Carousel .embla-thumbs {
+  --thumbs-slide-spacing: 0.8rem;
+  --thumbs-slide-height: 9rem !important;
+  /* margin-top: var(--thumbs-slide-spacing); */
+  margin-top: -9rem;
+  padding: 0 1rem;
+}
+.Carousel .embla-thumbs__viewport {
+  overflow: hidden;
+}
+.Carousel .embla-thumbs__container {
+  display: flex;
+  flex-direction: row;
+  margin-left: calc(var(--thumbs-slide-spacing) * -1);
+}
+.Carousel .embla-thumbs__slide {
+  flex: 0 0 calc(33.33% - var(--thumbs-slide-spacing) / 3);
+  min-width: 0 !important;
+  padding-left: var(--thumbs-slide-spacing);
+  position: relative;
+}
+@media (min-width: 1000px) {
+  .Carousel .embla-thumbs__slide {
+    flex: 0 0 calc(20% - var(--thumbs-slide-spacing) / 5);
   }
-  
-  *::-webkit-scrollbar {
-    display: none;
-  }
-  
-  * {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-  }
-  
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  html {
-    overflow: hidden;
-    max-height: 100dvh;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    margin: 0;
-    background-color: #161619;
-    font-family:
-      'Ubuntu',
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      'Roboto',
-      'Oxygen',
-      'Cantarell',
-      'Fira Sans',
-      'Droid Sans',
-      'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  a,
-  button {
-    cursor: pointer;
-  }
-  
-  ul {
-    list-style: none;
-  }
-  
-  .movie-backdrop:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to bottom, #00000000 0%, #151517 100%);
-    height: 100%;
-    z-index: 0;
-  }
-  .movie-backdrop {
-    /* position: relative; */
-    background-position: center center;
-    background-size: cover;
-  }
-  .poster-box-shadow {
-    border-radius: 20px;
-    background: linear-gradient(145deg, #131315, #161619);
-    box-shadow:
-      20px 20px 50px #080809,
-      -20px -20px -50px #222225;
-  }
-  
+}
+.Carousel .embla-thumbs__slide__button {
+  background-color: transparent;
+  touch-action: manipulation;
+  /* display: block; */
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 100% !important;
+  filter: brightness(30%);
+  /* opacity: 0.2; */
+  transition: all 0.2s;
+  border-radius: 15px;
+}
+.Carousel .embla-thumbs__slide--selected .embla-thumbs__slide__button {
+  filter: brightness(100%);
+  /* opacity: 1; */
+}
+.Carousel .embla-thumbs__slide__img {
+  display: block;
+  height: var(--thumbs-slide-height);
+  width: 100% !important;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+
+/************************* Media CSS *************************/
+.movie-backdrop:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #00000000 0%, #151517 100%);
+  height: 100%;
+  z-index: 0;
+}
+.movie-backdrop {
+  /* position: relative; */
+  background-position: center center;
+  background-size: cover;
+}
+.poster-box-shadow {
+  border-radius: 20px;
+  background: linear-gradient(145deg, #131315, #161619);
+  box-shadow:
+    20px 20px 50px #080809,
+    -20px -20px -50px #222225;
+}
+
+
+/************************* Iptv CSS *************************/
+.iptv-player-app .art-video-player {
+  min-width: 70vw;
+  min-height: 80dvh;
+  max-width: 90vw;
+  max-height: 80dvh;
+}
+
+@media only screen and (max-width: 640px) {
   .iptv-player-app .art-video-player {
-    min-width: 70vw;
-    min-height: 80dvh;
-    max-width: 90vw;
-    max-height: 80dvh;
+    min-width: 90vw;
+    min-height: 50dvh;
   }
-  
-  @media only screen and (max-width: 640px) {
-    .iptv-player-app .art-video-player {
-      min-width: 90vw;
-      min-height: 50dvh;
+}
+
+
+/************************* Video Player CSS *************************/
+.art-video-player {
+  height: 100% !important;
+  z-index: 5 !important;
+}
+.art-controls * {
+  z-index: 5 !important;
+}
+.art-fullscreen {
+  cursor: default !important;
+}
+@media (max-width: 630px) {
+  /* .art-controls {
+      height: 40px !important;
+      transform: translateY(-20px) !important;
+      justify-content: center !important;
+      align-items: center !important;
+      flex-direction: column !important;
     }
+    .art-progress {
+      transform: translateY(-40px) !important;
+    }
+    .art-layer{
+      transform: translateY(-40px) !important;
+    } */
+  .art-control {
+    margin-right: 0px !important;
   }
+  .art-control-screenshot {
+    display: none !important;
+  }
+  .art-control-pip {
+    display: none !important;
+  }
+  .art-control-fullscreenWeb {
+    display: none !important;
+  }
+  .art-control-volume {
+    display: none !important;
+  }
+}
+.art-setting-panel {
+  min-width: fit-content !important;
+}
+.art-setting-item-right-tooltip {
+  max-width: 100px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.art-setting-item-left-text {
+  max-width: 150px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+

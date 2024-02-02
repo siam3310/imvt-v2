@@ -2,11 +2,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 import { Star, Users } from "lucide-react"
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import "./HeroSectionCarousel.css"
 import { mediaData } from '@/types/mediaData'
 const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined, loading: boolean }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
