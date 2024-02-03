@@ -2,9 +2,10 @@ import React, { useEffect, useRef, RefObject } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-export default function VideoPlayer({ media, getInstance, className }: { media: {urls: {quality: string, url: string}[], subtitles: {lang: string, url: string}[], thumbnail: string}, getInstance?: any, className: any }) {
+export default function VideoPlayer({ media, getInstance, className }: { media: { urls: { quality: string, url: string }[], subtitles: { lang: string, url: string }[], thumbnail: string, logo: string }, getInstance?: any, className: any }) {
     const artRef: RefObject<HTMLDivElement> = useRef(null);
-    
+    console.log(media);
+
     let SubtitleObj: any
     let QualityObj: any
     SubtitleObj = media?.subtitles?.map((subtitle: { lang: any; url: any; }) => {
@@ -145,7 +146,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
             },
             icons: {
                 // state: 'play Icon',
-                // loading: 'loading Icon',
+                loading: `<img class="w-1/2 max-h-1/2 animate-pulse" src=${media?.logo} alt="Loading" />`,
                 indicator: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>',
             },
         });

@@ -1,0 +1,66 @@
+query GET_MOVIE_BY_ID($tmdbId: ID!) {
+  getMoviebyId(tmdbId: $tmdbId) {
+    backdrop_path
+    streamingId
+    title
+    overview
+    poster_path
+    release_date
+    Images {
+      logos {
+        file_path
+      }
+    }
+  }
+}
+
+query GET_TV_BY_ID($tmdbId: ID!) {
+  getTvbyId(tmdbId: $tmdbId) {
+    backdrop_path
+    streamingId
+    poster_path
+    overview
+    first_air_date
+    number_of_seasons
+    number_of_episodes
+    Images {
+      logos {
+        file_path
+      }
+    }
+    seasons {
+      isReleased
+      season
+      image {
+        hd
+        mobile
+      }
+      episodes {
+        Season
+        description
+        episode
+        id
+        releaseDate
+        title
+        url
+        img {
+          hd
+          mobile
+        }
+      }
+    }
+  }
+}
+
+query GET_STREAMING_DATA($episodeId: ID!, $streamingId: ID!) {
+  mediaPlayerStreamingData(episodeId: $episodeId, streamingId: $streamingId) {
+    sources {
+      url
+      quality
+    }
+    subtitles {
+      url
+      lang
+    }
+  }
+}

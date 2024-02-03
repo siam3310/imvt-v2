@@ -352,7 +352,36 @@ type SegmentInfo {
   groupTitle: String 
 }
 
+type MediaPlayerData {
+  image: String
+  release_date: String
+  description: String
+  cover: String
+  id: String
+  totalSeason: Int
+  totalEpisode: Int
+  seasons: [Season]
+}
+
+
+type MediaPlayerStreamingData {
+  sources: [Source]
+  subtitles: [Subtitle]
+}
+
+type Source {
+  url: String
+  quality: String
+}
+
+type Subtitle {
+  url: String
+  lang: String
+}
+
 type Query {
+  mediaPlayerData(id: ID!, type: String!): MediaPlayerData
+  mediaPlayerStreamingData(episodeId: ID!, streamingId: ID!): [MediaPlayerStreamingData]
   iptvCountry(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
   iptvCategory(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
   iptvCountries: [String]

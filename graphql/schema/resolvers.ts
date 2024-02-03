@@ -175,6 +175,27 @@ export const resolvers = {
         },
     },
     Query: {
+        // MediaPlayer Data
+        mediaPlayerData: async (_: any, { id, type }: { id: number; type: string; }) => {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${id}?type=${type}`);
+            const data = await res.json();
+            return data;
+        },
+
+        mediaPlayerStreamingData: async (_: any, { episodeId, streamingId }: { episodeId: string; streamingId: string }) => {
+            const servers = ['upcloud', 'vidcloud', '', 'mixdrop'];
+            const requests = servers.map(async (server, index) => {
+                const url = index === 2
+                    ? `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`
+                    : `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
+                const res = await fetch(url);
+                return res.json();
+            });
+
+            const data = await Promise.all(requests);
+            return data;
+        },
+
         // Both Movie and TV
         discoverMedia: async (parent: any, { type, dategte, datelte, votesAvglte, votesAvggte, votesCountlte, votesCountgte, sort, genres, page = 1 }: any) => {
             const params = {
