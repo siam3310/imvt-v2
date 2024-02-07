@@ -5,7 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
 import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
 import MediaSwiper from '@/components/Common/MediaSwiper'
-import GetHomeData from '../../graphql/queries/GetHomeData.gql'
+import GetHomeData from '@/graphql/queries/GetHomeData.gql'
 
 const HomePage = () => {
   const { data, loading } = useQuery(GetHomeData);

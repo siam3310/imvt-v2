@@ -46,14 +46,14 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
     useEffect(() => {
         if (loading) return;
         if (type === 'movie') {
-            setmediaData({ ...data.getMoviebyId, number_of_seasons: 0, number_of_episodes: 0, seasons: [] });
-            setStreamingId(data.getMoviebyId.streamingId);
-            const array = data.getMoviebyId.streamingId.split("-");
+            setmediaData({ ...data?.getMoviebyId, number_of_seasons: 0, number_of_episodes: 0, seasons: [] });
+            setStreamingId(data?.getMoviebyId.streamingId);
+            const array = data?.getMoviebyId.streamingId.split("-");
             setEpisodeId(array.length > 1 ? array[array.length - 1] : "");
         } else {
-            setmediaData(data.getTvbyId);
-            setStreamingId(data.getTvbyId.streamingId);
-            setEpisodeId(data.getTvbyId.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.id);
+            setmediaData(data?.getTvbyId);
+            setStreamingId(data?.getTvbyId?.streamingId);
+            setEpisodeId(data?.getTvbyId?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.id);
         }
         // setLoading(loading);
     }, [data, loading, type, episodeNumber, seasonNumber]);
@@ -175,8 +175,6 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                         alt="loading Media..." />
                                 </div>
                             }
-
-
                             <div className="flex flex-col gap-5 items-start justify-center p-10 pt-10">
                                 <div className='flex sm:flex-row flex-col items-start justify-center gap-3'>
                                     <span className='shrink-0 py-1'>
@@ -187,6 +185,14 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                         <Button onClick={(e) => { setServerNumber(1); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 1 ? "default" : "secondary"} className="w-28">Server 2</Button>
                                         <Button onClick={(e) => { setServerNumber(2); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 2 ? "default" : "secondary"} className="w-28">Server 3</Button>
                                         <Button onClick={(e) => { setServerNumber(4); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 4 ? "default" : "secondary"} className="w-28">Server 4</Button>
+                                        {/* <Button onClick={(e) => { setServerNumber(5); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 5 ? "default" : "secondary"} className="w-28">Server 5</Button>
+                                        <Button onClick={(e) => { setServerNumber(6); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 6 ? "default" : "secondary"} className="w-28">Server 6</Button>
+                                        <Button onClick={(e) => { setServerNumber(7); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 7 ? "default" : "secondary"} className="w-28">Server 7</Button>
+                                        <Button onClick={(e) => { setServerNumber(8); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 8 ? "default" : "secondary"} className="w-28">Server 8</Button>
+                                        <Button onClick={(e) => { setServerNumber(9); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 9 ? "default" : "secondary"} className="w-28">Server 9</Button>
+                                        <Button onClick={(e) => { setServerNumber(10); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 10 ? "default" : "secondary"} className="w-28">Server 10</Button>
+                                        <Button onClick={(e) => { setServerNumber(11); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 11 ? "default" : "secondary"} className="w-28">Server 11</Button>
+                                        <Button onClick={(e) => { setServerNumber(12); setIsMediaPlayer(true) }} variant={isMediaPlayer && serverNumber === 12 ? "default" : "secondary"} className="w-28">Server 12</Button> */}
                                     </div>
                                 </div>
                                 <div className='flex sm:flex-row flex-col items-start justify-start gap-x-3'>
@@ -262,7 +268,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                         </>
                                         }
                                         <div className="w-full">
-                                            <Image className='w-full sm:w-[50%] max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img.hd : mediaData?.poster_path}
+                                            <Image className='w-full sm:w-[50%] max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path}
                                                 alt={`current media poster`}
                                                 width={300}
                                                 height={300}
@@ -292,7 +298,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                 <CardTitle>Currently Playing</CardTitle>
                                 {type !== "movie" && <CardDescription>Season {seasonNumber} | Episode {episodeNumber}</CardDescription>}
                                 <div>
-                                    <Image className='w-full max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img.hd : mediaData?.poster_path}
+                                    <Image className='w-full max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path}
                                         alt={`current media poster`}
                                         width={300}
                                         height={300}

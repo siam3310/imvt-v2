@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Link from 'next/link'
 import { Star, PlayCircle, ExternalLink } from "lucide-react"
-
-const MediaGrid = ({ mediaData, loading }: { mediaData: any, loading: boolean }) => {
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
+const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: boolean, type?: string }) => {
     const [basis, setBasis] = React.useState('');
 
     useEffect(() => {
@@ -26,59 +26,56 @@ const MediaGrid = ({ mediaData, loading }: { mediaData: any, loading: boolean })
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     if (loading) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><MediaGridSkeleton basis={basis} /></SkeletonTheme>
+    if (type === "anime") return (
+        <div className="w-full h-fit">
+            <div className="w-full h-full flex justify-start">
+                <div className="flex flex-wrap w-full justify-start items-center">
+                    {mediaData?.results.map((post: { title: any; id: number; image: string; type: string; rating: number; releaseDate: string; totalEpisodes: number }, index: React.Key | null | undefined) => (
+                        <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
+                            <MediaThumbnailComponent link={`/anime/${post.id}`} title={post.title.userPreferred} poster={post.image} width={400} height={600} index={index} type={"anime"}>
+                                <div className="absolute flex justify-start items-center flex-wrap gap-2 top-3 left-3 z-[3]">
+                                    {post.rating && <span className='bg-yellow-500 text-white py-[0.8px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
+                                        <Star fill="white" color='white' width={12} />&nbsp;{(post.rating / 10).toFixed(1)}
+                                    </span>}
+                                    {post.type && <span className='bg-red-500 text-white py-[2px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
+                                        {post.type}
+                                    </span>}
+                                    {post.totalEpisodes && <span className='bg-blue-500 text-white py-[2px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
+                                        EP {post.totalEpisodes}
+                                    </span>}
+                                    {post.releaseDate && <span className='bg-green-500 text-white py-[2px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
+                                        {post.releaseDate}
+                                    </span>}
+                                </div>
+                            </MediaThumbnailComponent>
+                        </div>
+                    )
+                    )}
+                </div>
+            </div>
+        </div>
+    )
 
     return (
         <div className="w-full h-fit">
             <div className="w-full h-full flex justify-start">
                 <div className="flex flex-wrap w-full justify-start items-center">
-                    {mediaData?.results.map((post: { __typename: string; title: any; id: any; vote_average: string; poster_path: string; name: any; known_for_department: string; profile_path: string; }, index: React.Key | null | undefined) => (
-                        (post.__typename !== "People") ? <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8 h-fit p-2`}>
-                            <div className="group clickable">
-                                <Link href={`/${post.title ? "movie" : "tv"}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
-                                    <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                                </Link>
-                                <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
-                                    <Star fill="white" color='white' width={12} />&nbsp;{parseFloat(post.vote_average).toFixed(1)}
-                                </span>
-                                <div className='w-full h-fulll'>
-                                    <div className="aspect-[2/3]">
-                                        <Image
-                                            className="rounded-t-md group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                                            src={post.poster_path}
-                                            alt={`${mediaData.name || mediaData.title} poster`}
-                                            width={400}
-                                            height={600}
-                                            loading={index as number < 10 ? "eager" : "lazy"}
-                                            placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`}
-                                        />
-                                    </div>
-                                    <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                                </div>
+                    {mediaData?.results.map((post: { __typename: string; title: any; id: any; vote_average: number; poster_path: string; name: any; known_for_department: string; profile_path: string; release_date: string; first_air_date: string; }, index: React.Key | null | undefined) => (
+                        (post.__typename !== "People") ?
+                            <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
+                                <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
+                                    <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                                        <Star fill="white" color='white' width={12} />&nbsp;{post.vote_average.toFixed(1)}
+                                    </span>
+                                </MediaThumbnailComponent>
+                            </div> :
+                            <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
+                                <MediaThumbnailComponent link={`/people/${post.id}`} title={post.name} poster={post.profile_path} width={400} height={600} index={index} type={"people"} >
+                                    <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
+                                        {(post.known_for_department === "Acting" && "Actor") || (post.known_for_department === "Writing" && "Writer") || (post.known_for_department === "Directing" && "Director") || (post.known_for_department === "Production" && "Producer") || post.known_for_department}
+                                    </span>
+                                </MediaThumbnailComponent>
                             </div>
-                        </div> : <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8 h-fit p-2`}>
-                            <div className="group clickable">
-                                <Link href={`/people/${post.id}`} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
-                                    <span className="z-[3] clickable"><ExternalLink size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                                </Link>
-                                <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
-                                    {post.known_for_department}
-                                </span>
-                                <div className='w-full h-fulll'>
-                                    <div className="aspect-[2/3]">
-                                        <Image
-                                            className="rounded-t-md group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                                            src={post.profile_path}
-                                            alt={`${post.name || post.title} photo`}
-                                            width={400}
-                                            height={600}
-                                            loading={index as number < 10 ? "eager" : "lazy"}
-                                            placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`}
-                                        />
-                                    </div>
-                                    <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                                </div>
-                            </div>
-                        </div>
                     )
                     )}
                 </div>

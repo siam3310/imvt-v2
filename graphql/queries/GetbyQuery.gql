@@ -10,6 +10,7 @@ query GetbyQuery($query: String!, $page: Int) {
         media_type
         genre_ids
         vote_average
+        release_date
       }
       ... on TV {
         backdrop_path
@@ -20,6 +21,7 @@ query GetbyQuery($query: String!, $page: Int) {
         media_type
         genre_ids
         vote_average
+        first_air_date
       }
       ... on People {
         biography

@@ -1,0 +1,174 @@
+query GetAnimebyQuery($query: String!, $page: Int) {
+  getAnimebyQuery(query: $query, page: $page) {
+    currentPage
+    hasNextPage
+    results {
+      color
+      cover
+      currentEpisodeCount
+      description
+      genres
+      id
+      image
+      popularity
+      rating
+      releaseDate
+      status
+      title {
+        english
+        native
+        romaji
+        userPreferred
+      }
+      totalEpisodes
+      type
+    }
+  }
+}
+
+query GetAnimebyId($id: ID!) {
+  getAnimebyId(id: $id) {
+    characters {
+      id
+      image
+      name {
+        first
+        full
+        last
+        native
+        userPreferred
+      }
+      role
+      voiceActors {
+        id
+        image
+        language
+        name {
+          first
+          full
+          last
+          native
+          userPreferred
+        }
+      }
+    }
+    color
+    cover
+    currentEpisode
+    description
+    duration
+    endDate {
+      month
+      year
+      day
+    }
+    episodes {
+      createdAt
+      number
+      title
+      url
+      description
+      id
+      image
+    }
+    genres
+    id
+    image
+    popularity
+    rating
+    recommendations {
+      cover
+      episodes
+      id
+      image
+      rating
+      status
+      title {
+        english
+        native
+        romaji
+        userPreferred
+      }
+      type
+    }
+    releaseDate
+    relations {
+      color
+      cover
+      episodes
+      id
+      image
+      rating
+      relationType
+      status
+      title {
+        english
+        native
+        romaji
+        userPreferred
+      }
+      type
+    }
+    season
+    startDate {
+      day
+      month
+      year
+    }
+    status
+    studios
+    subOrDub
+    title {
+      english
+      romaji
+      native
+      userPreferred
+    }
+    totalEpisodes
+    trailer {
+      id
+      site
+      thumbnail
+    }
+    type
+    zoroEpisodes {
+      createdAt
+      description
+      id
+      image
+      number
+      title
+      url
+    }
+    countryOfOrigin
+    isAdult
+    isLicensed
+    malId
+    synonyms
+  }
+}
+
+query GetAnimeStreamingData($anilistId: ID, $zoroId: ID) {
+  animePlayerStreamingData(anilistId: $anilistId, zoroId: $zoroId) {
+    intro {
+      end
+      start
+    }
+    outro {
+      end
+      start
+    }
+    headers {
+      Referer
+    }
+    sources {
+      quality
+      url
+    }
+    subtitles {
+      lang
+      url
+    }
+    download
+  }
+}

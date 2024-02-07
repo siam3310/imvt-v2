@@ -1,15 +1,33 @@
-import React, { useEffect, useRef, RefObject } from 'react';
+import React, { useState, useEffect, useRef, RefObject, use } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
+import artplayerPluginVttThumbnail from 'artplayer-plugin-thumbnail';
 export default function VideoPlayer({ media, getInstance, className }: { media: { urls: { quality: string, url: string }[], subtitles: { lang: string, url: string }[], thumbnail: string, logo: string }, getInstance?: any, className: any }) {
-    const artRef: RefObject<HTMLDivElement> = useRef(null);
+    // const [thumbnail, setThumbnail] = useState(media?.thumbnail || null);
     console.log(media);
 
     let SubtitleObj: any
     let QualityObj: any
+    let thumbnail: any
     SubtitleObj = media?.subtitles?.map((subtitle: { lang: any; url: any; }) => {
-        if (subtitle.lang === media?.subtitles[0]?.lang) {
+        if (subtitle.lang === "Thumbnails") {
+            // setThumbnail(subtitle.url)
+            thumbnail = subtitle.url
+            return {
+                default: false,
+                html: "No Subtitle",
+                url: "",
+                type: 'vtt',
+                encoding: 'utf-8',
+                escape: true,
+                style: {
+                    color: '#ffffff',
+                    'font-size': '1em',
+                },
+            }
+        }
+        else if (subtitle.lang === media?.subtitles[0]?.lang) {
             return {
                 default: true,
                 html: subtitle.lang,
@@ -36,6 +54,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
             }
         }
     })
+    console.log(thumbnail)
     QualityObj = media?.urls?.map((quality: { quality: string; url: any; }) => {
         if (quality?.quality === "auto") {
             return {
@@ -83,6 +102,9 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
                     title: 'Quality',
                     auto: 'Auto',
                 }),
+                artplayerPluginVttThumbnail({
+                    vtt: thumbnail || "",
+                })
             ],
             volume: 1,
             isLive: false,
@@ -115,7 +137,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
                 {
                     width: 200,
                     html: 'Subtitle',
-                    tooltip: `${media?.subtitles[0]?.lang}`,
+                    tooltip: `${media?.subtitles[0]?.lang === "Thumbnails" ? "No Subtitle" : media?.subtitles[0]?.lang}`,
                     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-subtitles"><path d="M7 13h4"/><path d="M15 13h2"/><path d="M7 9h2"/><path d="M13 9h4"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>`,
                     selector: [{
                         html: 'Display',
@@ -160,7 +182,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
                 art.destroy(false);
             }
         };
-    }, []);
+    }, [thumbnail]);
 
     return <div className={`artplayer-app ${className}`} ></div>
 }
