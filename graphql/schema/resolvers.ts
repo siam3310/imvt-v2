@@ -2,6 +2,9 @@ const M3U8FileParser = require('m3u8-file-parser');
 const axios = require('axios')
 const MovieGenres = [{ "id": 28, "name": "Action" }, { "id": 12, "name": "Adventure" }, { "id": 16, "name": "Animation" }, { "id": 35, "name": "Comedy" }, { "id": 80, "name": "Crime" }, { "id": 99, "name": "Documentary" }, { "id": 18, "name": "Drama" }, { "id": 10751, "name": "Family" }, { "id": 14, "name": "Fantasy" }, { "id": 36, "name": "History" }, { "id": 27, "name": "Horror" }, { "id": 10402, "name": "Music" }, { "id": 9648, "name": "Mystery" }, { "id": 10749, "name": "Romance" }, { "id": 878, "name": "Science Fiction" }, { "id": 10770, "name": "TV Movie" }, { "id": 53, "name": "Thriller" }, { "id": 10752, "name": "War" }, { "id": 37, "name": "Western" }]
 const TvGenres = [{ "id": 10759, "name": "Action & Adventure" }, { "id": 16, "name": "Animation" }, { "id": 35, "name": "Comedy" }, { "id": 80, "name": "Crime" }, { "id": 99, "name": "Documentary" }, { "id": 18, "name": "Drama" }, { "id": 10751, "name": "Family" }, { "id": 10762, "name": "Kids" }, { "id": 9648, "name": "Mystery" }, { "id": 10763, "name": "News" }, { "id": 10764, "name": "Reality" }, { "id": 10765, "name": "Sci-Fi & Fantasy" }, { "id": 10766, "name": "Soap" }, { "id": 10767, "name": "Talk" }, { "id": 10768, "name": "War & Politics" }, { "id": 37, "name": "Western" }]
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
+import { prisma } from '@/lib/db'
 
 export const resolvers = {
     Media: {
@@ -134,6 +137,15 @@ export const resolvers = {
             }
         },
     },
+    SingleAnime: {
+        zoroEpisodes: async (anime: { id: any; }) => {
+            try {
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
+            } catch (error) {
+                return "";
+            }
+        }
+    },
     People: {
         profile_path: (people: { profile_path: any; }) => { if (!people.profile_path) { return "https://st3.depositphotos.com/1717437/18622/v/450/depositphotos_186223678-stock-illustration-incognito-unknown-person-silhouette-man.jpg" } else { return `https://image.tmdb.org/t/p/original${people.profile_path}` } },
         gender: (people: { gender: number; }) => {
@@ -174,7 +186,165 @@ export const resolvers = {
             else { return "Not specified" }
         },
     },
+    Mutation: {
+        addWatchlistItem: async (_: any, { userId, mediaId, mediaType, watchListType }: { userId: string, mediaId: string, mediaType: string, watchListType: "watching" | "plan_to_watch" | "completed" | "on_hold" | "dropped" }, context: any) => {
+            try {
+                const existingItem = await prisma.watchlistItem.findFirst({
+                    where: { userId: userId!, mediaId, mediaType },
+                });
+
+                if (existingItem) {
+                    throw new Error('Item already exists in watchlist');
+                }
+
+                const watchlistItem = await prisma.watchlistItem.create({
+                    data: { userId: userId!, mediaId, mediaType, watchListType },
+                });
+
+                return watchlistItem;
+            } catch (error) {
+                console.error('Error adding watchlist item:', error);
+                throw error;
+            }
+        },
+        deleteWatchlistItem: async (_: any, { userId, itemId }: { userId: string, itemId: string }, context: any) => {
+            try {
+                // Check if the item exists
+                const existingItem = await prisma.watchlistItem.findUnique({
+                    where: { id: itemId!, userId: userId! },
+                });
+
+                if (!existingItem) {
+                    throw new Error('Item does not exist in watchlist');
+                }
+
+                const watchlistItem = await prisma.watchlistItem.delete({
+                    where: { id: itemId!, userId: userId! },
+                });
+
+                return !!watchlistItem;
+            } catch (error) {
+                console.error('Error deleting watchlist item:', error);
+                throw error;
+            }
+        },
+        updateWatchlistItem: async (_: any, { userId, itemId, watchListType }: { userId: string, itemId: string, watchListType: "watching" | "plan_to_watch" | "completed" | "on_hold" | "dropped" }, context: any) => {
+            try {
+                // Check if the item exists
+                const existingItem = await prisma.watchlistItem.findUnique({
+                    where: { id: itemId!, userId: userId! },
+                });
+
+                if (!existingItem) {
+                    throw new Error('Item does not exist in watchlist');
+                }
+
+                const watchlistItem = await prisma.watchlistItem.update({
+                    where: { id: itemId!, userId: userId! },
+                    data: { watchListType },
+                });
+
+                return watchlistItem;
+            } catch (error) {
+                console.error('Error updating watchlist item:', error);
+                throw error;
+            }
+        },
+        deleteUser: async (_: any, { userId }: { userId: string }, context: any) => {
+            const cookiesStore = cookies()
+            const supabase = createClient(cookiesStore)
+            const userSession = (await supabase.auth.getSession()).data.session
+            try {
+                // Check if the item exists
+                if (userId !== userSession?.user?.id) {
+                    throw new Error('You need to be logged in first');
+                }
+                const existingUser = await prisma.user.findUnique({
+                    where: { id: userId! },
+                });
+
+                if (!existingUser) {
+                    throw new Error('User does not exist');
+                }
+
+                const DeleteUser = await prisma.user.delete({
+                    where: { id: userId! },
+                });
+
+                return !!DeleteUser;
+            } catch (error) {
+                console.error('Error deleting watchlist item:', error);
+                throw error;
+            }
+        },
+        updateUser: async (_: any, { userId, name, profile_photo }: { userId: string, name: string, profile_photo: string }, context: any) => {
+            const cookiesStore = cookies()
+            const supabase = createClient(cookiesStore)
+            const userSession = (await supabase.auth.getSession()).data.session
+            try {
+                // Check if the item exists
+                if (userId !== userSession?.user?.id) {
+                    throw new Error('You need to be logged in first');
+                }
+                // Check if the item exists
+                const existingUser = await prisma.user.findUnique({
+                    where: { id: userId! },
+                });
+
+                if (!existingUser) {
+                    throw new Error('User does not exist');
+                }
+
+                const UpdateUser = await prisma.user.update({
+                    where: { id: userId! },
+                    data: { name, profile_photo },
+                });
+
+                return UpdateUser;
+            } catch (error) {
+                console.error('Error updating watchlist item:', error);
+                throw error;
+            }
+        },
+    },
     Query: {
+        // Supabase Data
+        getUser: async (_: any, { userId }: { userId: string; }) => {
+            const userData = userId ?
+                await prisma.user.findUnique({
+                    where: { id: userId },
+                    include: {
+                        watchlist: true
+                    }
+                }) : null;
+
+            if (!userData) {
+                throw new Error(`No user found`);
+            }
+
+            return userData;
+        },
+        // getUser: async () => {
+        //     const cookieStore = cookies();
+        //     const supabase = createClient(cookieStore)
+        //     const { data, error } = await supabase.auth.getSession();
+        //     if (error) throw new Error(error.message);
+        //     const userId = data?.session?.user?.id;
+        //     const userData = userId ?
+        //         await prisma.user.findUnique({
+        //             where: { id: userId },
+        //             include: {
+        //                 watchlist: true
+        //             }
+        //         }) : null;
+        //     console.log(userData)
+
+        //     if (!userId) {
+        //         throw new Error(`No user found`);
+        //     }
+
+        //     return userData;
+        // },
         // MediaPlayer Data
         mediaPlayerData: async (_: any, { id, type }: { id: number; type: string; }) => {
             const res = await fetch(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${id}?type=${type}`);
@@ -183,14 +353,57 @@ export const resolvers = {
         },
 
         mediaPlayerStreamingData: async (_: any, { episodeId, streamingId }: { episodeId: string; streamingId: string }) => {
-            const servers = ['upcloud', 'vidcloud', '', 'mixdrop'];
+            const servers = ['upcloud', 'vidcloud', '', 'mixdrop', 'asianload', 'mixdrop', 'streamtape', 'streamsb', 'asianload', 'mixdrop', 'streamtape', 'streamsb',];
             const requests = servers.map(async (server, index) => {
-                const url = index === 2
-                    ? `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`
-                    : `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
-                const res = await fetch(url);
-                return res.json();
+                if (index === 2) {
+                    const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`;
+                    const res = await fetch(url);
+                    return res.json();
+                }
+                // else if (index >= 4 && index <= 7) {
+                //     const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/dramacool/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
+                //     const res = await fetch(url);
+                //     return res.json();
+                // }
+                // else if (index >= 8 && index <= 11) {
+                //     const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/viewasian/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
+                //     const res = await fetch(url);
+                //     return res.json();
+                // }
+                else {
+                    const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
+                    const res = await fetch(url);
+                    return res.json();
+                }
+                // const url = index === 2
+                //     ? `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`
+                //     : `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
             });
+
+            const data = await Promise.all(requests);
+            return data;
+        },
+        animePlayerStreamingData: async (_: any, { anilistId, zoroId }: { anilistId: string, zoroId: string }) => {
+            const servers = ["vidcloud", "streamsb", "vidstreaming", "streamtape"];
+
+            const zoroId2 = zoroId.endsWith('dub') ? zoroId.replace(/dub$/, 'sub') : zoroId.replace(/sub$/, 'dub');
+            console.log(zoroId, zoroId2, anilistId);
+
+
+            const urlAnilist = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/watch/${anilistId}`;
+            const anilistData = fetch(urlAnilist).then(res => res.json());
+
+            const requests = servers.flatMap((server) => {
+                const urlzoro2 = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/anime/zoro/watch?episodeId=${zoroId2}&server=${server}`;
+                const urlzoro1 = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/anime/zoro/watch?episodeId=${zoroId}&server=${server}`;
+
+                return [
+                    fetch(urlzoro1).then(res => res.json()),
+                    fetch(urlzoro2).then(res => res.json()),
+                ];
+            });
+
+            requests.push(anilistData);
 
             const data = await Promise.all(requests);
             return data;
@@ -226,6 +439,19 @@ export const resolvers = {
                 hasNextPage: page < response.data.total_pages,
                 total_pages: response.data.total_pages,
                 total_results: response.data.total_results,
+            };
+        },
+        getAnimebyId: async (parent: any, { id }: any) => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`);
+            console.log(response)
+            return response.data
+        },
+        getAnimebyQuery: async (parent: any, { query, page = 1 }: any) => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/${query}&?page=${page}`);
+            return {
+                results: response.data.results,
+                currentPage: response.data.currentPage,
+                hasNextPage: response.data.hasNextPage,
             };
         },
         getAnybyQuery: async (parent: any, { query, page = 1 }: any) => {
@@ -501,16 +727,9 @@ async function getIPTVGroupTitles(url: string) {
         reader.read(data);
         let result = reader.getResult();
 
-        // Create a Set to store unique group titles
-        let groupTitles = new Set();
-
-        // Iterate over segments and add group titles to the Set
-        result.segments?.forEach((segment: { inf: { groupTitle: unknown; }; }) => {
-            segment.inf?.groupTitle && groupTitles.add(segment.inf.groupTitle);
-        });
 
         // Convert the Set back to an array
-        let uniqueGroupTitles = Array.from(groupTitles);
+        let uniqueGroupTitles = Array.from(result);
 
         // Return the unique group titles
         return uniqueGroupTitles;

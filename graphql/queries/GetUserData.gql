@@ -1,0 +1,16 @@
+query GetUserData($userId: String!) {
+  getUser(userId: $userId){
+    email
+    id
+    name
+    profile_photo
+    role
+    watchlist {
+      id
+      mediaId
+      mediaType
+      userId
+      watchListType
+    }
+  }
+}

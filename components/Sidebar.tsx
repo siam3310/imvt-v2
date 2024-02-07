@@ -1,46 +1,46 @@
 "use client"
-import { MoreVertical, HomeIcon, Tv, ExternalLink, Clapperboard, Film, PanelRightClose, PanelLeftClose, XCircle, Compass } from "lucide-react";
-import { cn } from "@/lib/utils"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/custom-sidebar-nav-menu"
+import { MoreVertical, HomeIcon, Tv, ExternalLink, Clapperboard, Film, PanelRightClose, PanelLeftClose, XCircle, Compass, LogIn } from "lucide-react";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle, } from "@/components/ui/custom-sidebar-nav-menu"
 import React, { createContext, useContext, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils"
 import Logo from "@/assets/logo.svg";
+import { Button } from "@/components/ui/button";
 import { shimmerBlurDataUrl } from "@/utils/blurDataUrl";
-const SidebarContext = createContext({
-  expanded: false,
-});
+import { ProfilePopover } from "@/components/user/ProfilePopover";
+import { useAuthenticatedUser } from "@/hooks/useAuthenticatedUser";
+
+const SidebarContext = createContext({ expanded: false });
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [hideSidebar, setHideSidebar] = useState<boolean>(false);
+  const { userData, userSession, loading } = useAuthenticatedUser()
+  const pathname = usePathname();
+
+  if (pathname === "/login" || pathname === "/signup") return <></>
+
   return (
-    <aside className={`h-[100dvh] text-black`}>
+    <aside className={`h-[100dvh] dark:text-white bg-[#dcdad7] dark:bg-[#0b0b0b]`}>
       {hideSidebar && (
         <button
           onClick={() => {
             setHideSidebar((curr) => !curr);
             setExpanded(false);
           }}
-          className={`absolute top-4 left-4 z-10 clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}
+          className={`absolute top-4 left-4 z-10 clickable p-1.5 rounded-lg bg-gray-50 dark:text-black hover:bg-gray-100`}
         >
           <PanelRightClose />
         </button>
       )}
-      <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm bg-[#0b0b0b] ${expanded && "absolute z-[100000] top-0 left-0 bg-[#0b0b0b]"} ${hideSidebar ? "absolute z-10 top-0 right-[100vw] bg-[#151517]" : "lg:static "}`}>
+      <nav className={`h-[100dvh] z-100 flex flex-col shadow-sm bg-[#dcdad7] dark:bg-[#0b0b0b] ${expanded && "absolute z-[100000] top-0 left-0 "} ${hideSidebar ? "absolute z-10 top-0 right-[100vw]" : "lg:static "}`}>
         <div className={`p-4 flex justify-between items-center`}>
           <Link href={`/`}>
             <Image
               src={Logo}
-              className={`clickable transition-all rounded-lg bg-gray-50 hover:bg-gray-100 object-cover aspect-[1.5/1] ${expanded ? "w-28" : "w-0"
+              className={`clickable transition-all rounded-lg bg-gray-50 hover:bg-gray-100 object-cover aspect-[1.5/1] ${expanded ? "w-28 img-3d-shine" : "w-0"
                 }`}
               alt="Logo"
               width={150}
@@ -49,7 +49,7 @@ export default function Sidebar() {
             />
           </Link>
           <div className="flex gap-x-3">
-            {expanded && <button onClick={() => setExpanded(false)} className={`clickable p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100`}>
+            {expanded && <button onClick={() => setExpanded(false)} className={`clickable p-1.5 rounded-lg bg-gray-50 dark:text-black hover:bg-gray-100`}>
               <PanelLeftClose />
             </button>}
             <button
@@ -57,7 +57,7 @@ export default function Sidebar() {
                 if (expanded) { setHideSidebar(true); setExpanded(false) }
                 else setExpanded(true)
               }}
-              className={`clickable p-1 rounded-lg bg-gray-50 hover:bg-gray-100`}
+              className={`clickable p-1 rounded-lg bg-gray-50 dark:text-black hover:bg-gray-100`}
             >
               {expanded ? <XCircle /> : <Image
                 src={Logo}
@@ -320,31 +320,34 @@ export default function Sidebar() {
           </NavigationMenu>
         </SidebarContext.Provider>
 
-        <div className="border-t flex p-3">
-          <Image
-            src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=Vishwajeet%20Yadav"
-            className="w-10 h-10 rounded-md clickable"
-            alt={`user pfp`}
-            width={100}
-            height={100}
-            loading={"lazy"}
-            placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
-          />
-          <div
-            className={`
+        {userData || loading ? <ProfilePopover userData={userData}>
+          <div className="border-t flex p-3 text-black dark:text-white">
+            <Image
+              src={userData?.profile_photo}
+              className="w-10 h-10 rounded-md clickable"
+              alt={`user pfp`}
+              width={100}
+              height={100}
+              loading={"lazy"}
+              placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
+            />
+            <div
+              className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
           `}
-          >
-            <div className="leading-4">
-              <h4 className="font-semibold text-white clickable">Vishwajeet Yadav</h4>
-              <span className="text-xs text-white clickable">vishwajeety14122@gmail.com</span>
+            >
+              <div className="leading-4">
+                <h4 className="font-semibold clickable">{userData?.name}</h4>
+                <span className="text-xs clickable">{userData?.email}</span>
+              </div>
+
+              <MoreVertical size={20} className="clickable" />
             </div>
-            <MoreVertical size={20} color="white" className="clickable" />
-          </div>
-        </div>
+
+          </div></ProfilePopover> : <Link className="p-1 flex items-center justify-center w-full" href="/login">{expanded ? <Button className="w-full">Sign In&nbsp;&nbsp;<LogIn size={20} /></Button> : <Button><LogIn size={20} /></Button>} </Link>}
       </nav>
-    </aside>
+    </aside >
   );
 }
 

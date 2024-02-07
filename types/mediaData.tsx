@@ -33,6 +33,7 @@ interface singleMediaDataType extends mediaData {
     genres: string[]
     recommendations: mediaData[]
     similar: mediaData[]
+    original_language?: string
     reviews: {
         author: string
         content: string

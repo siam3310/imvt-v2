@@ -64,7 +64,6 @@ ul {
   list-style: none;
 }
 
-
 /************************* Carousel CSS *************************/
 .Carousel .embla {
   --slide-spacing: 1rem;
@@ -95,6 +94,22 @@ ul {
   left: 0;
   right: 0;
   background: linear-gradient(to bottom, #ffffff00 0%, #151517 100%);
+  height: 100% !important;
+  z-index: 0;
+}
+.Carousel .embla__slide-light {
+  flex: 0 0 var(--slide-size);
+  min-width: 0 !important;
+  padding-left: var(--slide-spacing);
+  position: relative;
+}
+.Carousel .embla__slide-light:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #ffffff00 50%, #e0d7d7 100%);
   height: 100% !important;
   z-index: 0;
 }
@@ -146,6 +161,7 @@ ul {
   transition: all 0.2s;
   border-radius: 15px;
 }
+
 .Carousel .embla-thumbs__slide--selected .embla-thumbs__slide__button {
   filter: brightness(100%);
   /* opacity: 1; */
@@ -157,7 +173,6 @@ ul {
   flex-shrink: 0;
   object-fit: cover;
 }
-
 
 /************************* Media CSS *************************/
 .movie-backdrop:after {
@@ -175,6 +190,21 @@ ul {
   background-position: center center;
   background-size: cover;
 }
+.movie-backdrop-light:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #00000000 0%, #e0d7d7 100%);
+  height: 100%;
+  z-index: 0;
+}
+.movie-backdrop-light {
+  /* position: relative; */
+  background-position: center center;
+  background-size: cover;
+}
 .poster-box-shadow {
   border-radius: 20px;
   background: linear-gradient(145deg, #131315, #161619);
@@ -182,7 +212,6 @@ ul {
     20px 20px 50px #080809,
     -20px -20px -50px #222225;
 }
-
 
 /************************* Iptv CSS *************************/
 .iptv-player-app .art-video-player {
@@ -198,7 +227,6 @@ ul {
     min-height: 50dvh;
   }
 }
-
 
 /************************* Video Player CSS *************************/
 .art-video-player {
@@ -257,3 +285,33 @@ ul {
   text-overflow: ellipsis !important;
 }
 
+.Parallax-img {
+  --f: 0.09; /* parallax factor (the smaller the better) */
+  --r: 10px; /* the radius */
+
+  --_f: calc(100% * var(--f) / (1 + var(--f)));
+  --_a: calc(90deg * var(--f));
+
+  width: 250px; /* image size */
+  aspect-ratio: calc(1 + var(--f));
+  object-fit: cover;
+  clip-path: inset(0 var(--_f) 0 0 round var(--r));
+  transform: perspective(400px) translateX(0px) rotateY(var(--_a));
+  transition: 0.5s;
+}
+.Parallax-img:hover {
+  clip-path: inset(0 0 0 var(--_f) round var(--r));
+  transform: perspective(400px) translateX(calc(-1 * var(--_f)))
+    rotateY(calc(-1 * var(--_a)));
+}
+
+.img-3d-shine {
+  transform: perspective(400px) rotate3d(1, -1, 0, calc(var(--i, 1) * 8deg));
+  mask: linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100%/240% 240%;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.img-3d-shine:hover {
+  --i: -1;
+  mask-position: 0 0;
+}

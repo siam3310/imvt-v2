@@ -1,8 +1,15 @@
+"use client"
 import React from 'react'
 import { HomeIcon, Search, Clapperboard, Film, Tv, Compass } from "lucide-react"
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuthenticatedUser } from "@/hooks/useAuthenticatedUser";
 
 const BottomNav = () => {
+    const { userData, userSession } = useAuthenticatedUser()
+    const pathname = usePathname();
+    if (pathname === "/login" || pathname === "/signup") return <></>
+
     return (
         <div className="sm:hidden absolute bottom-0 z-50 w-full -translate-x-1/2 dark:bg-[#0b0b0b] border-t left-1/2 dark:border-gray-600">
             <div className="w-full">

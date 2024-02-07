@@ -186,6 +186,30 @@ type TV {
   vote_count: Int
   streamingId: String
 }
+type AnimeTitle{
+  romaji: String
+  english: String
+  native: String
+  userPreferred: String
+}
+type Anime{
+  id: ID!
+  malId:ID
+  title: AnimeTitle
+  status: String
+  image:String
+  cover: String
+  popularity: Int
+  description: String
+  rating: Float
+  genres: [String]
+  color: String
+  totalEpisodes: Int
+  episodes:Int
+  currentEpisodeCount: Int
+  type: String
+  releaseDate: String
+}
 
 type SingleMovie {
   title: String
@@ -267,6 +291,100 @@ type SingleTV {
   vote_count: Int
   streamingId: String
 }
+type AnimeTrailer{
+    id: String,
+    site: String,
+    thumbnail: String
+}
+type AnimeDate{
+    year: Int,
+    month: Int,
+    day: Int
+}
+type AnimeRecommendations{
+  id: ID!
+  title: AnimeTitle
+  status: String
+  episodes:Int
+  image:String
+  cover: String
+  rating: Float
+  type: String
+}
+type AnimeRelations{
+    id: Int,
+    relationType: String,
+    title: AnimeTitle,
+    status: String,
+    episodes: Int,
+    image: String,
+    color: String,
+    type: String,
+    cover: String,
+    rating: Int,
+}
+type AnimeEpisodes{
+    id: String,
+    title: String,
+    image: String,
+    number: Int,
+    createdAt: String
+    description: String
+    url: String
+}
+type AnimeCharacterName{
+  first: String,
+  last: String
+  full: String
+  native: String
+  userPreferred: String
+}
+type AnimeVoiceActors{
+  id: String,
+  language: String,
+  name: AnimeCharacterName
+  image: String,
+}
+type AnimeCharacter{
+  id: String,
+  role: String,
+  name: AnimeCharacterName,
+  image: String,
+  voiceActors: [AnimeVoiceActors]
+}
+type SingleAnime{
+  id: ID!
+  malId:ID
+  title: AnimeTitle
+  synonyms: [String]
+  status: String
+  image:String
+  cover: String
+  popularity: Int
+  isAdult: Boolean
+  isLicensed: Boolean
+  countryOfOrigin: String
+  description: String
+  rating: Float
+  genres: [String]
+  color: String
+  totalEpisodes: Int
+  currentEpisode: Int
+  duration: Float
+  type: String
+  releaseDate: String
+  trailer: AnimeTrailer,
+  startDate: AnimeDate
+  endDate: AnimeDate
+  season: String,
+  subOrDub: String,
+  studios: [String],
+  recommendations: [AnimeRecommendations]
+  characters: [AnimeCharacter]
+  relations: [AnimeRelations]
+  episodes: [AnimeEpisodes]
+  zoroEpisodes: [AnimeEpisodes]
+}
 
 union Media = Movie | TV | People
 
@@ -323,6 +441,12 @@ type PaginatedTV {
   total_results: Int
 }
 
+type PaginatedAnime {
+  results: [Anime]
+  currentPage: Int
+  hasNextPage: Boolean
+}
+
 type PaginatedPeople {
   results: [People]
   hasNextPage: Boolean
@@ -363,10 +487,26 @@ type MediaPlayerData {
   seasons: [Season]
 }
 
-
 type MediaPlayerStreamingData {
   sources: [Source]
   subtitles: [Subtitle]
+}
+type AnimePlayerTimeStamps {
+  start: Int
+  end: Int
+}
+
+type AnimePlayerStreamingData {
+  headers: headers
+  sources: [Source]
+  subtitles: [Subtitle]
+  intro: AnimePlayerTimeStamps
+  outro: AnimePlayerTimeStamps
+  download: String
+}
+
+type headers{
+  Referer: String
 }
 
 type Source {
@@ -379,9 +519,43 @@ type Subtitle {
   lang: String
 }
 
+type User {
+  id: ID!
+  email: String!
+  name: String
+  profile_photo: String
+  role:String
+  watchlist:[watchlistItem]
+}
+
+type watchlistItem {
+  id: ID
+  userId: ID
+  mediaType: String
+  mediaId:String
+  watchListType: String
+}
+enum watchListType {
+  watching
+  on_hold
+  plan_to_watch
+  dropped
+  completed
+}
+
+type Mutation {
+  addWatchlistItem(userId:String,mediaId: ID, mediaType: String, watchListType: watchListType): watchlistItem
+  deleteWatchlistItem(userId:String,itemId: ID): Boolean
+  updateWatchlistItem(userId:String,itemId: ID, watchListType: watchListType): watchlistItem
+  deleteUser(userId:String): Boolean
+  updateUser(userId:String,name: String, profile_photo: String): User
+}
+
 type Query {
+  getUser(userId:String): User
   mediaPlayerData(id: ID!, type: String!): MediaPlayerData
   mediaPlayerStreamingData(episodeId: ID!, streamingId: ID!): [MediaPlayerStreamingData]
+  animePlayerStreamingData(anilistId:ID, zoroId:ID): [AnimePlayerStreamingData]
   iptvCountry(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
   iptvCategory(search: String, group: String, page: Int, pageSize: Int): IPTVResponse
   iptvCountries: [String]
@@ -400,6 +574,8 @@ type Query {
   ): PaginatedMedia
   getAnyTrendingToday(page: Int): PaginatedMedia
   getAnyTrendingWeek(page: Int): PaginatedMedia
+  getAnimebyId(id: ID!): SingleAnime
+  getAnimebyQuery(query: String!, page: Int): PaginatedAnime
   getAnybyQuery(query: String!, page: Int): PaginatedMedia
   getMoviebyId(tmdbId: ID!): SingleMovie
   getMoviebyQuery(query: String!, page: Int): PaginatedMovie

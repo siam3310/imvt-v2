@@ -11,7 +11,7 @@ export default function Provider({ children }: IChildren) {
   })
 
   return (
-    <ThemeProvider attribute='class' value={{ light: 'light', dark: 'dark' }}>
+    <ThemeProvider attribute='class' value={{ light: 'light', dark: 'dark', green: 'green', blue: 'blue', red: 'red', yellow: 'yellow', purple: 'purple' }}>
       <ApolloProvider client={client}>
         {children}
       </ApolloProvider>

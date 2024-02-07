@@ -7,6 +7,7 @@ import { Star, Users } from "lucide-react"
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { mediaData } from '@/types/mediaData'
+import { useTheme } from 'next-themes'
 const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined, loading: boolean }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })])
@@ -35,9 +36,8 @@ const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined,
         emblaMainApi.on('select', onSelect)
         emblaMainApi.on('reInit', onSelect)
     }, [emblaMainApi, onSelect])
-
-
-    if (loading) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><HeroSkeleton /></SkeletonTheme>
+    const { theme, setTheme } = useTheme()
+    if (loading || !data) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><HeroSkeleton /></SkeletonTheme>
 
     return (
         <div className='Carousel hidden sm:block text-white'>
@@ -45,7 +45,7 @@ const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined,
                 <div className="embla__viewport" ref={emblaMainRef}>
                     <div className="embla__container">
                         {data?.map((mediaData: mediaData, index: React.Key | number) => (
-                            <div className="embla__slide" key={index}>
+                            <div className={`${theme === "dark" ? "embla__slide" : "embla__slide-light"}`} key={index}>
                                 <Image
                                     className="embla__slide__img"
                                     src={mediaData.backdrop_path}
@@ -78,7 +78,7 @@ const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined,
                                         <Link href={`/${mediaData.name ? "tv" : "movie"}/${mediaData.id}`} className='bg-blue-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center'>More details</Link>
                                     </div>
                                     <Image
-                                        className="w-56 hidden sm:block h-80 object-cover rounded-3xl clickable"
+                                        className="w-56 hidden sm:block h-80 object-cover cursor-pointer clickable Parallax-img"
                                         src={mediaData.poster_path}
                                         alt={`${mediaData.name || mediaData.title} poster`}
                                         width={400}
@@ -160,11 +160,12 @@ const Thumb = ({ selected, backdropSrc, posterSrc, onClick, title }: { selected:
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 const HeroSkeleton = () => {
+    const { theme } = useTheme()
     return <div className='Carousel sm:block hidden'>
         <div className="embla">
             <div className="embla__viewport">
                 <div className="embla__container">
-                    <div className="embla__slide">
+                    <div className="embla__slide" >
                         <Skeleton className="embla__slide__img" />
                         <div className='flex items-center gap-3 absolute top-0 right-0 w-full h-[80dvh] p-[3rem]'>
                             <div className='w-full flex flex-col justify-center gap-y-6'>
@@ -173,8 +174,8 @@ const HeroSkeleton = () => {
                                 <Skeleton className='flex max-w-[70%] text-[1rem] sm:text-[1.5rem] lg:text-[2.2rem]' />
                                 <Skeleton className='flex max-w-[60%] text-[1rem] sm:text-[1.5rem] lg:text-[2.2rem]' />
                             </div>
-                            <div className='min-w-56 min-h-80 rounded-3xl object-cover overflow-hidden'>
-                                <Skeleton className="w-56 hidden sm:block h-80 object-cover rounded-3xl clickable" />
+                            <div className='min-w-56 min-h-80 object-cover rounded-lg overflow-hidden'>
+                                <Skeleton className="w-56 hidden sm:block h-80 object-cover rounded-3xl clickable Parallax-img" />
                             </div>
                         </div>
                     </div>

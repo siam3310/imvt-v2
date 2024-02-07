@@ -7,7 +7,7 @@ import Image from "next/image"
 
 export default function HeroMiniCarousel({ data, loading }: { data: mediaData[] | undefined, loading: boolean }) {
 
-    if (loading) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><HeroMiniSkeleton /></SkeletonTheme>
+    if (loading || !data) return <SkeletonTheme baseColor="#202020" highlightColor="#444"><HeroMiniSkeleton /></SkeletonTheme>
     return (
         <Carousel opts={{ align: "center", loop: true, }} className="w-full relative h-fit sm:hidden text-white" plugins={[Autoplay({ delay: 3000, })]} >
             <CarouselContent className="">
