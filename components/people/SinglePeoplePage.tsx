@@ -12,7 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import Link from 'next/link'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import GetpeoplebyId from '@/graphql/queries/getpeoplebyId.gql';
+import GetpeoplebyId from '@/graphql/queries/GetpeoplebyId.gql';
 
 const SinglePeoplePage = ({ id }: { id: string }) => {
   const [basis, setBasis] = useState('50%');
