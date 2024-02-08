@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "migrate-dev": "npx prisma migrate dev && npx tsx lib/seedTriggers.ts",
-    "codegen": "npx graphql-codegen"
+    "codegen": "npx graphql-codegen",
+    "kill": "npx kill-port 3000"
   },
   "dependencies": {
     "@apollo/client": "^3.9.2",
@@ -23,6 +24,7 @@
     "@pothos/plugin-add-graphql": "^3.2.0",
     "@prisma/client": "^5.9.1",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-hover-card": "^1.0.7",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-navigation-menu": "^1.1.4",

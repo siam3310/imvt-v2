@@ -63,6 +63,7 @@ query GetAnimebyId($id: ID!) {
       day
     }
     episodes {
+      airDate
       createdAt
       number
       title
@@ -132,6 +133,7 @@ query GetAnimebyId($id: ID!) {
     }
     type
     zoroEpisodes {
+      airDate
       createdAt
       description
       id

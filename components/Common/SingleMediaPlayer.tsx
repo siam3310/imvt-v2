@@ -21,9 +21,12 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
     const [isMediaPlayer, setIsMediaPlayer] = useState(true)
     const [serverNumber, setServerNumber] = useState<number>(3)
     const [iframeSrc, setIframeSrc] = useState("")
+
     // const [loading, setLoading] = useState<boolean>(false)
+
     const [mediaData, setmediaData] = useState<MediaPlayerDataType>({ poster_path: "", release_date: "", first_air_date: "", overview: "", backdrop_path: "", id: "", number_of_seasons: 0, number_of_episodes: 0, seasons: [], Images: { logos: [{ file_path: "" }] } })
     const [streamingData, setStreamingData] = useState<{ sources: { url: string, quality: string }[], subtitles: { url: string, lang: string }[] }[]>(() => [{ sources: [{ url: "", quality: "" }], subtitles: [{ url: "", lang: "" }] }])
+
     const IframeButtonDetails = [
         { name: "BlackVid", url: `https://blackvid.space/embed?tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}` },
         { name: "SuperEmbed", url: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${seasonNumber}&e=${episodeNumber}` },
@@ -41,6 +44,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
         type === 'movie' ? GET_MOVIE_BY_ID : GET_TV_BY_ID,
         { variables: { tmdbId } }
     );
+
     console.log(data);
 
     useEffect(() => {
@@ -147,6 +151,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                 <ResizablePanel className='h-[100dvh] w-full min-w-0 sm:p-0 pb-32' defaultSize={60}>
                     <div className="w-full h-full">
 
+
                         <ScrollArea className='w-full h-full'>
                             {!isMediaPlayer && <iframe className="w-full aspect-[1.85/1]" src={`${iframeSrc}`} allowFullScreen></iframe>}
                             {(isMediaPlayer && !loading && !streamingLoading) && streamingData[serverNumber - 1]?.sources?.length > 0 && <MediaPlayer
@@ -207,6 +212,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                 </div>
                             </div>
 
+
                             <div className=' md:hidden'>
                                 {type !== "movie" && <ResizablePanelGroup direction="vertical" className='min-h-[70dvh] min-w-0'>
                                     <ResizablePanel defaultSize={45} className='max-h-fit min-w-0'>
@@ -258,6 +264,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                 </ResizablePanelGroup>
                                 }
                             </div>
+
 
                             <ScrollArea className="flex w-full h-full xl:hidden items-center justify-center p-0">
                                 <Card className="w-full h-full">

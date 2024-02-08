@@ -16,7 +16,7 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
     const [anilistId, setAnilistId] = useState<string>("")
     const [zoroId, setZoroId] = useState<string>("")
     const [serverNumber, setServerNumber] = useState<number>(9)
-    const [animeData, setAnimeData] = useState<any>({ episodes: [{ id: "", title: "", description: "", createdAt: "", image: "", number: "" }], zoroEpisodes: [{ zoroId: "" }] })
+    const [animeData, setAnimeData] = useState<any>({ episodes: [{ id: "", title: "", description: "", airDate: "", image: "", number: "" }], zoroEpisodes: [{ zoroId: "" }] })
     const [streamingData, setStreamingData] = useState<{ headers: { Referer: string }, sources: { url: string, quality: string }[], subtitles: { url: string, lang: string }[] }[]>(() => [{ headers: { Referer: "" }, sources: [{ url: "", quality: "" }], subtitles: [{ url: "", lang: "" }] }])
 
     const { data, loading, error } = useQuery(
@@ -187,7 +187,7 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
                                         </CardDescription>
                                     </CardHeader>
                                     <CardFooter>
-                                        {new Date(animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+                                        {animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt && new Date(animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
                                     </CardFooter>
                                 </Card>
                             </ScrollArea>
@@ -217,7 +217,7 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
                                 </CardDescription>
                             </CardHeader>
                             <CardFooter>
-                                {new Date(animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+                                {animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt && new Date(animeData?.zoroEpisodes[episodeNumber - 1]?.createdAt).toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
                             </CardFooter>
                         </Card>
                     </ScrollArea>

@@ -328,6 +328,7 @@ type AnimeEpisodes{
     title: String,
     image: String,
     number: Int,
+    airDate: String,
     createdAt: String
     description: String
     url: String
