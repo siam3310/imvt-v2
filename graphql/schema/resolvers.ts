@@ -29,7 +29,7 @@ export const resolvers = {
         }),
         streamingId: async (movie: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.id;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.id;
             } catch (error) {
                 return null;
             }
@@ -44,7 +44,7 @@ export const resolvers = {
         }),
         streamingId: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.id;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.id;
             } catch (error) {
                 return "";
             }
@@ -65,21 +65,21 @@ export const resolvers = {
         },
         streamingId: async (movie: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.id;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.id;
             } catch (error) {
                 return null;
             }
         },
         recommendations: async (movie: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.recommendations;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.recommendations;
             } catch (error) {
                 return null;
             }
         },
         similar: async (movie: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.similar;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${movie.id}?type=movie`)).data?.similar;
             } catch (error) {
                 return null;
             }
@@ -103,35 +103,35 @@ export const resolvers = {
         },
         seasons: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.seasons;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.seasons;
             } catch (error) {
                 return [];
             }
         },
         trailer: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.trailer;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.trailer;
             } catch (error) {
                 return "";
             }
         },
         streamingId: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.id;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.id;
             } catch (error) {
                 return "";
             }
         },
         similar: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.similar;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.similar;
             } catch (error) {
                 return [];
             }
         },
         recommendations: async (tv: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.CONSUMET_API_BASE_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.recommendations;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/info/${tv.id}?type=tv`)).data?.recommendations;
             } catch (error) {
                 return [];
             }
