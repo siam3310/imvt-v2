@@ -1,5 +1,5 @@
 query GetUserData($userId: String!) {
-  getUser(userId: $userId){
+  getUser(userId: $userId) {
     email
     id
     name
@@ -14,3 +14,50 @@ query GetUserData($userId: String!) {
     }
   }
 }
+
+mutation UpdateUser(
+  $name: String = ""
+  $profile_photo: String = ""
+  $userId: String = ""
+) {
+  updateUser(name: $name, profile_photo: $profile_photo, userId: $userId) {
+    email
+    id
+    name
+    profile_photo
+    role
+  }
+}
+# # query GetUserWatchList($userId: String!) {
+# #   getUserWatchList(userId: $userId) {
+# #     id
+# #     mediaId
+# #     mediaType
+# #     userId
+# #     watchListType
+# #   }
+# # }
+
+# mutation AddToWatchList($mediaId: Int!, $mediaType: String!, $userId: String!, $watchListType: String!) {
+#   addToWatchList(mediaId: $mediaId, mediaType: $mediaType, userId: $userId, watchListType: $watchListType) {
+#     id
+#     mediaId
+#     mediaType
+#     userId
+#     watchListType
+#   }
+# }
+
+# mutation RemoveFromWatchList($mediaId: Int!, $mediaType: String!, $userId: String!, $watchListType: String!) {
+#   removeFromWatchList(mediaId: $mediaId, mediaType: $mediaType, userId: $userId, watchListType: $watchListType) {
+#     id
+#     mediaId
+#     mediaType
+#     userId
+#     watchListType
+#   }
+# }
+
+# mutation UpdateWatchList(){
+
+# }

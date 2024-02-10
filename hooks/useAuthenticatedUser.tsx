@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from "next/navigation";
 import { useUserDataStore } from "@/store/userDataStore";
 import { useQuery, gql } from '@apollo/client';
-import GetUserData from '@/graphql/queries/GetUserData.gql'
+import {GetUserData} from '@/graphql/queries/GetUserData.gql'
 import { createClient } from '@/utils/supabase/client'
 import { set } from 'react-hook-form';
 

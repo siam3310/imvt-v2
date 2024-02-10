@@ -323,8 +323,8 @@ export default function Sidebar() {
         {userData || loading ? <ProfilePopover userData={userData}>
           <div className="border-t flex p-3 text-black dark:text-white">
             <Image
-              src={userData?.profile_photo}
-              className="w-10 h-10 rounded-md clickable"
+              src={userData?.profile_photo || "https://via.placeholder.com/150"}
+              className="w-10 h-10 rounded-md clickable object-cover"
               alt={`user pfp`}
               width={100}
               height={100}

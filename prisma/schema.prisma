@@ -36,7 +36,7 @@ model watchlistItem {
   mediaType     String
   mediaId       String
   watchListType watchListType @default(plan_to_watch)
-  user          user          @relation(fields: [userId], references: [id])
+  user          user          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String        @db.Uuid
 
   @@map("watchlistItem")
