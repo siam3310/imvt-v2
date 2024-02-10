@@ -1,6 +1,6 @@
 "use client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -15,7 +15,6 @@ import { shimmerBlurDataUrl } from "@/utils/blurDataUrl"
 import { useMutation, gql } from '@apollo/client';
 import { UpdateUser } from "@/graphql/queries/GetUserData.gql"
 import { useRouter } from "next/navigation"
-import { PopoverClose } from "@radix-ui/react-popover"
 const DeleteUser = gql`
     mutation DeleteUser($userId: String = "") {
         deleteUser(userId: $userId)
@@ -44,8 +43,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 export default function ProfileForm() {
     const router = useRouter()
     const { userData } = useUserDataStore()
-    const [deleteUser, { data: userDelete }] = useMutation(DeleteUser);
-    const [updateUser, { data }] = useMutation(UpdateUser);
+    const [deleteUser] = useMutation(DeleteUser);
+    const [updateUser] = useMutation(UpdateUser);
     const form = useForm<ProfileFormValues>({
         resolver: zodResolver(profileFormSchema),
         defaultValues: {
@@ -176,6 +175,7 @@ export default function ProfileForm() {
                                         />
                                     </>
                                 </FormControl>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -208,7 +208,7 @@ export default function ProfileForm() {
                             </FormItem>
                         )}
                     />
-                    <Button disabled={inputLoading || (form.watch().name === userData?.name && form.watch().profile_photo === userData?.profile_photo)} type="submit">{!inputLoading ? "Update profile" : <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" /><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" /></path></svg>}</Button>
+                    <Button disabled={inputLoading || Object.keys(form.formState.errors).length > 0 || (form.watch().name === userData?.name && form.watch().profile_photo === userData?.profile_photo)} type="submit">{!inputLoading ? "Update profile" : <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" /><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" /></path></svg>}</Button>
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button disabled={inputLoading} variant={"destructive"}>{!inputLoading ? "Delete Acccount" : <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity="0.5" /><path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate" /></path></svg>}</Button>
