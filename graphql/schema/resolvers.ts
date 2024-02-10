@@ -166,7 +166,6 @@ export const resolvers = {
         backdrop_path: (people: { backdrop_path: any; }) => { if (!people.backdrop_path) { return "https://static.vecteezy.com/system/resources/previews/011/598/289/original/blank-smartphone-with-popcorn-film-strip-clapperboard-on-blue-background-online-streaming-movie-concept-iluustration-free-vector.jpg" } else { return `https://image.tmdb.org/t/p/original${people.backdrop_path}` } },
         genres: (people: { title: any; media_type: string; genre_ids: any[]; name: any; }) => {
             if (people.title || people.media_type === "movie") {
-                console.log(people.media_type);
                 return people.genre_ids?.map((id: number) => {
                     const genre = MovieGenres.find(genre => genre.id === id);
                     return genre ? genre.name : null;
@@ -387,7 +386,7 @@ export const resolvers = {
             const servers = ["vidcloud", "streamsb", "vidstreaming", "streamtape"];
 
             const zoroId2 = zoroId.endsWith('dub') ? zoroId.replace(/dub$/, 'sub') : zoroId.replace(/sub$/, 'dub');
-            console.log(zoroId, zoroId2, anilistId);
+            // console.log(zoroId, zoroId2, anilistId);
 
 
             const urlAnilist = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/watch/${anilistId}`;
@@ -443,7 +442,7 @@ export const resolvers = {
         },
         getAnimebyId: async (parent: any, { id }: any) => {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`);
-            console.log(response)
+            // console.log(response)
             return response.data
         },
         getAnimebyQuery: async (parent: any, { query, page = 1 }: any) => {
@@ -684,12 +683,12 @@ async function getIPTVResponse(url: string, searchTerm: string, groupSearchTerm:
         // Filter the result based on the search term
         if (searchTerm || groupSearchTerm) {
             if (searchTerm) {
-                console.log(`Searching ${searchTerm}`);
+                // console.log(`Searching ${searchTerm}`);
                 result.segments = result.segments?.filter((item: { inf: { title: string; }; }) =>
                     item.inf?.title?.toLowerCase().includes(searchTerm.toLowerCase()));
             }
             if (groupSearchTerm) {
-                console.log(`Group Searching ${groupSearchTerm}`);
+                // console.log(`Group Searching ${groupSearchTerm}`);
                 result.segments = result.segments?.filter((item: { inf: { groupTitle: string; }; }) =>
                     item.inf?.groupTitle?.toLowerCase().includes(groupSearchTerm.toLowerCase()));
             }

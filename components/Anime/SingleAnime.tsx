@@ -9,7 +9,7 @@ const SingleAnime = ({ id }: { id: number }) => {
         variables: { id },
     });
     const animeData = data?.getAnimebyId;
-    console.log(animeData);
+    // console.log(animeData);
 
     if (error && !data && !loading) {
         console.log(error);

@@ -24,7 +24,7 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
         { variables: { id } }
     );
 
-    console.log(data);
+    // console.log(data);
 
     useEffect(() => {
         if (loading) return;
@@ -44,8 +44,8 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
         if (animeStreamingData) {
             setStreamingData(animeStreamingData.animePlayerStreamingData);
         }
-        console.log(streamingData);
-        console.log("refetching the sources");
+        // console.log(streamingData);
+        // console.log("refetching the sources");
 
     }, [animeStreamingData]);
 

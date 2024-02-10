@@ -21,7 +21,7 @@ const SelectAnimeDrawer = ({ children, animeQuery }: { children: React.ReactNode
         }
     })
     const AnimeData = data?.getAnimebyQuery
-    console.log(AnimeData)
+    // console.log(AnimeData)
     return (
         <Drawer>
             <DrawerTrigger asChild>

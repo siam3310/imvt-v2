@@ -5,7 +5,7 @@ import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
 import artplayerPluginVttThumbnail from 'artplayer-plugin-thumbnail';
 export default function VideoPlayer({ media, getInstance, className }: { media: { urls: { quality: string, url: string }[], subtitles: { lang: string, url: string }[], thumbnail: string, logo: string }, getInstance?: any, className: any }) {
     // const [thumbnail, setThumbnail] = useState(media?.thumbnail || null);
-    console.log(media);
+    // console.log(media);
 
     let SubtitleObj: any
     let QualityObj: any
@@ -54,7 +54,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
             }
         }
     })
-    console.log(thumbnail)
+    // console.log(thumbnail)
     QualityObj = media?.urls?.map((quality: { quality: string; url: any; }) => {
         if (quality?.quality === "auto") {
             return {

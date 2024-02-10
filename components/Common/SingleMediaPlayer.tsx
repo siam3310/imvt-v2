@@ -45,7 +45,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
         { variables: { tmdbId } }
     );
 
-    console.log(data);
+    // console.log(data);
 
     useEffect(() => {
         if (loading) return;
@@ -72,7 +72,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
         if (mediaPlayerStreamingData) {
             setStreamingData(mediaPlayerStreamingData.mediaPlayerStreamingData);
         }
-        console.log("refetching the sources");
+        // console.log("refetching the sources");
 
     }, [mediaPlayerStreamingData]);
 

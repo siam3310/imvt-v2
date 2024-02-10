@@ -22,7 +22,7 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
     variables: { Id },
   });
   const peopleData = data?.getpeoplebyId;
-  console.log(peopleData);
+  // console.log(peopleData);
 
   useEffect(() => {
     const handleResize = () => {
