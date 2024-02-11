@@ -24,8 +24,8 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
                         userId: userData?.id,
                     },
                 });
-                // console.log("add to watchlist")
-                // console.log([...watchlistState, response.data.addWatchlistItem])
+                console.log("add to watchlist")
+                console.log([...watchlistState, response.data.addWatchlistItem])
                 setWatchlistState([...watchlistState, response.data.addWatchlistItem])
             } catch (error) {
                 console.error(error);
@@ -33,10 +33,10 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
         }
         const handleDeleteWatchlist = async (watchlistItem: any) => {
             try {
-                // console.log("deleteWatchlistItem")
-                // console.log(userData?.watchlist)
-                setWatchlistState(userData?.watchlist.filter((item: any) => item.id !== watchlistItem.id))
-                // console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
+                console.log("deleteWatchlistItem")
+                console.log(userData?.watchlist)
+                setWatchlistState(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
+                console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
                 return await deleteWatchlistItem({
                     variables: {
                         itemId: watchlistItem.id,
@@ -64,8 +64,8 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
             }
         };
         const watchlistItem = watchlistState?.find((watchlistItem: any) => watchlistItem.mediaId === mediaId)
-        // console.log("watchlistState")
-        // console.log(watchlistState)
+        console.log("watchlistState")
+        console.log(watchlistState)
         if (!watchlistItem && watchlistType) {
             handleAddToWatchlist()
         }
@@ -78,13 +78,21 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
 
     }, [watchlistType, mediaId, type])
 
+    // useEffect(() => {
+    //     watchlistState?.forEach((watchlistItem: any) => {
+    //         if (watchlistItem.mediaId === mediaId) {
+    //             setWatchlistType(watchlistItem.watchListType);
+    //         }
+    //     });
+    // }, [userData, mediaId]);
+
     useEffect(() => {
         watchlistState?.forEach((watchlistItem: any) => {
             if (watchlistItem.mediaId === mediaId) {
                 setWatchlistType(watchlistItem.watchListType);
             }
         });
-    }, [userData, mediaId]);
+    }, [watchlistState, mediaId]);
 
     return { watchlistType, setWatchlistType }
 }
