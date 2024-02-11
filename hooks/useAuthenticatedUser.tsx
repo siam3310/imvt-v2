@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from "next/navigation";
 import { useUserDataStore } from "@/store/userDataStore";
 import { useQuery, gql } from '@apollo/client';
-import {GetUserData} from '@/graphql/queries/GetUserData.gql'
+import { GetUserData } from '@/graphql/queries/GetUserData.gql'
 import { createClient } from '@/utils/supabase/client'
-import { set } from 'react-hook-form';
+import { useWatchlistDataStore } from '@/store/watchlistDataStore'
 
 export function useAuthenticatedUser() {
     const [userSession, setUserSession] = useState<any>()
@@ -12,6 +12,7 @@ export function useAuthenticatedUser() {
     const pathname = usePathname();
     const supabase = createClient();
     const { userData, setUserData } = useUserDataStore();
+    const { watchlistState, setWatchlistState } = useWatchlistDataStore()
     // const [userComponentSession, setUserComponentSession] = useState(null);
     useEffect(() => {
         const getUserSession = async () => {
@@ -34,6 +35,12 @@ export function useAuthenticatedUser() {
             setUserData(userDataFromGraphql?.getUser);
         }
     }, [supabase.auth.onAuthStateChange, userDataFromGraphql?.getUser]);
+
+    useEffect(() => {
+        if (userDataFromGraphql?.getUser && userDataFromGraphql?.getUser?.watchlist) {
+            setWatchlistState(userDataFromGraphql?.getUser?.watchlist)
+        }
+    }, [supabase.auth.onAuthStateChange, userDataFromGraphql?.getUser])
 
     const handleSignOut = async () => {
         const { error } = await supabase.auth.signOut();

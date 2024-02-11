@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
@@ -13,7 +13,6 @@ import usehandleWatchlist from '@/hooks/usehandleWatchlist';
 const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaDataType, loading: any, type: any }) => {
   const ReleaseDate = new Date(mediaData?.release_date || mediaData?.first_air_date);
   const isUpcoming = ReleaseDate ? ReleaseDate > new Date() : null;
-  const { watchlistType, setWatchlistType } = usehandleWatchlist(mediaData?.id, mediaData?.name ? "tv" : "movie")
   const [openAnimeDrawer, setOpenAnimeDrawer] = React.useState<boolean>(false);
 
   useEffect(() => {
@@ -21,6 +20,8 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
       setOpenAnimeDrawer(true)
     }
   }, [mediaData])
+
+  const { watchlistType, setWatchlistType } = usehandleWatchlist(mediaData?.id, mediaData?.name ? "tv" : "movie")
 
   const watchListNames = {
     completed: "Completed",
@@ -73,7 +74,7 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
                   <Button onClick={() => { setWatchlistType("plan_to_watch"); }} variant={watchlistType === "plan_to_watch" ? "default" : "outline"}>Plan to Watch</Button>
                   <Button onClick={() => { setWatchlistType("on_hold"); }} variant={watchlistType === "on_hold" ? "default" : "outline"}>On Hold</Button>
                   <Button onClick={() => { setWatchlistType("dropped"); }} variant={watchlistType === "dropped" ? "default" : "outline"}>Dropped</Button>
-                  {watchlistType && <Button onClick={() => { setWatchlistType("remove"); }} variant={'destructive'}>Remove from Watchlist</Button>}
+                  {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
                 </PopoverContent>
               </Popover>
 

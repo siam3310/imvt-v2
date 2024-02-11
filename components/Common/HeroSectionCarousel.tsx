@@ -133,7 +133,7 @@ const HeroSectionCarouselSlide = ({ mediaData, index }: { mediaData: mediaData, 
                             <Button onClick={() => { setWatchlistType("plan_to_watch"); }} variant={watchlistType === "plan_to_watch" ? "default" : "outline"}>Plan to Watch</Button>
                             <Button onClick={() => { setWatchlistType("on_hold"); }} variant={watchlistType === "on_hold" ? "default" : "outline"}>On Hold</Button>
                             <Button onClick={() => { setWatchlistType("dropped"); }} variant={watchlistType === "dropped" ? "default" : "outline"}>Dropped</Button>
-                            {watchlistType && <Button onClick={() => { setWatchlistType("remove"); }} variant={'destructive'}>Remove from Watchlist</Button>}
+                            {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
                         </PopoverContent>
                     </Popover>
                 </div>

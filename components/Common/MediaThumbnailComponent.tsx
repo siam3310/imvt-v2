@@ -1,4 +1,4 @@
-import React, { Key } from 'react'
+import React, { Key, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PlusCircle, PlayCircle, ExternalLink } from 'lucide-react'
@@ -8,12 +8,12 @@ import usehandleWatchlist from '@/hooks/usehandleWatchlist';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 const MediaThumbnailComponent = ({ children, link, id, title, poster, index, width, height, release_date = "", type, title2 = null }: { children: React.ReactNode, id: string, link: string, title: string, poster: string, index: Key | null | undefined, width: number, height: number, release_date?: string, type: string, title2?: any }) => {
 
-    const { watchlistType, setWatchlistType } = usehandleWatchlist(id, type)
     let isUpcoming = false;
 
     if (type !== "people" && new Date(release_date) >= new Date()) {
         isUpcoming = true;
     }
+    const { watchlistType, setWatchlistType } = usehandleWatchlist(id, type)
 
     const watchListNames = {
         completed: "Completed",
@@ -50,7 +50,7 @@ const MediaThumbnailComponent = ({ children, link, id, title, poster, index, wid
                     <Button onClick={() => { setWatchlistType("plan_to_watch"); }} variant={watchlistType === "plan_to_watch" ? "default" : "outline"}>Plan to Watch</Button>
                     <Button onClick={() => { setWatchlistType("on_hold"); }} variant={watchlistType === "on_hold" ? "default" : "outline"}>On Hold</Button>
                     <Button onClick={() => { setWatchlistType("dropped"); }} variant={watchlistType === "dropped" ? "default" : "outline"}>Dropped</Button>
-                    {watchlistType && <Button onClick={() => { setWatchlistType("remove"); }} variant={'destructive'}>Remove from Watchlist</Button>}
+                    {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
                 </PopoverContent>
             </Popover>}
             <div className='w-full h-full'>
