@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { useUserDataStore } from '@/store/userDataStore'
 import ProfileForm from '@/components/user/ProfileForm'
-import { ScrollArea } from '@/components/ui/scroll-area'
 const UserProfilePage = () => {
     const [watchListData, setWatchListData] = useState([])
     const { userData } = useUserDataStore()

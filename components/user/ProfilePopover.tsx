@@ -11,10 +11,10 @@ export function ProfilePopover({ userData, children }: { userData: any, children
                 {children}
             </PopoverTrigger>
             <PopoverContent className="w-80 z-[11111111111111]">
-                <div className="grid gap-4">
-                    {/* <h4 className="font-medium leading-none">Hi {userData?.name}</h4> */}
+                <div className="grid gap-2">
                     <Link href="/my-profile"><Button className="w-full">Your Profile</Button></Link>
-                    <Button onClick={handleSignOut} className="w-full">Sign Out</Button>
+                    <Link href="/watchlist"><Button className="w-full">Watchlist</Button></Link>
+                    <Button variant={"destructive"} onClick={handleSignOut} className="w-full">Sign Out</Button>
                 </div>
             </PopoverContent>
         </Popover>

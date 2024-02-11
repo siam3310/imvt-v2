@@ -179,7 +179,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
         <div className="w-full h-full flex justify-center">
           <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.similar.map((post, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-              <MediaThumbnailComponent link={`/${type}/${post.id}`} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
+              <MediaThumbnailComponent link={`/${type}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                   <Star fill="white" color='white' width={12} />&nbsp;{post.rating.toFixed(1)}
                 </span>
@@ -195,7 +195,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
         <div className="w-full h-full flex justify-center">
           <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.recommendations.map((post, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-              <MediaThumbnailComponent link={`/${type}/${post.id}`} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
+              <MediaThumbnailComponent link={`/${type}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                   <Star fill="white" color='white' width={12} />&nbsp;{post.rating.toFixed(1)}
                 </span>

@@ -104,7 +104,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                                             <div key={index} className="w-full h-full">
                                                                 <div className='flex gap-x-3 justify-center items-start min-w-[200px] shrink-0'>
                                                                     <Image className='w-[25%]'
-                                                                        src={season?.image?.mobile}
+                                                                        src={season?.image?.mobile || "https://via.placeholder.com/300x450"}
                                                                         alt={`${seasonNumber} poster`}
                                                                         width={100}
                                                                         height={150}
@@ -226,7 +226,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                                     <div key={index} className="w-full h-full">
                                                         <div className='flex justify-center items-start min-w-[200px] shrink-0'>
                                                             <Image className='w-[25%]'
-                                                                src={season?.image?.mobile}
+                                                                src={season?.image?.mobile || "https://via.placeholder.com/200"}
                                                                 alt={`${seasonNumber} poster`}
                                                                 width={200}
                                                                 height={200}
@@ -275,7 +275,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                         </>
                                         }
                                         <div className="w-full">
-                                            <Image className='w-full sm:w-[50%] max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path}
+                                            <Image className='w-full sm:w-[50%] max-h-[50dvh] object-contain object-left' src={(type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path) || "https://via.placeholder.com/300"}
                                                 alt={`current media poster`}
                                                 width={300}
                                                 height={300}
@@ -305,7 +305,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                                 <CardTitle>Currently Playing</CardTitle>
                                 {type !== "movie" && <CardDescription>Season {seasonNumber} | Episode {episodeNumber}</CardDescription>}
                                 <div>
-                                    <Image className='w-full max-h-[50dvh] object-contain object-left' src={type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path}
+                                    <Image className='w-full max-h-[50dvh] object-contain object-left' src={(type !== "movie" ? mediaData?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]?.img?.hd : mediaData?.poster_path) || "https://via.placeholder.com/300"}
                                         alt={`current media poster`}
                                         width={300}
                                         height={300}

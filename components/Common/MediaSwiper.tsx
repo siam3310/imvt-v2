@@ -45,7 +45,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
             <CarouselContent className='ml-2'>
                 {data[0]?.profile_path ? data?.map((post: mediaPeopleData, index: React.Key | number) => (
                     <CarouselItem key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`} >
-                        <MediaThumbnailComponent link={`/people/${post.id}`} title={post.name} poster={post.profile_path} width={400} height={600} index={index} type={"people"} >
+                        <MediaThumbnailComponent link={`/people/${post.id}`} id={post.id} title={post.name} poster={post.profile_path} width={400} height={600} index={index} type={"people"} >
                             <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                 {(post.known_for_department === "Acting" && "Actor") || (post.known_for_department === "Writing" && "Writer") || (post.known_for_department === "Directing" && "Director") || (post.known_for_department === "Production" && "Producer") || post.known_for_department}
                             </span>
@@ -54,7 +54,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
                 )) : data?.map((post: mediaPeopleData, index: React.Key | null | undefined) => (
                     <CarouselItem key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`} >
                         {/* <CarouselItem key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit`} > */}
-                        <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
+                        <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                             <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                 <Star fill="white" color='white' width={12} />&nbsp;{post.vote_average.toFixed(1)}
                             </span>

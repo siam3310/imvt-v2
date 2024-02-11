@@ -105,7 +105,7 @@ export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
                 <div className="w-full h-full flex justify-center">
                     <div className="w-full flex flex-wrap justify-start items-center">
                         {animeData?.recommendations.map((post: any, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-                            <MediaThumbnailComponent link={`/anime/${post.id}`} title={post.title.userPreferred || post.title.english || post.title.romaji || post.title.native} poster={post.image} width={200} height={300} index={index} type={"anime"}>
+                            <MediaThumbnailComponent link={`/anime/${post.id}`} id={post.id} title={post.title.userPreferred || post.title.english || post.title.romaji || post.title.native} poster={post.image} width={200} height={300} index={index} type={"anime"}>
                                 <div className="absolute flex justify-start items-center flex-wrap gap-2 top-3 left-3 z-[3]">
                                     <span className='bg-yellow-500 text-white py-[0.8px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
                                         <Star fill="white" color='white' width={12} />&nbsp;{(post.rating / 10).toFixed(1)}
@@ -131,7 +131,7 @@ export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
                 <div className="w-full h-full flex justify-center">
                     <div className="w-full flex flex-wrap justify-start items-center">
                         {animeData?.relations.map((post: any, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-                            <MediaThumbnailComponent link={`/anime/${post.id}`} title={post.title.userPreferred || post.title.english || post.title.romaji || post.title.native} poster={post.image} width={200} height={300} index={index} type={"anime"}>
+                            <MediaThumbnailComponent link={`/anime/${post.id}`} id={post.id} title={post.title.userPreferred || post.title.english || post.title.romaji || post.title.native} poster={post.image} width={200} height={300} index={index} type={"anime"}>
                                 <div className="absolute flex justify-start items-center flex-wrap gap-2 top-3 left-3 z-[3]">
                                     <span className='bg-yellow-500 text-white py-[0.8px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
                                         <Star fill="white" color='white' width={12} />&nbsp;{(post.rating / 10).toFixed(1)}

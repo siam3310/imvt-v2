@@ -30,9 +30,9 @@ const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: bool
         <div className="w-full h-fit">
             <div className="w-full h-full flex justify-start">
                 <div className="flex flex-wrap w-full justify-start items-center">
-                    {mediaData?.results.map((post: { title: any; id: number; image: string; type: string; rating: number; releaseDate: string; totalEpisodes: number }, index: React.Key | null | undefined) => (
+                    {mediaData?.results.map((post: { title: any; id: string; image: string; type: string; rating: number; releaseDate: string; totalEpisodes: number }, index: React.Key | null | undefined) => (
                         <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
-                            <MediaThumbnailComponent link={`/anime/${post.id}`} title={post.title.userPreferred} poster={post.image} width={400} height={600} index={index} type={"anime"}>
+                            <MediaThumbnailComponent link={`/anime/${post.id}`} id={post.id} title={post.title.userPreferred || post.title.english} poster={post.image} width={400} height={600} index={index} type={"anime"}>
                                 <div className="absolute flex justify-start items-center flex-wrap gap-2 top-3 left-3 z-[3]">
                                     {post.rating && <span className='bg-yellow-500 text-white py-[0.8px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
                                         <Star fill="white" color='white' width={12} />&nbsp;{(post.rating / 10).toFixed(1)}
@@ -63,14 +63,14 @@ const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: bool
                     {mediaData?.results.map((post: { __typename: string; title: any; id: any; vote_average: number; poster_path: string; name: any; known_for_department: string; profile_path: string; release_date: string; first_air_date: string; }, index: React.Key | null | undefined) => (
                         (post.__typename !== "People") ?
                             <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
-                                <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
+                                <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                                     <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                         <Star fill="white" color='white' width={12} />&nbsp;{post.vote_average.toFixed(1)}
                                     </span>
                                 </MediaThumbnailComponent>
                             </div> :
                             <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
-                                <MediaThumbnailComponent link={`/people/${post.id}`} title={post.name} poster={post.profile_path} width={400} height={600} index={index} type={"people"} >
+                                <MediaThumbnailComponent link={`/people/${post.id}`} title={post.name} id={post.id} poster={post.profile_path} width={400} height={600} index={index} type={"people"} >
                                     <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                         {(post.known_for_department === "Acting" && "Actor") || (post.known_for_department === "Writing" && "Writer") || (post.known_for_department === "Directing" && "Director") || (post.known_for_department === "Production" && "Producer") || post.known_for_department}
                                     </span>

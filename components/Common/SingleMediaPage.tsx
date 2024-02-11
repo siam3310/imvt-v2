@@ -3,15 +3,17 @@ import Link from 'next/link';
 import Image from 'next/image'
 import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 import { Button } from '@/components/ui/button';
-import { Star, ClockIcon, Users, PlayCircle } from "lucide-react";
+import { Star, ClockIcon, Users, PlayCircle, PlusCircle } from "lucide-react";
 import MediaDetailsTabs from '@/components/Common/MediaDetailsTabs';
 import SelectAnimeDrawer from '@/components/Anime/SelectAnimeDrawer';
 import { singleMediaDataType } from '@/types/mediaData'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import usehandleWatchlist from '@/hooks/usehandleWatchlist';
 const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaDataType, loading: any, type: any }) => {
   const ReleaseDate = new Date(mediaData?.release_date || mediaData?.first_air_date);
   const isUpcoming = ReleaseDate ? ReleaseDate > new Date() : null;
+  const { watchlistType, setWatchlistType } = usehandleWatchlist(mediaData?.id, mediaData?.name ? "tv" : "movie")
   const [openAnimeDrawer, setOpenAnimeDrawer] = React.useState<boolean>(false);
 
   useEffect(() => {
@@ -20,6 +22,14 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
     }
   }, [mediaData])
 
+  const watchListNames = {
+    completed: "Completed",
+    watching: "Watching",
+    plan_to_watch: "Plan to Watch",
+    on_hold: "On Hold",
+    dropped: "Dropped",
+    remove: "watchlist",
+  }
 
   if (loading || !mediaData) return <SingleMediaSkeleton />
 
@@ -50,7 +60,24 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
               loading={"eager"}
               placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`} />
             <div className='w-full flex flex-col items-center justify-center'>
-              <Link href={`/${!mediaData?.name ? "movie" : "tv"}/${mediaData.id}/play`}><Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1'><PlayCircle /> Watch Now</Button></Link></div>
+              <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 p-0 rounded-xl overflow-hidden'><Link className='bg-yellow-400 text-white px-5 py-2 h-full w-full flex justify-center items-center gap-x-1' href={`/${!mediaData?.name ? "movie" : "tv"}/${mediaData.id}/play`}><PlayCircle /> Watch Now</Link></Button>
+            </div>
+            <div className='w-full flex flex-col items-center justify-center'>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 rounded-xl'>{watchlistType ? watchListNames[watchlistType] : <><PlusCircle /> Watchlist</>}</Button>
+                </PopoverTrigger>
+                <PopoverContent className="flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]">
+                  <Button onClick={() => { setWatchlistType("completed"); }} variant={watchlistType === "completed" ? "default" : "outline"}>Completed</Button>
+                  <Button onClick={() => { setWatchlistType("watching"); }} variant={watchlistType === "watching" ? "default" : "outline"}>Watching</Button>
+                  <Button onClick={() => { setWatchlistType("plan_to_watch"); }} variant={watchlistType === "plan_to_watch" ? "default" : "outline"}>Plan to Watch</Button>
+                  <Button onClick={() => { setWatchlistType("on_hold"); }} variant={watchlistType === "on_hold" ? "default" : "outline"}>On Hold</Button>
+                  <Button onClick={() => { setWatchlistType("dropped"); }} variant={watchlistType === "dropped" ? "default" : "outline"}>Dropped</Button>
+                  {watchlistType && <Button onClick={() => { setWatchlistType("remove"); }} variant={'destructive'}>Remove from Watchlist</Button>}
+                </PopoverContent>
+              </Popover>
+
+            </div>
           </div>
           <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
             <h1 className='text-[2rem] lg:text-[2.5rem] font-bold'>{mediaData?.name || mediaData?.title}</h1>
@@ -78,7 +105,6 @@ const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaD
               ))}
               <p className='text-lg hidden lg:block'>{mediaData?.overview}</p>
             </div>
-
           </div>
         </div>
         <p className='text-lg text-white px-3 sm:px-10 lg:hidden'>{mediaData?.overview}</p>
@@ -103,9 +129,12 @@ const SingleMediaSkeleton = () => {
       </div>
       <div className='flex flex-col gap-y-5 lg:gap-y-14'>
         <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[30dvh] z-2'>
-          <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-center gap-y-3 justify-center'>
+          <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-center gap-y-2 justify-center'>
             <div className='min-w-[150px] h-fit rounded-3xl p-0 m-0 overflow-hidden max-w-[250px] w-[70%] sm:w-[60%] lg:w-[50%]'>
               <Skeleton className="w-full rounded-3xl p-0 m-0" height={360} />
+            </div>
+            <div className='min-w-[150px] max-w-[250px] w-[70%] sm:w-[60%] lg:w-[50%]'>
+              <Skeleton className='w-full' height={50} />
             </div>
             <div className='min-w-[150px] max-w-[250px] w-[70%] sm:w-[60%] lg:w-[50%]'>
               <Skeleton className='w-full' height={50} />
@@ -127,10 +156,7 @@ const SingleMediaSkeleton = () => {
               <Skeleton height={40} width={100} />
             </div>
             <div className='min-w-[150px] w-[100%]'>
-              <Skeleton className='text-[2rem] lg:text-[2.5rem] font-bold' height={190} />
-            </div>
-            <div className='min-w-[150px] w-[70%] sm:w-[60%] lg:w-[50%]'>
-              <Skeleton className='text-[1.2rem] font-serif' height={50} />
+              <Skeleton className='text-[2rem] lg:text-[2.5rem] font-bold' height={250} />
             </div>
           </div>
         </div>

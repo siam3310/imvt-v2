@@ -7,11 +7,11 @@ import { gql, useQuery } from "@apollo/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { PlayCircle, Star, Users } from 'lucide-react';
+import { Star, Users } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area'
-import Link from 'next/link'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
 import GetpeoplebyId from '@/graphql/queries/GetpeoplebyId.gql';
 
 const SinglePeoplePage = ({ id }: { id: string }) => {
@@ -22,7 +22,6 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
     variables: { Id },
   });
   const peopleData = data?.getpeoplebyId;
-  // console.log(peopleData);
 
   useEffect(() => {
     const handleResize = () => {
@@ -130,34 +129,15 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
               <TabsTrigger value="crew">Crew</TabsTrigger>
             </TabsList>
 
-
             <TabsContent value='cast'>
               {loading ? <Skeleton width={"100%"} height={500} /> : <div className="w-full h-full flex justify-center">
                 <div className="w-full flex flex-wrap justify-start items-center">
                   {peopleData?.combined_credits.cast.map((post: any, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-                    <div className="group clickable">
-                      <Link href={`/${post.media_type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
-                        <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                      </Link>
+                    <MediaThumbnailComponent title={post.name || post.title} id={post.id} link={`/${post.media_type}/${post.id}`} poster={post.poster_path} width={200} height={300} index={index} type={post.title ? "movie" : "tv"} title2={`as ${post.character}`}>
                       <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                         Acting
                       </span>
-                      <div className='w-full h-fulll'>
-                        <div className="aspect-[2/3]">
-                          <Image
-                            className="rounded-t-md flex justify-center items-center group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                            src={post.poster_path}
-                            alt={`${post.name || post.title} poster`}
-                            width={200}
-                            height={300}
-                            loading={index as number < 10 ? "eager" : "lazy"}
-                            placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
-                          />
-                        </div>
-                        <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                        <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.character}>as {post.character}</h2>
-                      </div>
-                    </div>
+                    </MediaThumbnailComponent>
                   </div>)
                   )}
                 </div>
@@ -169,29 +149,11 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
               {loading ? <Skeleton width={"100%"} height={500} /> : <div className="w-full h-full flex justify-center">
                 <div className="w-full flex flex-wrap justify-start items-center">
                   {peopleData?.combined_credits.crew.map((post: any, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-                    <div className="group clickable">
-                      <Link href={`/${post.media_type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
-                        <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                      </Link>
+                    <MediaThumbnailComponent title={post.name || post.title} id={post.id} link={`/${post.media_type}/${post.id}`} poster={post.poster_path} width={200} height={300} index={index} type={post.title ? "movie" : "tv"} title2={post.department}>
                       <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                         {post.job}
                       </span>
-                      <div className='w-full h-fulll'>
-                        <div className="aspect-[2/3]">
-                          <Image
-                            className="rounded-t-md flex justify-center items-center group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                            src={post.poster_path}
-                            alt={`${post.name || post.title} poster`}
-                            width={200}
-                            height={300}
-                            loading={index as number < 10 ? "eager" : "lazy"}
-                            placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
-                          />
-                        </div>
-                        <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                        <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.department}>{post.department}</h2>
-                      </div>
-                    </div>
+                    </MediaThumbnailComponent>
                   </div>)
                   )}
                 </div>

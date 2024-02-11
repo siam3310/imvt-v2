@@ -121,7 +121,7 @@ export default function ProfileForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col md:flex-row-reverse gap-3 items-start justify-center pb-[150px] sm:pb-10 sm:pt-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col md:flex-row-reverse gap-3 items-start justify-center pb-[150px] sm:pb-8 sm:pt-5">
                 <div className="w-full md:w-1/3 pt-7">
                     <FormField
                         control={form.control}
