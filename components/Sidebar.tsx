@@ -17,7 +17,7 @@ const SidebarContext = createContext({ expanded: false });
 export default function Sidebar() {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [hideSidebar, setHideSidebar] = useState<boolean>(false);
-  const { userData, userSession, loading } = useAuthenticatedUser()
+  const { userData, loading } = useAuthenticatedUser()
   const pathname = usePathname();
 
   if (pathname === "/login" || pathname === "/signup") return <></>

@@ -1,7 +1,7 @@
 import React, { Key, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PlusCircle, PlayCircle, ExternalLink } from 'lucide-react'
+import { PlusCircle, PlayCircle, ExternalLink, Info } from 'lucide-react'
 import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 import { Button } from '@/components/ui/button';
 import usehandleWatchlist from '@/hooks/usehandleWatchlist';
@@ -26,17 +26,20 @@ const MediaThumbnailComponent = ({ children, link, id, title, poster, index, wid
 
     return (
         <div className="group clickable">
-            <Link href={link} className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
+            <div className="hidden clickable group-hover:flex absolute w-full aspect-[2/3] group-hover:z-[3] justify-center items-center pr-5">
                 {/* <Link href={link} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5"> */}
                 {type === "people" ?
                     <span className="z-[3] clickable"><ExternalLink size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
                     : <span className="z-[3] clickable flex flex-wrap justify-center items-center gap-2">
-                        <Link href={link + "/play"}>
-                            <PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth />
+                        <Link className="text-white hover:text-yellow-300" title="play now" href={link + "/play"}>
+                            <PlayCircle size={48} strokeWidth={4} absoluteStrokeWidth />
+                        </Link>
+                        <Link className="text-white hover:text-blue-600" title="More Info" href={link}>
+                            <Info size={48} strokeWidth={4} absoluteStrokeWidth />
                         </Link>
                     </span>}
 
-            </Link>
+            </div>
             {!isUpcoming ? children : <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                 {new Date(release_date).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
             </span>}
@@ -65,7 +68,7 @@ const MediaThumbnailComponent = ({ children, link, id, title, poster, index, wid
                         placeholder={`data:image/${shimmerBlurDataUrl(width, height)}`}
                     />
                 </div>
-                <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={title}>{title}</h2>
+                <Link href={link}><h2 className="cursor-pointer text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={title}>{title}</h2></Link>
                 {title2 && <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={title2}>{title2}</h2>}
             </div>
         </div>

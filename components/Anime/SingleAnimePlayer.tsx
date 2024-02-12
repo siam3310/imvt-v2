@@ -64,14 +64,15 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
                         <ResizablePanel defaultSize={20} className='max-w-[500px] h-full'>
                             <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Episodes</h1>
                             <ScrollArea className="h-full w-full rounded-md border p-4 pb-12">
-                                {animeData?.episodes && <div className="flex flex-col gap-3">
+                                {animeData?.zoroEpisodes && animeData?.zoroEpisodes.length > 0 && animeData?.zoroEpisodes[0].id && <div className="flex flex-col gap-3">
                                     <div className="flex flex-col gap-3">
                                         {animeData?.zoroEpisodes?.map((episode: { id: string; title: any; episode: string, number: string }, index: number) => (
                                             <Button key={index} variant={episodeNumber === (index as number) + 1 ? "default" : "secondary"} onClick={() => { setEpisodeNumber((index as number) + 1); setAnilistId(animeData?.episodes[index].zoroId); setZoroId(episode.id); }} title={`EP ${episode.number} ` + episode.title || animeData?.episodes[index].title || `Episode ${episode.number}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis text-start justify-start">{`EP ${episode.number}: ` + episode.title || animeData?.episodes[index].title || `Episode ${episode.number}`}</Button>
                                         ))}
                                     </div>
                                 </div>}
-                                <ScrollBar orientation="horizontal" />
+                                <ScrollBar />
+                                <ScrollBar orientation='horizontal' />
                             </ScrollArea>
                         </ResizablePanel>
                     </div>
@@ -150,15 +151,16 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
 
                             <div className=' md:hidden'>
                                 <h1 className="text-xl h-10 px-3 py-2 font-bold whitespace-nowrap overflow-hidden text-ellipsis">Episodes</h1>
-                                <ScrollArea className="h-full max-w-[100vw] w-full rounded-md border p-4 pb-12 max-h-[50dvh] min-w-0">
-                                    {animeData?.episodes && <div className="flex flex-col gap-3">
+                                <ScrollArea className="h-full max-w-[100vw] w-full rounded-md border p-4 pb-12 overflow-y-scroll max-h-[50dvh] min-w-0">
+                                    {animeData?.zoroEpisodes && animeData?.zoroEpisodes.length > 0 && animeData?.zoroEpisodes[0].id && <div className="flex flex-col gap-3">
                                         <div className="flex flex-col gap-3">
                                             {animeData?.zoroEpisodes?.map((episode: { id: string; title: any; episode: string, number: string }, index: number) => (
                                                 <Button key={index} variant={episodeNumber === (index as number) + 1 ? "default" : "secondary"} onClick={() => { setEpisodeNumber((index as number) + 1); setAnilistId(animeData?.episodes[index].zoroId); setZoroId(episode.id); }} title={`EP ${episode.number} ` + episode.title || animeData?.episodes[index].title || `Episode ${episode.number}`} className="w-full whitespace-nowrap overflow-hidden text-ellipsis text-start justify-start">{`EP ${episode.number}: ` + episode.title || animeData?.episodes[index].title || `Episode ${episode.number}`}</Button>
                                             ))}
                                         </div>
                                     </div>}
-                                    <ScrollBar orientation="horizontal" />
+                                    <ScrollBar />
+                                    <ScrollBar orientation='horizontal' />
                                 </ScrollArea>
                             </div>
 
@@ -168,19 +170,13 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
                                         <CardTitle>Currently Playing</CardTitle>
                                         {<CardDescription>Episode {episodeNumber}</CardDescription>}
                                         <div className="w-full">
-                                            <Image className='w-full max-h-[50dvh] object-contain object-left' src={animeData?.zoroEpisodes ? animeData?.zoroEpisodes[episodeNumber - 1]?.image : `https://via.placeholder.com/300`}
+                                            <Image className='w-full max-h-[50dvh] object-contain object-left'
+                                                src={animeData?.zoroEpisodes[episodeNumber - 1]?.image || `https://via.placeholder.com/300`}
                                                 alt={`current media poster`}
                                                 width={300}
                                                 height={300}
                                                 placeholder={`data:image/${shimmerBlurDataUrl(50, 75)}`} />
                                         </div>
-                                        {/* <div className="w-full">
-                                            <Image className='w-full sm:w-[50%] max-h-[50dvh] object-contain object-left' src={animeData?.zoroEpisodes ? animeData?.zoroEpisodes[episodeNumber - 1]?.image : `https://via.placeholder.com/300`}
-                                                alt={`current media poster`}
-                                                width={300}
-                                                height={300}
-                                                placeholder={`data:image/${shimmerBlurDataUrl(50, 75)}`} />
-                                        </div> */}
                                         <CardTitle>{animeData?.zoroEpisodes[episodeNumber - 1]?.title}</CardTitle>
                                         <CardDescription>
                                             {animeData?.zoroEpisodes[episodeNumber - 1]?.description || animeData?.description}
@@ -205,7 +201,8 @@ const SingleMediaPlayer = ({ id }: { id: string }) => {
                                 <CardTitle>Currently Playing</CardTitle>
                                 {<CardDescription>Episode {episodeNumber}</CardDescription>}
                                 <div className="w-full">
-                                    <Image className='w-full max-h-[50dvh] object-contain object-left' src={animeData?.zoroEpisodes ? animeData?.zoroEpisodes[episodeNumber - 1]?.image : `https://via.placeholder.com/300`}
+                                    <Image className='w-full max-h-[50dvh] object-contain object-left'
+                                        src={animeData?.zoroEpisodes[episodeNumber - 1]?.image || `https://via.placeholder.com/300`}
                                         alt={`current media poster`}
                                         width={300}
                                         height={300}

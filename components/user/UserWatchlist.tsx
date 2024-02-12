@@ -18,7 +18,7 @@ const UserWatchlist = () => {
 
 
     return (
-        <div className='w-full h-full overflow-y-auto flex flex-col justify-start items-center space-y-6'>
+        <div className='w-full h-full overflow-y-auto flex flex-col justify-start items-center space-y-6 pb-[120px] sm:pb-5'>
             <h1 className='text-[2rem] sm:text-[3rem] font-bold text-center py-20 w-full bg-red-500 whitespace-nowrap overflow-hidden text-ellipsis'>Your Watchlist</h1>
             <div className="w-full sm:px-10 shrink">
                 {!loading && (!mediaList || (mediaList.movie.length === 0 && mediaList.tv.length === 0 && mediaList.anime.length === 0)) ? <div className='flex items-center justify-center w-full h-[300px] text-xl'>No Media in your Watchlist</div> :

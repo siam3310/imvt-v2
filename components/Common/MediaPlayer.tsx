@@ -99,11 +99,12 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
                     control: false,
                     setting: true,
                     getResolution: (level) => level.height + 'P',
-                    title: 'Quality',
+                    title: 'Auto Quality',
                     auto: 'Auto',
                 }),
                 artplayerPluginVttThumbnail({
-                    vtt: thumbnail || "",
+                    // vtt: "./sprite.vtt",
+                    vtt: thumbnail || null,
                 })
             ],
             volume: 1,

@@ -4,9 +4,9 @@ import { HomeIcon, Search, Clapperboard, Film, Tv, Compass } from "lucide-react"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthenticatedUser } from "@/hooks/useAuthenticatedUser";
-
+import { ProfilePopover } from "@/components/user/ProfilePopover";
 const BottomNav = () => {
-    const { userData, userSession } = useAuthenticatedUser()
+    const { userData, loading } = useAuthenticatedUser()
     const pathname = usePathname();
     if (pathname === "/login" || pathname === "/signup") return <></>
 
@@ -20,14 +20,10 @@ const BottomNav = () => {
                     <Link href="/explore" className="flex justify-evenly items-center px-5 py-1.5 text-xs font-medium rounded-lg border dark:bg-black dark:border-gray-900 dark:text-white dark:hover:bg-gray-900">
                         <Compass color='rgb(107 114 128 / 1)' />Explore
                     </Link>
-                    {/* <Link href="tv" type="button" className="px-5 py-1.5 text-xs font-medium text-gray-900 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 rounded-lg">
-                        TV Shows
-                    </Link> */}
                 </div>
             </div>
 
-            <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
-
+            <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
                 <Link href={`/`} data-tooltip-target="tooltip-home" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-900 group">
                     <HomeIcon color='rgb(107 114 128 / 1)' />
                     <span className="text-sm text-[rgb(107,114,128,1)]">Home</span>
@@ -45,29 +41,17 @@ const BottomNav = () => {
 
                 <Link href="iptv" data-tooltip-target="tooltip-post" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-900 group">
                     <Tv color='rgb(107 114 128 / 1)' />
-                    <span className="text-sm text-[rgb(107,114,128,1)]">Live TV</span>
+                    <span className="text-sm text-[rgb(107,114,128,1)] whitespace-nowrap">Live TV</span>
                 </Link>
 
-                {/* <Link href="trending" data-tooltip-target="tooltip-post" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <Flame color='rgb(107 114 128 / 1)' />
-                    <span className="sr-only">Trending</span>
-                </Link>
-                <div id="tooltip-post" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Trending
-                    <div className="tooltip-arrow" data-popper-arrow></div>
-                </div> */}
-
-
-                {/* <button data-tooltip-target="tooltip-settings" type="button" className="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                    <svg className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2" />
-                    </svg>
-                    <span className="sr-only">Settings</span>
-                </button>
-                <div id="tooltip-settings" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Settings
-                    <div className="tooltip-arrow" data-popper-arrow></div>
-                </div> */}
+                <ProfilePopover userData={userData}>
+                    <button className="w-full h-full p-1 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-900">
+                        <span className='flex flex-col items-center justify-center'>
+                            <svg className='text-[rgb(107,114,128,1)]' xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" d="M4 18a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2" opacity="0.16" /><path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M4 18a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" /><circle cx="12" cy="7" r="3" stroke="currentColor" strokeWidth="2" /></g></svg>
+                            <span className="text-sm text-[rgb(107,114,128,1)]">Profile</span>
+                        </span>
+                    </button>
+                </ProfilePopover>
             </div>
         </div>
     )
