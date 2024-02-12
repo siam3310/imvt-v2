@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { GetMoviebyId } from "@/graphql/queries/GetMoviebyId.gql";
-import { GetTvbyId } from "@/graphql/queries/GetTvbyId.gql";
-import { GetAnimebyId } from "@/graphql/queries/GetAnime.gql";
+import { GetMoviebyId, GetTvbyId, GetAnimebyId } from "@/graphql/queries/WatchlistQuery.gql";
 import { useApolloClient } from '@apollo/client';
 
 const useWatchlist = (watchlist: any[]) => {
@@ -49,9 +47,6 @@ const useWatchlist = (watchlist: any[]) => {
             if (results.length > 0) {
                 setLoading(results[results.length - 1].loading);
             }
-            // if (newMediaList.movie.length > 0 || newMediaList.tv.length > 0 || newMediaList.anime.length > 0) {
-            //     setLoading(false);
-            // }
         };
 
         fetchMedia();

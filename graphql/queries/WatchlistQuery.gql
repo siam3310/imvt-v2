@@ -1,0 +1,39 @@
+query GetMoviebyId($tmdbId: ID!) {
+  getMoviebyId(tmdbId: $tmdbId) {
+    id
+    title
+    poster_path
+    original_title
+    release_date
+    vote_average
+  }
+}
+
+query GetTvbyId($tmdbId: ID!) {
+  getTvbyId(tmdbId: $tmdbId) {
+    id
+    name
+    poster_path
+    original_name
+    first_air_date
+    vote_average
+  }
+}
+
+query GetAnimebyId($id: ID!) {
+  getAnimebyId(id: $id) {
+    id
+    title {
+      english
+      romaji
+      native
+      userPreferred
+    }
+    image
+    rating
+    type
+    totalEpisodes
+    releaseDate
+    color
+  }
+}

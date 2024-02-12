@@ -32,7 +32,7 @@ const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: bool
                 <div className="flex flex-wrap w-full justify-start items-center">
                     {mediaData?.results.map((post: { title: any; id: string; image: string; type: string; rating: number; releaseDate: string; totalEpisodes: number }, index: React.Key | null | undefined) => (
                         <div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`}>
-                            <MediaThumbnailComponent link={`/anime/${post.id}`} id={post.id} title={post.title.userPreferred || post.title.english} poster={post.image} width={400} height={600} index={index} type={"anime"}>
+                            <MediaThumbnailComponent link={`/anime/${post.id}`} id={post.id} title={post.title.userPreferred || post.title.english || post.title.romaji || post.title.native} poster={post.image} width={400} height={600} index={index} type={"anime"}>
                                 <div className="absolute flex justify-start items-center flex-wrap gap-2 top-3 left-3 z-[3]">
                                     {post.rating && <span className='bg-yellow-500 text-white py-[0.8px] px-1 text-[0.8rem] rounded-md whitespace-nowrap flex items-center'>
                                         <Star fill="white" color='white' width={12} />&nbsp;{(post.rating / 10).toFixed(1)}
