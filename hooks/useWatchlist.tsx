@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { GetMoviebyId, GetTvbyId, GetAnimebyId } from "@/graphql/queries/WatchlistQuery.gql";
 import { useApolloClient } from '@apollo/client';
-
+import { useWatchlistDataStore } from '@/store/watchlistDataStore'
 const useWatchlist = (watchlist: any[]) => {
+    const { watchlistState, setWatchlistState } = useWatchlistDataStore()
     const [mediaList, setMediaList] = useState<any>({ movie: [], tv: [], anime: [] });
     const [loading, setLoading] = useState(true);
     const client = useApolloClient();
@@ -10,7 +11,8 @@ const useWatchlist = (watchlist: any[]) => {
     useEffect(() => {
         const fetchMedia = async () => {
             setLoading(true);
-            const promises = watchlist.map((media: any) => {
+            setMediaList({ movie: [], tv: [], anime: [] });
+            const promises = watchlistState.map((media: any) => {
                 if (media.mediaType === 'movie') {
                     return client.query({
                         query: GetMoviebyId,
@@ -49,8 +51,13 @@ const useWatchlist = (watchlist: any[]) => {
             }
         };
 
-        fetchMedia();
-    }, [watchlist]);
+        if (watchlistState.length > 0) {
+            fetchMedia();
+        } else {
+            setLoading(false);
+        }
+
+    }, [watchlistState]);
 
     return { mediaList, loading };
 };
