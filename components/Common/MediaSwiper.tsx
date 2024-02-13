@@ -107,12 +107,12 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
                                     <h3 className='font-bold w-fit text-[1.5rem] sm:text-[1.5rem] md:text-[2rem] lg:[2.5rem] xl:text-[3rem] text-wrap'>{data[selectedIndex]?.name || data[selectedIndex]?.title || "unknown"}</h3>
                                     <div className='flex flex-wrap items-center gap-x-2'>
                                         <span className='bg-yellow-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md whitespace-nowrap flex items-center'>
-                                            <Star fill="white" color='white' width={16} />&nbsp;{data[selectedIndex]?.vote_average.toFixed(1)}
+                                            <Star fill="white" color='white' width={16} />&nbsp;{data[selectedIndex]?.vote_average?.toFixed(1)}
                                         </span>
                                         {data[selectedIndex]?.adult && <span className='bg-red-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md'>
                                             NSFW
                                         </span>}
-                                        {data[selectedIndex]?.genre_ids.map((genre, index) => (
+                                        {data[selectedIndex]?.genre_ids?.map((genre, index) => (
                                             <span key={index} className='bg-green-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md'>
                                                 {genre}
                                             </span>
