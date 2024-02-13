@@ -166,18 +166,26 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
                             />}
                             {(isMediaPlayer && !loading && !streamingLoading) && (streamingData[serverNumber - 1]?.sources?.length === 0 || !streamingData[serverNumber - 1]?.sources || !streamingData) &&
                                 <div className='w-[99%] min-h-[200px] sm:min-h-[350px] max-h-[100dvh] aspect-[4/3] sm:aspect-[1.85/1] flex items-center justify-center'>
-                                    <img
+                                    <Image
                                         className="w-full h-full object-contain flex justify-center items-center"
                                         src="https://techdator.net/wp-content/uploads/2022/05/No-Valid-Sources-Available-for-This-Video.png"
-                                        alt="Video Source Not Found" />
+                                        alt="Video Source Not Found"
+                                        width={1080}
+                                        height={720}
+                                        placeholder={`data:image/${shimmerBlurDataUrl(1080, 720)}`}
+                                    />
                                 </div>
                             }
                             {(loading || streamingLoading || !mediaData) &&
                                 <div className='w-[99%] min-h-[200px] sm:min-h-[350px] max-h-[100dvh] aspect-[4/3] sm:aspect-[1.85/1] flex items-center justify-center'>
-                                    <img
+                                    <Image
                                         className="w-1/2 h-1/2 object-contain flex justify-center items-center"
                                         src="https://i.pinimg.com/originals/d9/f2/15/d9f21515b1e38d83e94fdbce88f623b6.gif"
-                                        alt="loading Media..." />
+                                        alt="loading Media..."
+                                        width={1080}
+                                        height={720}
+                                        placeholder={`data:image/${shimmerBlurDataUrl(1080, 720)}`}
+                                    />
                                 </div>
                             }
                             <div className="flex flex-col gap-5 items-start justify-center p-10 pt-10">

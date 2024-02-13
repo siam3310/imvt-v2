@@ -51,3 +51,5 @@ export default async function RootLayout({ children }: IChildren) {
     </html>
   )
 }
+
+export const dynamic = 'force-dynamic'

@@ -30,7 +30,7 @@ const TrendingMediaPages = ({ type }: { type: string }) => {
       setMediaData(data?.getPeopleTrendingWeek)
       setHeading("Trending People")
     }
-  }, [data, page])
+  }, [data, page, type])
 
   return (
     <>

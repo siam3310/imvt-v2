@@ -106,7 +106,7 @@ export default function IptvPlayer({ playerData }: { playerData: iptvDataType },
                 art.destroy();
             }
         };
-    }, [playerData]);
+    }, [playerData, getInstance]);
 
     return <></>
 }

@@ -183,7 +183,7 @@ export default function VideoPlayer({ media, getInstance, className }: { media: 
                 art.destroy(false);
             }
         };
-    }, [thumbnail]);
+    }, [thumbnail, getInstance, QualityObj, SubtitleObj, media?.urls, media?.subtitles, media?.thumbnail, media?.logo]);
 
     return <div className={`artplayer-app ${className}`} ></div>
 }

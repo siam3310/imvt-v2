@@ -57,11 +57,11 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
         } else {
             setIptvData(categoryData?.iptvCategory);
         }
-    }, [searchBy, countryData, categoryData]);
+    }, [searchBy, countryData, categoryData, setIptvData]);
 
     useEffect(() => {
         setLoadingPage(countryLoading || categoryLoading);
-    }, [countryLoading, categoryLoading]);
+    }, [countryLoading, categoryLoading, setLoadingPage]);
 
 
 
@@ -85,8 +85,8 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
 
                                                 {iptv?.inf?.tvgLogo && <Image
                                                     className="flex justify-center items-center rounded-t-md group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-contain bg-gray-200 w-full h-full"
-                                                    src={iptv.inf.tvgLogo}
-                                                    alt={`${iptv.inf.title} logo`}
+                                                    src={iptv?.inf?.tvgLogo}
+                                                    alt={`${iptv?.inf?.title} logo`}
                                                     width={500}
                                                     height={500}
                                                     loading={index as number < 10 ? "eager" : "lazy"}
@@ -94,8 +94,8 @@ const IptvChannels = ({ query, setQuery, setIptvPlayerData, searchBy, group, pag
                                                 />
                                                 }
                                             </div>
-                                            <h2 className="text-gray-900 bg-white border  px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={iptv.inf.title}>{iptv.inf.title}</h2>
-                                            <h2 onClick={(e) => setQuery(iptv.inf.groupTitle)} className="bg-white rounded-b-md border px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold text-blue-600 cursor-pointer" title={iptv.inf.groupTitle}>{iptv.inf.groupTitle}</h2>
+                                            <h2 className="text-gray-900 bg-white border  px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={iptv?.inf?.title}>{iptv?.inf?.title}</h2>
+                                            <h2 onClick={(e) => setQuery(iptv?.inf?.groupTitle)} className="bg-white rounded-b-md border px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold text-blue-600 cursor-pointer" title={iptv?.inf?.groupTitle}>{iptv?.inf?.groupTitle}</h2>
                                         </div>
                                     </div>
                                 </div>

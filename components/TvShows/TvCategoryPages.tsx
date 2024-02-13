@@ -32,7 +32,7 @@ const TvCategoryPages = ({ category }: { category: string }) => {
       setMediaData(data?.getTvOnTheAir)
       setHeading("On the Air Shows")
     }
-  }, [data, page])
+  }, [data, page, category])
   return (
     <>
       <div className="w-full h-[100dvh] flex flex-col gap-y-3 p-5 ">

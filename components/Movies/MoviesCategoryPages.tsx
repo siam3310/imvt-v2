@@ -29,7 +29,7 @@ const MovieCategoryPages = ({ category }: { category: string }) => {
       setMediaData(data?.getMovieUpcoming)
       setHeading("Upcoming")
     }
-  }, [data, page])
+  }, [data, page, category])
 
   return (
     <>
