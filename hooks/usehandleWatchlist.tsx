@@ -26,9 +26,9 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
                 if (response.errors) {
                     return response
                 }
-                console.log("add to watchlist")
+                // console.log("add to watchlist")
                 setWatchlistState([...watchlistState, response.data.addWatchlistItem])
-                console.log([...watchlistState, response.data.addWatchlistItem])
+                // console.log([...watchlistState, response.data.addWatchlistItem])
             } catch (error) {
                 console.error(error);
             }
@@ -36,7 +36,7 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
         const handleDeleteWatchlist = async (watchlistItem: any) => {
             try {
                 setWatchlistState(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
-                console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
+                // console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
                 const response = await deleteWatchlistItem({
                     variables: {
                         itemId: watchlistItem.id,
@@ -44,8 +44,8 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
                     },
                 });
                 setWatchlistState(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
-                console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
-                console.log(response?.data?.deleteWatchlistItem)
+                // console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
+                // console.log(response?.data?.deleteWatchlistItem)
                 return response
             } catch (error) {
                 console.error(error);
@@ -55,8 +55,8 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
             try {
                 const updatedWatchlist = watchlistState.filter((item: any) => item.id !== watchlistItem.id)
                 setWatchlistState([...updatedWatchlist, { ...watchlistItem, watchListType: watchlistType }])
-                console.log("updateWatchlistItem")
-                console.log([...updatedWatchlist, { ...watchlistItem, watchListType: watchlistType }])
+                // console.log("updateWatchlistItem")
+                // console.log([...updatedWatchlist, { ...watchlistItem, watchListType: watchlistType }])
                 return await updateWatchlistItem({
                     variables: {
                         itemId: watchlistItem.id,
@@ -68,27 +68,27 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
                 console.error(error);
             }
         };
-        console.log("running this useEffect")
+        // console.log("running this useEffect")
         if (!watchlistItem && watchlistType) {
-            console.log("Initial watchlistState")
-            console.log(watchlistState)
+            // console.log("Initial watchlistState")
+            // console.log(watchlistState)
             handleAddToWatchlist()
         }
         else if (watchlistItem && watchlistType === "") {
-            console.log("Initial watchlistState")
-            console.log(watchlistState)
+            // console.log("Initial watchlistState")
+            // console.log(watchlistState)
             handleDeleteWatchlist(watchlistItem)
         }
         else if (watchlistItem && watchlistType && watchlistItem?.watchListType !== watchlistType) {
-            console.log("Initial watchlistState")
-            console.log(watchlistState)
+            // console.log("Initial watchlistState")
+            // console.log(watchlistState)
             handleUpdateWatchlist(watchlistItem)
         }
 
     }, [watchlistType, mediaId, type])
 
     useEffect(() => {
-        console.log("running this 2nd useEffect")
+        // console.log("running this 2nd useEffect")
         if (!watchlistItem) {
             setWatchlistType("");
         }

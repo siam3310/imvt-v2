@@ -33,8 +33,8 @@ const useWatchlist = (watchlist: any[]) => {
                 }
             });
             const results = await Promise.all(promises);
-            console.log("results")
-            console.log(results)
+            // console.log("results")
+            // console.log(results)
             const newMediaList: { movie: any[], tv: any[], anime: any[] } = { movie: [], tv: [], anime: [] };
             results.forEach((result: any) => {
                 if (result?.data?.getMoviebyId) {

@@ -6,6 +6,10 @@ const nextConfig = {
       exclude: /node_modules/,
       loader: "graphql-tag/loader"
     });
+    config.ignoreWarnings = [
+      { module: /node_modules\/node-fetch\/lib\/index\.js/ },
+      { file: /node_modules\/node-fetch\/lib\/index\.js/ },
+    ];
 
     return config;
   },
@@ -25,6 +29,7 @@ const nextConfig = {
     // formats: ['image/webp'],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
+
   },
 }
 
