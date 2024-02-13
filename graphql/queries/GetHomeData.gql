@@ -3,6 +3,7 @@ query GetHomeData {
     results {
       ... on Movie {
         backdrop_path
+        release_date
         adult
         id
         title
@@ -15,6 +16,7 @@ query GetHomeData {
       }
       ... on TV {
         backdrop_path
+        first_air_date
         adult
         id
         name

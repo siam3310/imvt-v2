@@ -61,9 +61,9 @@ const HeroSectionCarousel = ({ data, loading }: { data: mediaData[] | undefined,
                                 <Thumb
                                     onClick={() => onThumbClick(index)}
                                     selected={index === selectedIndex}
-                                    backdropSrc={mediaData.backdrop_path}
-                                    posterSrc={mediaData.poster_path}
-                                    title={mediaData.name || mediaData.title || "unknown"}
+                                    backdropSrc={mediaData?.backdrop_path}
+                                    posterSrc={mediaData?.poster_path}
+                                    title={mediaData?.name || mediaData?.title || "unknown"}
                                     key={index}
                                 />
                             ))}
@@ -79,7 +79,13 @@ export default HeroSectionCarousel
 
 const HeroSectionCarouselSlide = ({ mediaData, index }: { mediaData: mediaData, index: React.Key | number }) => {
     const { theme, setTheme } = useTheme()
-    const { watchlistType, setWatchlistType } = usehandleWatchlist(mediaData.id, mediaData.name ? "tv" : "movie")
+    const { watchlistType, setWatchlistType } = usehandleWatchlist(mediaData?.id, mediaData?.name ? "tv" : "movie")
+
+    let isUpcoming = false;
+
+    if (new Date(mediaData?.release_date) >= new Date() || new Date(mediaData?.first_air_date) >= new Date()) {
+        isUpcoming = true;
+    }
 
     const watchListNames = {
         completed: "Completed",
@@ -93,8 +99,8 @@ const HeroSectionCarouselSlide = ({ mediaData, index }: { mediaData: mediaData, 
     return <div className={`${theme === "dark" ? "embla__slide" : "embla__slide-light"}`} key={index}>
         <Image
             className="embla__slide__img"
-            src={mediaData.backdrop_path}
-            alt={`${mediaData.name || mediaData.title} backdrop`}
+            src={mediaData?.backdrop_path}
+            alt={`${mediaData?.name || mediaData?.title} backdrop`}
             width={1280}
             height={720}
             loading={index as number < 10 ? "eager" : "lazy"}
@@ -102,27 +108,31 @@ const HeroSectionCarouselSlide = ({ mediaData, index }: { mediaData: mediaData, 
         />
         <div className='flex items-center gap-3 absolute top-0 right-0 z-10 w-full h-[80%] p-[3rem]'>
             <div className='w-full flex flex-col justify-center gap-y-3 select-none'>
-                <h3 className='font-bold text-[1.5rem] sm:text-[2rem] lg:text-[3rem]'>{mediaData.name || mediaData.title || "unknown"}</h3>
+                <h3 className='font-bold text-[1.5rem] sm:text-[2rem] lg:text-[3rem]'>{mediaData?.name || mediaData?.title || "unknown"}</h3>
                 <div className='flex flex-wrap items-center gap-3'>
-                    <span className='bg-yellow-500 py-1 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                        <Star fill="white" color='white' width={16} />&nbsp;{mediaData?.vote_average.toFixed(1)}&nbsp;•&nbsp;<Users fill="white" color='white' width={16} />&nbsp;{mediaData?.vote_count}
-                    </span>
-                    {mediaData.adult && <span className='bg-red-500 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                    {isUpcoming ?
+                        <span className='bg-yellow-500 py-1 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                            {new Date(mediaData?.release_date || mediaData?.first_air_date).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </span> :
+                        <span className='bg-yellow-500 py-1 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                            <Star fill="white" color='white' width={16} />&nbsp;{mediaData?.vote_average?.toFixed(1)}&nbsp;•&nbsp;<Users fill="white" color='white' width={16} />&nbsp;{mediaData?.vote_count}
+                        </span>}
+                    {mediaData?.adult && <span className='bg-red-500 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                         NSFW
                     </span>}
-                    {mediaData.genre_ids.map((genre, index) => (
+                    {mediaData?.genre_ids.map((genre, index) => (
                         <span key={index} className='bg-green-500 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                             {genre}
                         </span>
                     ))}
                     <span className='bg-purple-500 py-2 px-3 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                        {mediaData.title ? "Movie" : "TV"}
+                        {mediaData?.title ? "Movie" : "TV"}
                     </span>
                 </div>
-                <span className='text-lg max-h-[115px] text-[0.9rem] sm:text-[1rem] overflow-hidden'>{mediaData.overview}...</span>
+                <span className='text-lg max-h-[115px] text-[0.9rem] sm:text-[1rem] overflow-hidden'>{mediaData?.overview}...</span>
                 <div className='flex justify-start items-center gap-x-2'>
-                    <Link href={`/${mediaData.name ? "tv" : "movie"}/${mediaData.id}/play`} className='bg-yellow-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center flex items-center gap-x-2'><PlayCircle /> Play Now</Link>
-                    <Link href={`/${mediaData.name ? "tv" : "movie"}/${mediaData.id}`} className='bg-blue-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center'>More details</Link>
+                    <Link href={`/${mediaData?.name ? "tv" : "movie"}/${mediaData?.id}/play`} className='bg-yellow-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center flex items-center gap-x-2'><PlayCircle /> Play Now</Link>
+                    <Link href={`/${mediaData?.name ? "tv" : "movie"}/${mediaData?.id}`} className='bg-blue-500 cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center'>More details</Link>
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button className='cursor-pointer w-24 sm:w-32 p-2 text-[0.8rem] sm:text-[1rem] sm:py-2 sm:px-3 rounded-xl text-center flex items-center gap-x-2'>{watchlistType ? watchListNames[watchlistType] : <><PlusCircle /> Watchlist</>}</Button>
@@ -140,8 +150,8 @@ const HeroSectionCarouselSlide = ({ mediaData, index }: { mediaData: mediaData, 
             </div>
             <Image
                 className="w-56 hidden sm:block h-80 object-cover cursor-pointer clickable Parallax-img"
-                src={mediaData.poster_path}
-                alt={`${mediaData.name || mediaData.title} poster`}
+                src={mediaData?.poster_path}
+                alt={`${mediaData?.name || mediaData?.title} poster`}
                 width={400}
                 height={600}
                 loading={index as number < 10 ? "eager" : "lazy"}
