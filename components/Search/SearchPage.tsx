@@ -30,13 +30,13 @@ export default function DiscoverPage() {
                         </Select>
                     </div>
 
-                    <div className="flex gap-x-2 border border-yellow-500 rounded-lg cursor-pointer">
+                    {/* <div className="flex gap-x-2 border border-yellow-500 rounded-lg cursor-pointer">
                         <span className="border-r px-1 py-1 text-yellow-500 border-yellow-500"><LayoutGrid /></span>
                         <span className=" px-0 py-1"><LayoutPanelLeft /></span>
                         <span className="border-l px-1 py-1"><LayoutList /></span>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="flex flex-col gap-y-4 w-full overflow-scroll h-full">
+                <div className="flex flex-col gap-y-4 w-full h-full">
                     <SearchResults query={query} searchType={searchType} page={page} setPage={setPage} />
                 </div>
             </div>

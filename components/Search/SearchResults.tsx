@@ -29,7 +29,7 @@ const SearchResults = ({ query, searchType, page, setPage }: { query: string, se
         <>
             <div className="w-full max-h-[100dvh] flex flex-col gap-y-3">
                 {query && <h1 className="text-white text-start font-semibold text-[1rem]">{mediaData?.total_results} results found for {query}</h1>}
-                <div className="overflow-scroll h-full pb-[100px] sm:pb-[30px]">
+                <div className="h-full pb-[100px] sm:pb-[30px]">
                     <MediaGrid mediaData={mediaData} loading={loading} />
                     <PaginationComponent mediaData={mediaData} page={page} setPage={setPage} />
                 </div>

@@ -38,7 +38,6 @@ const MediaThumbnailComponent = ({ children, link, id, title, poster, index, wid
                             <Info size={48} strokeWidth={4} absoluteStrokeWidth />
                         </Link>
                     </span>}
-
             </div>
             {!isUpcoming ? children : <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                 {new Date(release_date).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -56,6 +55,7 @@ const MediaThumbnailComponent = ({ children, link, id, title, poster, index, wid
                     {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
                 </PopoverContent>
             </Popover>}
+
             <div className='w-full h-full'>
                 <div className="aspect-[2/3]">
                     <Image
