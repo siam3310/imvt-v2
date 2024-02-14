@@ -28,14 +28,14 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
     const [streamingData, setStreamingData] = useState<{ sources: { url: string, quality: string }[], subtitles: { url: string, lang: string }[] }[]>(() => [{ sources: [{ url: "", quality: "" }], subtitles: [{ url: "", lang: "" }] }])
 
     const IframeButtonDetails = [
-        { name: "BlackVid", url: `https://blackvid.space/embed?tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}` },
-        { name: "SuperEmbed", url: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${seasonNumber}&e=${episodeNumber}` },
-        { name: "2Embed", url: `https://www.2embed.cc/embed/${id}&s=${seasonNumber}&e=${episodeNumber}` },
-        { name: "VidSrc", url: `https://vidsrc.xyz/embed/${type}/${id}&season=${seasonNumber}&episode=${episodeNumber}` },
-        { name: "tvembed", url: `https://tvembed.cc/${type}/${id}/${seasonNumber}/${episodeNumber}` },
-        { name: "Player S", url: ` https://embed.smashystream.com/playere.php?dplayer=S&tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}` },
-        { name: "Player F", url: ` https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}` },
-        { name: "Hindi Player", url: ` https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}&season=${seasonNumber}&episode=${episodeNumber}` },
+        { name: "BlackVid", url: `https://blackvid.space/embed?tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "SuperEmbed", url: `https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&${type !== 'movie' ? `s=${seasonNumber}&e=${episodeNumber}` : ""}` },
+        { name: "2Embed", url: `https://www.2embed.cc/embed/${id}&${type !== 'movie' ? `s=${seasonNumber}&e=${episodeNumber}` : ""}` },
+        { name: "VidSrc", url: `https://vidsrc.xyz/embed/${type}/${id}&${type !== 'movie' ? `season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "tvembed", url: `https://tvembed.cc/${type}/${id}${type !== 'movie' ? `/${seasonNumber}/${episodeNumber}` : ""}` },
+        { name: "Player S", url: ` https://embed.smashystream.com/playere.php?dplayer=S&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "Player F", url: ` https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "Hindi Player", url: ` https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
     ]
 
     const tmdbId = id;
@@ -51,9 +51,9 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
         if (loading) return;
         if (type === 'movie') {
             setmediaData({ ...data?.getMoviebyId, number_of_seasons: 0, number_of_episodes: 0, seasons: [] });
-            setStreamingId(data?.getMoviebyId.streamingId);
-            const array = data?.getMoviebyId.streamingId.split("-");
-            setEpisodeId(array.length > 1 ? array[array.length - 1] : "");
+            setStreamingId(data?.getMoviebyId?.streamingId);
+            const array = data?.getMoviebyId?.streamingId?.split("-");
+            setEpisodeId(array?.length > 1 ? array[array.length - 1] : "");
         } else {
             setmediaData(data?.getTvbyId);
             setStreamingId(data?.getTvbyId?.streamingId);
@@ -70,7 +70,7 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
     useEffect(() => {
         setStreamingData([])
         if (mediaPlayerStreamingData) {
-            setStreamingData(mediaPlayerStreamingData.mediaPlayerStreamingData);
+            setStreamingData(mediaPlayerStreamingData?.mediaPlayerStreamingData);
         }
         // console.log("refetching the sources");
 
