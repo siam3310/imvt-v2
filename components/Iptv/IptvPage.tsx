@@ -6,30 +6,16 @@ import IptvChannels from "@/components/Iptv/IptvChannels"
 import IptvPlayer from '@/components/Iptv/IptvPlayer'
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { countriesList, categoriesList } from "@/utils/iptvGroups"
+import { iptvDataType } from "@/types/mediaData"
 
 export default function IptvPage(): React.JSX.Element {
-    const [iptvPlayerData, setIptvPlayerData] = useState({ url: "", inf: { title: "", tvgLogo: "", groupTitle: "" } })
-    const [loading, setLoading] = useState(true);
+    const [iptvPlayerData, setIptvPlayerData] = useState<iptvDataType>({ url: "", inf: { title: "", tvgLogo: "", groupTitle: "" } })
+    const [loadingPage, setLoadingPage] = useState(true);
     const [query, setQuery] = useState("")
     const [group, setGroup] = useState("")
     const [page, setPage] = useState(1)
     const [searchBy, setSearchBy] = useState("country")
-    const [countriesList, setCountriesList] = useState([])
-    const [categoriesList, setCategoriesList] = useState([])
-    useEffect(() => {
-        const fetchIptvCountries = async () => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_IPTV_API_URL}/countries`)
-            const data = await res.json()
-            setCountriesList(data)
-        }
-        const fetchIptvCategories = async () => {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_IPTV_API_URL}/categories`)
-            const data = await res.json()
-            setCategoriesList(data)
-        }
-        fetchIptvCountries()
-        fetchIptvCategories()
-    }, [])
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
@@ -43,7 +29,7 @@ export default function IptvPage(): React.JSX.Element {
     return (
         <div className="w-full h-full max-h-[100dvh] overflow-scroll">
             <div className="flex gap-y-10 flex-col w-full min-h-[100dvh] h-fit items-center justify-start p-6">
-                <div className={`font-bold text-3xl lg:text-[2.5rem] text-center ${iptvPlayerData.url === "" ? " mt-[30dvh]" : "iptv-player-app p-10 min-w-[50vw] min-h-[50dvh] "}`}>Search TV channel to stream</div>
+                <div className={`font-bold text-3xl lg:text-[2.5rem] text-center ${iptvPlayerData.url === "" ? " mt-[30dvh]" : "iptv-player-app p-5 sm:p-10 min-w-[50vw] min-h-[50dvh] "}`}>Search TV channel to stream</div>
                 {iptvPlayerData.url !== "" && <IptvPlayer playerData={iptvPlayerData} />}
                 <form onSubmit={handleSubmit(onSubmit)} className="relative w-full max-w-[600px] flex h-fit items-center justify-center">
                     <Input {...register('search')} placeholder="Enter channel name" className="w-full rounded-3xl dark:bg-white dark:text-black" />
@@ -87,7 +73,7 @@ export default function IptvPage(): React.JSX.Element {
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-4 w-full h-full">
-                    <IptvChannels query={query} setQuery={setQuery} setIptvPlayerData={setIptvPlayerData} searchBy={searchBy} group={group} page={page} setPage={setPage} loading={loading} setLoading={setLoading} />
+                    <IptvChannels query={query} setQuery={setQuery} setIptvPlayerData={setIptvPlayerData} searchBy={searchBy} group={group} page={page} setPage={setPage} loadingPage={loadingPage} setLoadingPage={setLoadingPage} />
                 </div>
             </div>
         </div>

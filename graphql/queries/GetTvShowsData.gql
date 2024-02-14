@@ -1,0 +1,82 @@
+query GetTvShowsData($page: Int) {
+  getTvTrendingWeek(page: $page) {
+    results {
+      backdrop_path
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getTvPopular(page: $page) {
+    results {
+      backdrop_path
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getTvTopRated(page: $page) {
+    results {
+      backdrop_path
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getTvAiringToday(page: $page) {
+    results {
+      backdrop_path
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getTvOnTheAir(page: $page) {
+    results {
+      backdrop_path
+      id
+      name
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+}

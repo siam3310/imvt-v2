@@ -23,16 +23,17 @@ interface mediaPeopleData extends mediaData {
     known_for_department: string
     profile_path: string
     character: string
-    birthday: String
-    deathday: String
-    place_of_birth: String
-    also_known_as: [String]
+    birthday: string
+    deathday: string
+    place_of_birth: string
+    also_known_as: [string]
 }
 interface singleMediaDataType extends mediaData {
     casts: mediaPeopleData[]
     genres: string[]
     recommendations: mediaData[]
     similar: mediaData[]
+    original_language?: string
     reviews: {
         author: string
         content: string
@@ -96,4 +97,22 @@ interface singleMediaDataType extends mediaData {
     }[]
     streamingId: string
 }
-export type { mediaData, mediaPeopleData, singleMediaDataType };
+
+interface iptvDataType {
+    url: string
+    inf: {
+        // duration: string
+        title: string
+        // tvgId: string
+        tvgLogo: string
+        groupTitle: string
+    }
+}
+
+interface paginatedIptvDataType {
+    results: iptvDataType[]
+    totalPages: number
+    totalResults: number
+}
+
+export type { mediaData, mediaPeopleData, singleMediaDataType, iptvDataType, paginatedIptvDataType };

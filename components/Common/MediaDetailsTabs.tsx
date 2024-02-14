@@ -1,19 +1,14 @@
 import React from "react"
 import Link from 'next/link'
 import { Star, PlayCircle, Users } from "lucide-react"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { singleMediaDataType } from '@/types/mediaData'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { shimmerBlurDataUrl } from "@/utils/blurDataUrl"
 import { handleDownload } from "@/utils/downloadImage"
-
+import MediaThumbnailComponent from "@/components/Common/MediaThumbnailComponent"
 export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singleMediaDataType, type: any }) {
   const [basis, setBasis] = React.useState('50%');
 
@@ -161,7 +156,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
 
       <TabsContent value="casts" className="p-5">
         <div className="flex flex-wrap justify-between items-center gap-y-5">
-          {mediaData?.casts.map((cast, index: React.Key | number) => (<div key={index} className="flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
+          {mediaData?.casts.map((cast, index: React.Key | number) => (<Link href={`/people/${cast.id}`} key={index} className="hover:bg-slate-800/50 transition-all duration-300 ease-in-out rounded-l-full flex items-center gap-x-5 w-[100%] sm:w-[50%] lg:w-[33%]">
             <Image
               className="rounded-full flex justify-center items-center w-24 h-24 aspect-square object-cover"
               src={`https://image.tmdb.org/t/p/original${cast.profile_path}`}
@@ -175,7 +170,7 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
               <h2 className="text-md font-semibold font-sans">as {cast.character}</h2>
               <h3 className="text-sm">{(cast.known_for_department === "Acting" && "Actor") || (cast.known_for_department === "Writing" && "Writer") || (cast.known_for_department === "Directing" && "Director") || (cast.known_for_department === "Production" && "Producer") || cast.known_for_department}</h3>
             </div>
-          </div>)
+          </Link>)
           )}
         </div>
       </TabsContent>
@@ -184,28 +179,11 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
         <div className="w-full h-full flex justify-center">
           <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.similar.map((post, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-              <div className="group clickable" key={index}>
-                <Link href={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
-                  <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                </Link>
+              <MediaThumbnailComponent link={`/${type}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                   <Star fill="white" color='white' width={12} />&nbsp;{post.rating.toFixed(1)}
                 </span>
-                <div className='w-full h-fulll'>
-                  <div className="aspect-[2/3]">
-                    <Image
-                      className="rounded-t-md flex justify-center items-center group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                      src={post.image}
-                      alt={`${post.name || post.title} poster`}
-                      width={200}
-                      height={300}
-                      loading={index as number < 10 ? "eager" : "lazy"}
-                      placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
-                    />
-                  </div>
-                  <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                </div>
-              </div>
+              </MediaThumbnailComponent>
             </div>)
             )}
           </div>
@@ -217,28 +195,11 @@ export default function MediaDetailsTabs({ mediaData, type }: { mediaData: singl
         <div className="w-full h-full flex justify-center">
           <div className="w-full flex flex-wrap justify-start items-center">
             {mediaData?.recommendations.map((post, index: React.Key | number) => (<div key={index} style={{ flexBasis: basis }} className={`relative min-w-0 shrink-0 grow-0 basis-1/2 h-fit p-2`}>
-              <div className="group clickable">
-                <Link href={`/${type}/${post.id}`} className="hidden clickable group-hover:flex absolute w-full h-full justify-center items-center pr-5">
-                  <span className="z-[3] clickable"><PlayCircle size={48} color="#ffffff" strokeWidth={3} absoluteStrokeWidth /></span>
-                </Link>
+              <MediaThumbnailComponent link={`/${type}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.image} width={200} height={300} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                   <Star fill="white" color='white' width={12} />&nbsp;{post.rating.toFixed(1)}
                 </span>
-                <div className='w-full h-fulll'>
-                  <div className="aspect-[2/3]">
-                    <Image
-                      className="rounded-t-md flex justify-center items-center group-hover:cursor-pointer group-hover:blur group-hover:scale-90 transition-all duration-300 ease-in-out object-cover w-full h-full"
-                      src={post.image}
-                      alt={`${post.name || post.title} poster`}
-                      width={200}
-                      height={300}
-                      loading={index as number < 10 ? "eager" : "lazy"}
-                      placeholder={`data:image/${shimmerBlurDataUrl(200, 300)}`}
-                    />
-                  </div>
-                  <h2 className="text-gray-900 bg-white rounded-b-md border border-t-2 border-black px-3 text-center whitespace-nowrap overflow-hidden text-ellipsis font-semibold" title={post.name || post.title}>{post.name || post.title}</h2>
-                </div>
-              </div>
+              </MediaThumbnailComponent>
             </div>)
             )}
           </div>

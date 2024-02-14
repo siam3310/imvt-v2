@@ -3,98 +3,12 @@ import React, { useState, useEffect } from "react";
 import MediaGrid from "@/components/Common/MediaGrid";
 import PaginationComponent from "@/components/Common/PaginationComponent";
 import { gql, useQuery } from "@apollo/client";
-import { set } from "react-hook-form";
+import GetTvShowsData from "@/graphql/queries/GetTvShowsData.gql";
 
-const search = gql`
-query GetMoviesData(
-  $page: Int
-) {
-    getTvTrendingWeek(page: $page) {
-      results {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getTvPopular(page: $page) {
-      results {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getTvTopRated(page: $page) {
-      results {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getTvAiringToday(page: $page) {
-      results {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getTvOnTheAir(page: $page) {
-      results {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-}
-`;
 const TvCategoryPages = ({ category }: { category: string }) => {
   const [heading, setHeading] = useState("")
   const [page, setPage] = useState(1)
-  const { data, loading } = useQuery(search, {
+  const { data, loading } = useQuery(GetTvShowsData, {
     variables: { page },
   });
   const [mediaData, setMediaData] = useState({
@@ -118,7 +32,7 @@ const TvCategoryPages = ({ category }: { category: string }) => {
       setMediaData(data?.getTvOnTheAir)
       setHeading("On the Air Shows")
     }
-  }, [data, page])
+  }, [data, page, category])
   return (
     <>
       <div className="w-full h-[100dvh] flex flex-col gap-y-3 p-5 ">

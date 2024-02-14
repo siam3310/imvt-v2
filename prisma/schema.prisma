@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  user
+}
+
+enum watchListType {
+  watching
+  on_hold
+  plan_to_watch
+  dropped
+  completed
+}
+
+model user {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  email         String          @unique
+  profile_photo String
+  role          Role            @default(user)
+  watchlist     watchlistItem[]
+
+  @@map("user")
+}
+
+model watchlistItem {
+  id            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mediaType     String
+  mediaId       String
+  watchListType watchListType @default(plan_to_watch)
+  user          user          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String        @db.Uuid
+
+  @@map("watchlistItem")
+}

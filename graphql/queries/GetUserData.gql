@@ -1,0 +1,70 @@
+query GetUserData($userId: String!) {
+  getUser(userId: $userId) {
+    email
+    id
+    name
+    profile_photo
+    role
+    watchlist {
+      id
+      mediaId
+      mediaType
+      userId
+      watchListType
+    }
+  }
+}
+
+mutation UpdateUser(
+  $name: String = ""
+  $profile_photo: String = ""
+  $userId: String = ""
+) {
+  updateUser(name: $name, profile_photo: $profile_photo, userId: $userId) {
+    email
+    id
+    name
+    profile_photo
+    role
+  }
+}
+
+mutation AddToWatchList(
+  $mediaId: ID!
+  $mediaType: String!
+  $userId: String!
+  $watchListType: watchListType = completed
+) {
+  addWatchlistItem(
+    mediaId: $mediaId
+    mediaType: $mediaType
+    userId: $userId
+    watchListType: $watchListType
+  ) {
+    id
+    mediaId
+    mediaType
+    userId
+    watchListType
+  }
+}
+mutation DeleteWatchList($itemId: ID!, $userId: String!) {
+  deleteWatchlistItem(itemId: $itemId, userId: $userId)
+}
+mutation UpdateWatchList(
+  $userId: String!
+  $watchListType: watchListType = on_hold
+  $itemId: ID!
+) {
+  updateWatchlistItem(
+    itemId: $itemId
+    userId: $userId
+    watchListType: $watchListType
+  ) {
+    id
+    mediaId
+    mediaType
+    userId
+    watchListType
+  }
+}

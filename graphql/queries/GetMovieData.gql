@@ -1,0 +1,89 @@
+query GetMovieData {
+  getMovieTrendingToday {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+      vote_count
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getMovieTrendingWeek {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getMoviePopular {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getMovieTopRated {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+  getMovieUpcoming {
+    results {
+      backdrop_path
+      adult
+      id
+      title
+      overview
+      poster_path
+      media_type
+      genre_ids
+      vote_average
+      release_date
+    }
+    currentPage
+    hasNextPage
+    total_pages
+    total_results
+  }
+}

@@ -3,82 +3,12 @@ import React, { useState, useEffect } from "react";
 import MediaGrid from "@/components/Common/MediaGrid";
 import PaginationComponent from "@/components/Common/PaginationComponent";
 import { gql, useQuery } from "@apollo/client";
+import GetMoviesData from "@/graphql/queries/GetMoviesData.gql"
 
-const search = gql`
-query GetMoviesData(
-  $page: Int
-) {
-    getMovieTrendingWeek(page: $page) {
-      results {
-        backdrop_path
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMoviePopular(page: $page) {
-      results {
-        backdrop_path
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMovieTopRated(page: $page) {
-      results {
-        backdrop_path
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMovieUpcoming(page: $page) {
-      results {
-        backdrop_path
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-        release_date
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-}
-`;
 const MovieCategoryPages = ({ category }: { category: string }) => {
   const [heading, setHeading] = useState("");
   const [page, setPage] = useState(1)
-  const { data, loading } = useQuery(search, {
+  const { data, loading } = useQuery(GetMoviesData, {
     variables: { page },
   });
   const [mediaData, setMediaData] = useState({
@@ -99,7 +29,7 @@ const MovieCategoryPages = ({ category }: { category: string }) => {
       setMediaData(data?.getMovieUpcoming)
       setHeading("Upcoming")
     }
-  }, [data, page])
+  }, [data, page, category])
 
   return (
     <>

@@ -4,100 +4,10 @@ import { gql, useQuery } from "@apollo/client";
 import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
 import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
 import MediaSwiper from '@/components/Common/MediaSwiper'
+import GetMovieData from '@/graphql/queries/GetMovieData.gql'
 
-const query = gql`
-query GetMovieData {
-    getMovieTrendingToday {
-      results {
-        backdrop_path
-        adult
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-        vote_count
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMovieTrendingWeek {
-      results {
-        backdrop_path
-        adult
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMoviePopular {
-      results {
-        backdrop_path
-        adult
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMovieTopRated {
-      results {
-        backdrop_path
-        adult
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-    getMovieUpcoming {
-      results {
-        backdrop_path
-        adult
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-        release_date
-      }
-      currentPage
-      hasNextPage
-      total_pages
-      total_results
-    }
-  }
-`;
 const MoviesPage = () => {
-  const { data, loading, error } = useQuery(query);
+  const { data, loading, error } = useQuery(GetMovieData);
   const { theme, setTheme } = useTheme()
   setTheme('dark')
   if (error) return <p>Error : {error.message}</p>;

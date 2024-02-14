@@ -3,101 +3,19 @@ import React, { useState, useEffect } from "react";
 import MediaGrid from "@/components/Common/MediaGrid";
 import PaginationComponent from "@/components/Common/PaginationComponent";
 import { gql, useQuery } from "@apollo/client";
+import GetTrendingMediaData from '@/graphql/queries/GetTrendingMediaData.gql';
 
-const search = gql`
-query GetTrendingData(
-  $page: Int
-) {
-  getAnyTrendingWeek(page: $page) {
-    results {
-      ... on Movie {
-        backdrop_path
-        id
-        title
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-      ... on TV {
-        backdrop_path
-        id
-        name
-        overview
-        poster_path
-        media_type
-        genre_ids
-        vote_average
-      }
-    }
-    currentPage
-    hasNextPage
-    total_pages
-    total_results
-  }
-  getMovieTrendingWeek(page: $page) {
-    results {
-      backdrop_path
-      id
-      title
-      overview
-      poster_path
-      media_type
-      genre_ids
-      vote_average
-    }
-    currentPage
-    hasNextPage
-    total_pages
-    total_results
-  }
-  getTvTrendingWeek(page: $page) {
-    results {
-      backdrop_path
-      id
-      name
-      overview
-      poster_path
-      media_type
-      genre_ids
-      vote_average
-    }
-    currentPage
-    hasNextPage
-    total_pages
-    total_results
-  }
-  getPeopleTrendingWeek(page: $page) {
-    results {
-      adult
-      biography
-      id
-      name
-      original_name
-      media_type
-      popularity
-      gender
-      known_for_department
-      profile_path
-    }
-    currentPage
-    hasNextPage
-    total_pages
-    total_results
-  }
-}
-`;
 const TrendingMediaPages = ({ type }: { type: string }) => {
   const [heading, setHeading] = useState("");
   const [page, setPage] = useState(1)
-  const { data, loading } = useQuery(search, {
+  const { data, loading } = useQuery(GetTrendingMediaData, {
     variables: { page },
   });
   const [mediaData, setMediaData] = useState({
     results: [],
     hasNextPage: false
   });
+
   useEffect(() => {
     if (type === "all") {
       setMediaData(data?.getAnyTrendingWeek)
@@ -112,9 +30,8 @@ const TrendingMediaPages = ({ type }: { type: string }) => {
       setMediaData(data?.getPeopleTrendingWeek)
       setHeading("Trending People")
     }
-  }, [data, page])
-  // if (loading) return <div>Loading...</div>
-  // if (mediaData?.results?.length === 0) return <div>404 Not Found</div>
+  }, [data, page, type])
+
   return (
     <>
       <div className="w-full h-[100dvh] flex flex-col gap-y-3 p-5 ">
