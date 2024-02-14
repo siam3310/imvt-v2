@@ -1,53 +1,69 @@
-This is a **NextJs** project bootstrapped with **create-next-app**
+<a name="readme-top"></a>
 
-## Getting Started
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/VISHWAJ33T/imvt-client">
+    <img src="assets/logo.svg" alt="Logo" width="100" height="80">
+  </a>
 
-First, install all dependencies:
+<h2 align="center">SORA</h2>
+  <p align="center">
+    A web app for exploring, watching movies, tv shows and anime built with Nextjs.
+    <br />
+  </p>
+</div>
+<br/>
 
-```bash
-npm i
+<!-- <div align="center">
+  <a href="https://github.com/VISHWAJ33T/imvt-client">
+    <img src="assets/logo.svg" alt="screenshot">
+  </a>
+</div>
+<br/> -->
+
+<!-- TECH STACK -->
+
+## Tech Stack
+
+- **Nextjs** with Typescript
+- Authentication, database using **Prisma and Supabase**
+- **Yoga Graphql with pothos** for Graphql Backend
+- **Apollo Client** for Graphql frontend
+- Styled using **TailwindCSS**
+- **Shadcn** for pre-made components and themes
+- Animation using **Framer Motion**
+- **Embla Carousel** for touch slider
+- State management using **Zustand**
+- **Zod** for Validation
+- Custom media player using **Artplayer**
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Development
+
+<br/>
+
+1. Install dependencies using pnpm
+
+```sh
+npm install
 ```
 
-Then, run the development server:
+2. Copy `.env-example` and update the variables
 
-```bash
+3. Start the development server
+
+```sh
 npm run dev
 ```
 
-### Dependencies
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```
-@hookform/resolvers
-@react-aria/ssr
-class-variance-authority
-clsx
-lucide-react
-next
-next-auth
-next-themes
-react
-react-dom
-react-hook-form
-tailwind-merge
-tailwindcss-animate
-zod
-```
+<!-- LICENSE -->
 
-### Dev Dependencies
+## License
 
-```
-@ianvs/prettier-plugin-sort-imports
-@types/node
-@types/react
-@types/react-dom
-@typescript-eslint/parser
-autoprefixer
-eslint
-eslint-config-next
-eslint-config-prettier
-eslint-plugin-react
-eslint-plugin-tailwindcss
-postcss
-tailwindcss
-typescript
-```
+Distributed under the MIT License. See [LICENSE.txt](https://github.com/VISHWAJ33T/imvt-client/blob/master/LICENSE.txt) for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
