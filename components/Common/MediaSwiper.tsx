@@ -18,7 +18,7 @@ interface MediaSwiperProps {
 }
 export default function MediaSwiper({ data, loading, heading, upcoming, link }: MediaSwiperProps) {
     const [basis, setBasis] = useState<string>('');
-    const [selectedId, setSelectedId] = useState<null | string>(data && data[0].id)
+    const [selectedId, setSelectedId] = useState<null | string>(null)
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
 
     useEffect(() => {

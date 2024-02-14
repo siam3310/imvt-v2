@@ -125,7 +125,12 @@ const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: bool
                                             {mediaData?.results[selectedIndex]?.adult && <span className='bg-red-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md'>
                                                 NSFW
                                             </span>}
-                                            {mediaData?.results[selectedIndex]?.genre_ids.map((genre: string, index: Key | null) => (
+                                            {mediaData?.results[selectedIndex]?.genre_ids?.map((genre: string, index: Key | null) => (
+                                                <span key={index} className='bg-green-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md'>
+                                                    {genre}
+                                                </span>
+                                            ))}
+                                            {mediaData?.results[selectedIndex]?.genres?.map((genre: string, index: Key | null) => (
                                                 <span key={index} className='bg-green-500 py-1 px-1 lg:py-2 lg:px-3 text-[0.8rem] sm:text-[1rem] rounded-md'>
                                                     {genre}
                                                 </span>
