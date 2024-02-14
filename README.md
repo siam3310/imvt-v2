@@ -70,7 +70,7 @@
 - **Live TV Player:**
   ![Live TV Player](assets/screenshots/desktop-iptv-player.png)
 
-- **Personalized Watchlist:** Organize your media journey with custom lists for completed, watching, on hold, dropped, and plan-to-watch titles.
+**Personalized Watchlist:** Organize your media journey with custom lists for completed, watching, on hold, dropped, and plan-to-watch titles.
 
 ![Watchlist](assets/screenshots/desktop-watchlist.png)
 
