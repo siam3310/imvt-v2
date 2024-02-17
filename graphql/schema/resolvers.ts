@@ -140,9 +140,9 @@ export const resolvers = {
     SingleAnime: {
         zoroEpisodes: async (anime: { id: any; }) => {
             try {
-                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
+                return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${anime.id}?provider=zoro`, { timeout: 4000 })).data?.episodes;
             } catch (error: any) {
-                if (error.response) {
+                if (error.code === 'ECONNABORTED' || error.response) {
                     return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
                 } else {
                     return "";
@@ -433,11 +433,11 @@ export const resolvers = {
         },
         getAnimebyId: async (parent: any, { id }: any) => {
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`, { timeout: 4000 });
                 return response.data;
             } catch (error: any) {
                 console.log(error)
-                if (error.response) {
+                if (error.code === 'ECONNABORTED' || error.response) {
                     const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${id}`);
                     return response.data;
                 } else {
