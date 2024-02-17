@@ -7,7 +7,7 @@ import { Star, ClockIcon, Users, PlayCircle, PlusCircle } from "lucide-react";
 import MediaDetailsTabs from '@/components/Common/MediaDetailsTabs';
 import SelectAnimeDrawer from '@/components/Anime/SelectAnimeDrawer';
 import { singleMediaDataType } from '@/types/mediaData'
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertTitle } from "@/components/ui/alert"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import usehandleWatchlist from '@/hooks/usehandleWatchlist';
 const SingleMediaPage = ({ mediaData, loading, type }: { mediaData: singleMediaDataType, loading: any, type: any }) => {

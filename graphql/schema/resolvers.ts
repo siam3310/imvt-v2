@@ -141,8 +141,12 @@ export const resolvers = {
         zoroEpisodes: async (anime: { id: any; }) => {
             try {
                 return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
-            } catch (error) {
-                return "";
+            } catch (error: any) {
+                if (error.response && error.response.status === 500) {
+                    return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
+                } else {
+                    return "";
+                }
             }
         }
     },
@@ -359,24 +363,11 @@ export const resolvers = {
                     const res = await fetch(url);
                     return res.json();
                 }
-                // else if (index >= 4 && index <= 7) {
-                //     const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/dramacool/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
-                //     const res = await fetch(url);
-                //     return res.json();
-                // }
-                // else if (index >= 8 && index <= 11) {
-                //     const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/viewasian/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
-                //     const res = await fetch(url);
-                //     return res.json();
-                // }
                 else {
                     const url = `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
                     const res = await fetch(url);
                     return res.json();
                 }
-                // const url = index === 2
-                //     ? `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/tmdb/watch/${episodeId}?id=${streamingId}`
-                //     : `${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/movies/flixhq/watch?server=${server}&episodeId=${episodeId}&mediaId=${streamingId}`;
             });
 
             const data = await Promise.all(requests);
@@ -441,9 +432,19 @@ export const resolvers = {
             };
         },
         getAnimebyId: async (parent: any, { id }: any) => {
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`);
-            // console.log(response)
-            return response.data
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${id}`);
+                return response.data;
+            } catch (error: any) {
+                console.log(error)
+                if (error.response && error.response.status === 500) {
+                    const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${id}`);
+                    return response.data;
+                } else {
+                    console.log(error)
+                    throw error;
+                }
+            }
         },
         getAnimebyQuery: async (parent: any, { query, page = 1 }: any) => {
             const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/${query}&?page=${page}`);

@@ -4,11 +4,23 @@ import Link from 'next/link';
 import Image from 'next/image'
 import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 import { Button } from '@/components/ui/button';
-import { Star, ClockIcon, Users, PlayCircle } from "lucide-react";
+import { Star, PlusCircle, PlayCircle } from "lucide-react";
 import AnimeDetailsTabs from '@/components/Anime/AnimeDetailsTabs';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import usehandleWatchlist from '@/hooks/usehandleWatchlist';
 
 const SingleAnimePage = ({ animeData, loading }: { animeData: any, loading: boolean }) => {
     if (loading || !animeData) return <SingleAnimeSkeleton />
+    const { watchlistType, setWatchlistType } = usehandleWatchlist(animeData?.id, "anime")
+
+    const watchListNames = {
+        completed: "Completed",
+        watching: "Watching",
+        plan_to_watch: "Plan to Watch",
+        on_hold: "On Hold",
+        dropped: "Dropped",
+        remove: "watchlist",
+    }
 
     return (<>
         <div className='overflow-y-scroll w-full h-[100dvh] pb-[150px] sm:pb-[30px]'>
@@ -33,7 +45,24 @@ const SingleAnimePage = ({ animeData, loading }: { animeData: any, loading: bool
                             loading={"eager"}
                             placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`} />
                         <div className='w-full flex flex-col items-center justify-center'>
-                            <Link href={`/anime/${animeData.id}/play`}><Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1'><PlayCircle /> Watch Now</Button></Link></div>
+                            <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 p-0 rounded-xl overflow-hidden'><Link className='bg-yellow-400 text-white px-5 py-2 h-full w-full flex justify-center items-center gap-x-1' href={`/anime/${animeData.id}/play`}><PlayCircle /> Watch Now</Link></Button>
+                        </div>
+                        <div className='w-full flex flex-col items-center justify-center'>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 rounded-xl'>{watchlistType ? watchListNames[watchlistType] : <><PlusCircle /> Watchlist</>}</Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]">
+                                    <Button onClick={() => { setWatchlistType("completed"); }} variant={watchlistType === "completed" ? "default" : "outline"}>Completed</Button>
+                                    <Button onClick={() => { setWatchlistType("watching"); }} variant={watchlistType === "watching" ? "default" : "outline"}>Watching</Button>
+                                    <Button onClick={() => { setWatchlistType("plan_to_watch"); }} variant={watchlistType === "plan_to_watch" ? "default" : "outline"}>Plan to Watch</Button>
+                                    <Button onClick={() => { setWatchlistType("on_hold"); }} variant={watchlistType === "on_hold" ? "default" : "outline"}>On Hold</Button>
+                                    <Button onClick={() => { setWatchlistType("dropped"); }} variant={watchlistType === "dropped" ? "default" : "outline"}>Dropped</Button>
+                                    {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
+                                </PopoverContent>
+                            </Popover>
+
+                        </div>
                     </div>
                     <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
                         <h1 className='text-[2rem] lg:text-[2.5rem] font-bold'>{animeData.title.userPreferred || animeData.title.english}</h1>
