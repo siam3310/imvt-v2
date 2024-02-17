@@ -65,7 +65,7 @@ const MediaGrid = ({ mediaData, loading, type }: { mediaData: any, loading: bool
 
     return (
         <div className="w-full h-fit">
-            <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-start">
+            <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-start items-start">
                 <div className="flex flex-wrap w-full justify-start items-center">
                     {mediaData?.results.map((post: { __typename: string; title: any; id: any; vote_average: number; poster_path: string; name: any; known_for_department: string; profile_path: string; release_date: string; first_air_date: string; }, index: React.Key | null | undefined) => (
                         (post.__typename !== "People") ?
