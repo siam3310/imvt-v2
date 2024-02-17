@@ -142,7 +142,7 @@ export const resolvers = {
             try {
                 return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
             } catch (error: any) {
-                if (error.response && error.response.status === 500) {
+                if (error.response) {
                     return (await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${anime.id}?provider=zoro`)).data?.episodes;
                 } else {
                     return "";
@@ -437,7 +437,7 @@ export const resolvers = {
                 return response.data;
             } catch (error: any) {
                 console.log(error)
-                if (error.response && error.response.status === 500) {
+                if (error.response) {
                     const response = await axios.get(`${process.env.NEXT_PUBLIC_CONSUMET_API_URL_ALT}/meta/anilist/info/${id}`);
                     return response.data;
                 } else {
