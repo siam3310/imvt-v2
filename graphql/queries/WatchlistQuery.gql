@@ -6,6 +6,9 @@ query GetMoviebyId($tmdbId: ID!) {
     original_title
     release_date
     vote_average
+    genres
+    overview
+    backdrop_path
   }
 }
 
@@ -17,6 +20,9 @@ query GetTvbyId($tmdbId: ID!) {
     original_name
     first_air_date
     vote_average
+    genres
+    overview
+    backdrop_path
   }
 }
 
@@ -35,5 +41,7 @@ query GetAnimebyId($id: ID!) {
     totalEpisodes
     releaseDate
     color
+    description
+    cover
   }
 }
