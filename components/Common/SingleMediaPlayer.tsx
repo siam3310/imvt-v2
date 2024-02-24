@@ -33,9 +33,9 @@ const SingleMediaPlayer = ({ id, type, querySeason, queryEpisode }: { id: string
         { name: "2Embed", url: `https://www.2embed.cc/embed/${id}&${type !== 'movie' ? `s=${seasonNumber}&e=${episodeNumber}` : ""}` },
         { name: "VidSrc", url: `https://vidsrc.xyz/embed/${type}/${id}&${type !== 'movie' ? `season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
         { name: "tvembed", url: `https://tvembed.cc/${type}/${id}${type !== 'movie' ? `/${seasonNumber}/${episodeNumber}` : ""}` },
-        { name: "Player S", url: ` https://embed.smashystream.com/playere.php?dplayer=S&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
-        { name: "Player F", url: ` https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
-        { name: "Hindi Player", url: ` https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "Player S", url: `https://embed.smashystream.com/playere.php?dplayer=S&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "Player F", url: `https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
+        { name: "Hindi Player", url: `https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}${type !== 'movie' ? `&season=${seasonNumber}&episode=${episodeNumber}` : ""}` },
     ]
 
     const tmdbId = id;
