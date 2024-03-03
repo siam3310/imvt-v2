@@ -43,21 +43,22 @@ export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
             <TabsContent value="more-details" className="rounded-3xl flex">
                 <Card className="w-full flex flex-wrap-reverse items-end justify-center min-w-0 h-fit p-2">
                     <CardContent className="w-full md:w-1/3 flex flex-col justify-center items-start gap-y-3">
-                        {animeData?.startDate && <CardTitle className="text-[2rem] font-bold">Start Date <CardDescription className="text-[1.5rem] font-normal">{monthNames[animeData?.startDate?.month - 1]} {animeData?.startDate?.day}, {animeData?.startDate?.year}</CardDescription></CardTitle>}
-                        {animeData?.endDate && <CardTitle className="text-[2rem] font-bold">End Date <CardDescription className="text-[1.5rem] font-normal">{monthNames[animeData?.endDate?.month - 1]} {animeData?.endDate?.day}, {animeData?.endDate?.year}</CardDescription></CardTitle>}
-                        {animeData?.studios && <CardTitle className="text-[2rem] font-bold">Studios</CardTitle>}
-                        {animeData?.studios.map((studio: string, index: number) => (
-                            <CardDescription className="text-[1.5rem] font-normal" key={index}>{studio}</CardDescription>
-                        ))}
-                        {animeData?.isLicensed ? <CardDescription className="text-[1.5rem] font-normal">Licensed</CardDescription> : null}
-                        <CardDescription className="text-[1.5rem] font-normal">Country of Origin: {animeData?.countryOfOrigin}</CardDescription>
-                        {animeData?.synonyms && <CardTitle className="text-[2rem] font-bold">Other Names</CardTitle>}
+                        {animeData?.startDate && <CardTitle className="text-[1.5rem]">Start Date <CardDescription className="text-[1.2rem] font-normal">{monthNames[animeData?.startDate?.month - 1]} {animeData?.startDate?.day}, {animeData?.startDate?.year}</CardDescription></CardTitle>}
+                        {animeData?.endDate && <CardTitle className="text-[1.5rem]">End Date <CardDescription className="text-[1.2rem] font-normal">{monthNames[animeData?.endDate?.month - 1]} {animeData?.endDate?.day}, {animeData?.endDate?.year}</CardDescription></CardTitle>}
+                        {animeData?.studios && <CardTitle className="text-[1.5rem]">Studios
+                            {animeData?.studios.map((studio: string, index: number) => (
+                                <CardDescription className="text-[1.2rem] font-normal" key={index}>{studio}</CardDescription>
+                            ))}
+                        </CardTitle>}
+                        <CardDescription className="text-[1.2rem]">Licensed: {animeData?.isLicensed ? "True" : "False"}</CardDescription>
+                        <CardDescription className="text-[1.2rem]">Country of Origin: {animeData?.countryOfOrigin}</CardDescription>
+                        {animeData?.synonyms && <CardTitle className="text-[1.5rem]">Other Names</CardTitle>}
                         {animeData?.synonyms.map((synonym: string, index: number) => (
-                            <CardDescription className="text-[1.5rem] font-normal" key={index}>{synonym}</CardDescription>
+                            <CardDescription className="text-[1.2rem]" key={index}>{synonym}</CardDescription>
                         ))}
                     </CardContent>
                     <CardContent className="w-full md:w-2/3 flex flex-col justify-center items-start gap-y-3">
-                        <CardTitle className="text-[2rem] font-bold">Trailer</CardTitle>
+                        <CardTitle className="text-[1.5rem]">Trailer</CardTitle>
                         <iframe className="w-full aspect-[1.85/1] border border-gray-200 rounded-sm" src={`https://www.youtube.com/embed/${animeData?.trailer?.id}`} allowFullScreen></iframe>
                     </CardContent>
                 </Card>

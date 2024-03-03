@@ -86,7 +86,7 @@ type LastEpisodeToAir {
   vote_average: Float
   vote_count: Int
   air_date: String
-  episode_number: Int
+  episode_number: Float
   episode_type: String
   production_code: String
   runtime: Int
@@ -108,7 +108,7 @@ type SeasonImage {
 type Episode {
   id: ID
   title: String
-  episode: Int
+  episode: Float
   Season: Int
   releaseDate: String
   description: String
@@ -204,9 +204,9 @@ type Anime{
   rating: Float
   genres: [String]
   color: String
-  totalEpisodes: Int
-  episodes:Int
-  currentEpisodeCount: Int
+  totalEpisodes: Float
+  episodes:Float
+  currentEpisodeCount: Float
   type: String
   releaseDate: String
 }
@@ -262,8 +262,8 @@ type SingleTV {
   languages: [String]
   episode_run_time: [Int]
   created_by: [CreatedBy]
-  number_of_seasons: Int
-  number_of_episodes: Int
+  number_of_seasons: Float
+  number_of_episodes: Float
   trailer: Trailer
   tagline: String
   homepage: String
@@ -305,7 +305,7 @@ type AnimeRecommendations{
   id: ID!
   title: AnimeTitle
   status: String
-  episodes:Int
+  episodes:Float
   image:String
   cover: String
   rating: Float
@@ -316,7 +316,7 @@ type AnimeRelations{
     relationType: String,
     title: AnimeTitle,
     status: String,
-    episodes: Int,
+    episodes: Float,
     image: String,
     color: String,
     type: String,
@@ -327,7 +327,7 @@ type AnimeEpisodes{
     id: String,
     title: String,
     image: String,
-    number: Int,
+    number: Float,
     airDate: String,
     createdAt: String
     description: String

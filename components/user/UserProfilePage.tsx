@@ -3,16 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useUserDataStore } from '@/store/userDataStore'
 import ProfileForm from '@/components/user/ProfileForm'
 const UserProfilePage = () => {
-    const [watchListData, setWatchListData] = useState([])
     const { userData } = useUserDataStore()
-
-    useEffect(() => {
-        if (userData) {
-            setWatchListData(userData.watchlist)
-        }
-    }, [userData])
-    // console.log(watchListData)
-    // console.log(userData)
 
     return (
         <div className='w-full h-full flex flex-col justify-start items-center space-y-6'>
