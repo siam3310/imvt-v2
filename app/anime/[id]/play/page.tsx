@@ -35,7 +35,7 @@ const AnimePlayerPage = () => {
         setZoroId(data?.getAnimebyId?.zoroEpisodes[episodeNumber - 1]?.id);
     }, [data, loading, episodeNumber]);
 
-    const { data: animeStreamingData, loading: streamingLoading } = useQuery(GetAnimeStreamingData, {
+    const { data: animeStreamingData, loading: streamingLoading, error: streamingError } = useQuery(GetAnimeStreamingData, {
         variables: { anilistId, zoroId: zoroId || "" },
         skip: !animeData || (!anilistId && !zoroId),
     });
@@ -47,7 +47,7 @@ const AnimePlayerPage = () => {
         }
     }, [animeStreamingData]);
 
-    if (loading || !data) return (
+    if (loading) return (
         <div className="w-full h-[100dvh] flex justify-center items-center sm:pb-0 pb-[150px]">
             <div className='animate-pulse w-[99%] aspect-[4/3] sm:aspect-[1.78/1] flex items-center justify-center'>
                 <Image
@@ -61,7 +61,7 @@ const AnimePlayerPage = () => {
         </div>
     )
 
-    if (error && !data && !loading) {
+    if (error) {
         console.log(error);
         return (<ErrorPage />)
     }

@@ -32,8 +32,8 @@ const AnimePage = ({ params }: { params: { id: number } }) => {
         remove: "watchlist",
     }
 
-    if (loading || !data) return <AnimeSkeleton />
-    if (error && !data && !loading) {
+    if (loading) return <AnimeSkeleton />
+    if (error) {
         console.log(error);
         return (<ErrorPage />)
     }
