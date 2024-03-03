@@ -1,5 +1,10 @@
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  // disable is help to disable PWA in deployment mode
+});
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withPWA({
   webpack: (config, options) => {
     config.module.rules.push({
       test: /\.(graphql|gql)/,
@@ -31,6 +36,6 @@ const nextConfig = {
     minimumCacheTTL: 60,
 
   },
-}
+});
 
 module.exports = nextConfig

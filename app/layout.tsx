@@ -27,6 +27,9 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: IChildren) {
   return (
     <html lang='en' suppressHydrationWarning>
+      <head>
+      <link rel="manifest" href="/manifest.json" />
+      </head>
       <body>
         {/* <CustomCursor> */}
         <div
