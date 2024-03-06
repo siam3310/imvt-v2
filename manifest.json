@@ -105,6 +105,18 @@
       "description": "Your Watchlist",
       "icons": [
         {
+          "src": "assets/Icons/manifest-icon-144.maskable.png",
+          "sizes": "144x144",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "assets/Icons/manifest-icon-144.maskable.png",
+          "sizes": "144x144",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+        {
           "src": "assets/Icons/manifest-icon-192.maskable.png",
           "sizes": "192x192",
           "type": "image/png",
@@ -135,11 +147,11 @@
   "protocol_handlers": [
     {
       "protocol": "mailto",
-      "url": "/handle_mailto"
+      "url": "https://imvt.vercel.app/handle_mailto/%s"
     },
     {
       "protocol": "tel",
-      "url": "/handle_tel"
+      "url": "https://imvt.vercel.app/handle_tel/%s"
     }
   ]
 }

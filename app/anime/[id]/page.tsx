@@ -14,7 +14,7 @@ import { GetAnimePageData } from '@/graphql/queries/GetAnime.gql';
 import ErrorPage from '@/components/Common/ErrorPage';
 import AnimeDetailsTabs from '@/components/Anime/AnimeDetailsTabs';
 
-const AnimePage = ({ params }: { params: { id: number } }) => {
+const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
     const id = params.id;
     const { data, loading, error } = useQuery(GetAnimePageData, {
         variables: { id },
@@ -32,10 +32,10 @@ const AnimePage = ({ params }: { params: { id: number } }) => {
         remove: "watchlist",
     }
 
-    if (loading) return <AnimeSkeleton />
+    if (loading) return <AnimeSkeleton />;
     if (error) {
         console.log(error);
-        return (<ErrorPage />)
+        return <ErrorPage />;
     }
 
     return (
@@ -49,25 +49,34 @@ const AnimePage = ({ params }: { params: { id: number } }) => {
                         width={1900}
                         height={400}
                         loading={"eager"}
-                        placeholder={`data:image/${shimmerBlurDataUrl(1280, 720)}`} />
+                        placeholder={`data:image/${shimmerBlurDataUrl(1280, 720)}`}
+                    />
                 </div>
                 <div className={`flex flex-col gap-y-5 lg:gap-y-14`}>
                     <div className='flex sm:flex-row flex-col items-start w-full h-fit relative gap-y-10 -mt-[30dvh] z-2'>
                         <div className='w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-center gap-y-3 justify-center'>
                             <Image
                                 className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] poster-box-shadow'
-                                src={animeData?.image} alt={`${animeData.title.userPreferred || animeData.title.english} poster`}
+                                src={animeData?.image}
+                                alt={`${animeData.title.userPreferred || animeData.title.english} poster`}
                                 width={400}
                                 height={600}
                                 loading={"eager"}
-                                placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`} />
+                                placeholder={`data:image/${shimmerBlurDataUrl(400, 600)}`}
+                            />
                             <div className='w-full flex flex-col items-center justify-center'>
-                                <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 p-0 rounded-xl overflow-hidden'><Link className='bg-yellow-400 text-white px-5 py-2 h-full w-full flex justify-center items-center gap-x-1' href={`/anime/${id}/play`}><PlayCircle /> Watch Now</Link></Button>
+                                <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 p-0 rounded-xl overflow-hidden'>
+                                    <Link className='bg-yellow-400 text-white px-5 py-2 h-full w-full flex justify-center items-center gap-x-1' href={`/anime/${id}/play`}>
+                                        <PlayCircle /> Watch Now
+                                    </Link>
+                                </Button>
                             </div>
                             <div className='w-full flex flex-col items-center justify-center'>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 rounded-xl'>{watchlistType ? watchListNames[watchlistType] : <><PlusCircle /> Watchlist</>}</Button>
+                                        <Button className='min-w-[150px] w-[50%] sm:w-[60%] lg:w-[50%] gap-x-1 rounded-xl'>
+                                            {watchlistType ? watchListNames[watchlistType] : <><PlusCircle /> Watchlist</>}
+                                        </Button>
                                     </PopoverTrigger>
                                     <PopoverContent className="flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]">
                                         <Button onClick={() => { setWatchlistType("completed"); }} variant={watchlistType === "completed" ? "default" : "outline"}>Completed</Button>
@@ -78,59 +87,79 @@ const AnimePage = ({ params }: { params: { id: number } }) => {
                                         {watchlistType && <Button onClick={() => { setWatchlistType(""); }} variant={'destructive'}>Remove from Watchlist</Button>}
                                     </PopoverContent>
                                 </Popover>
-
                             </div>
                         </div>
                         <div className='w-full max-w-[800px] sm:w-1/2 lg:w-2/3 h-fit flex flex-col items-start justify-start text-white px-5'>
                             <h1 className='text-[2rem] lg:text-[2.5rem] font-bold'>{animeData.title.userPreferred || animeData.title.english}</h1>
                             <div className='flex flex-wrap items-center gap-3 mt-3'>
-                                {animeData?.isAdult && <span className='bg-black p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    NSFW
-                                </span>}
-                                {animeData?.type && <span className='bg-violet-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.type}
-                                </span>}
-                                {animeData?.rating && <span className='bg-indigo-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    <Star fill="white" color='white' width={16} />&nbsp;{(animeData?.rating / 10).toFixed(1)}
-                                </span>}
+                                {animeData?.isAdult && (
+                                    <span className='bg-black p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        NSFW
+                                    </span>
+                                )}
+                                {animeData?.type && (
+                                    <span className='bg-violet-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.type}
+                                    </span>
+                                )}
+                                {animeData?.rating && (
+                                    <span className='bg-indigo-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        <Star fill="white" color='white' width={16} />&nbsp;{(animeData?.rating / 10).toFixed(1)}
+                                    </span>
+                                )}
                                 {animeData?.genres.map((genre: string, index: React.Key | number) => (
                                     <span key={index} className='bg-blue-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
                                         {genre}
                                     </span>
                                 ))}
-                                {animeData?.duration && <span className='bg-cyan-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
-                                    {animeData?.duration} min
-                                </span>}
-                                {animeData?.currentEpisode && <span className='bg-teal-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
-                                    EP {animeData?.currentEpisode}
-                                </span>}
-                                {animeData?.status && <span className='bg-green-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.status}
-                                </span>}
-                                {animeData?.season && <span className='bg-teal-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.season}
-                                </span>}
-                                {animeData?.releaseDate && <span className='bg-yellow-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.releaseDate}
-                                </span>}
-                                {animeData?.subOrDub && <span className='bg-orange-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.subOrDub}
-                                </span>}
-                                {animeData?.countryOfOrigin && <span className='bg-red-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
-                                    {animeData?.countryOfOrigin}
-                                </span>}
+                                {animeData?.duration && (
+                                    <span className='bg-cyan-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                                        {animeData?.duration} min
+                                    </span>
+                                )}
+                                {animeData?.currentEpisode && (
+                                    <span className='bg-teal-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl'>
+                                        EP {animeData?.currentEpisode}
+                                    </span>
+                                )}
+                                {animeData?.status && (
+                                    <span className='bg-green-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.status}
+                                    </span>
+                                )}
+                                {animeData?.season && (
+                                    <span className='bg-teal-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.season}
+                                    </span>
+                                )}
+                                {animeData?.releaseDate && (
+                                    <span className='bg-yellow-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.releaseDate}
+                                    </span>
+                                )}
+                                {animeData?.subOrDub && (
+                                    <span className='bg-orange-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.subOrDub}
+                                    </span>
+                                )}
+                                {animeData?.countryOfOrigin && (
+                                    <span className='bg-red-500 p-2 text-[1rem] sm:py-2 sm:px-3 rounded-3xl whitespace-nowrap flex items-center'>
+                                        {animeData?.countryOfOrigin}
+                                    </span>
+                                )}
                                 <p className='text-lg hidden lg:block'>{animeData?.description}</p>
                             </div>
-
                         </div>
                     </div>
                     <p className='text-lg text-white px-3 sm:px-10 lg:hidden'>{animeData?.description}</p>
-                    <div className='flex justify-center'><AnimeDetailsTabs animeData={animeData} /></div>
+                    <div className='flex justify-center'>
+                        <AnimeDetailsTabs animeData={animeData} />
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default AnimePage
 
