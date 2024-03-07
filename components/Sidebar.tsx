@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils"
-import Logo from "@/assets/logo.svg";
+import Logo from "@/public/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { shimmerBlurDataUrl } from "@/utils/blurDataUrl";
 import { ProfilePopover } from "@/components/user/ProfilePopover";
