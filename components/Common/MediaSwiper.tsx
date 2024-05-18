@@ -60,13 +60,13 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
                     </CarouselItem>
                 )) : data?.map((post: mediaPeopleData, index: React.Key | null | undefined) => (
                     <CarouselItem key={index} style={{ flexBasis: basis }} className={`relative min-w-0 h-fit p-2 shrink-0 grow-0 basis-1/2 sm:basis-1/4 md:basis-1/5 lg:basis-1/6 xl:basis-1/8`} >
-                        <motion.div className=' z-[1111] ' layoutId={index as string} onClick={() => { setSelectedId(post.id); setSelectedIndex(index as number) }}>
+                        {/* <motion.div className=' z-[1111] ' layoutId={index as string} onClick={() => { setSelectedId(post.id); setSelectedIndex(index as number) }}> */}
                             <MediaThumbnailComponent link={`/${post.name ? "tv" : "movie"}/${post.id}`} id={post.id} title={post.name || post.title} poster={post.poster_path} width={400} height={600} index={index} release_date={post.release_date || post.first_air_date} type={post.title ? "movie" : "tv"}>
                                 <span className='bg-yellow-500 text-white absolute top-3 left-3 z-[3] py-[2px] px-2 text-[0.8rem] rounded-3xl whitespace-nowrap flex items-center'>
                                     <Star fill="white" color='white' width={12} />&nbsp;{post.vote_average.toFixed(1)}
                                 </span>
                             </MediaThumbnailComponent>
-                        </motion.div>
+                        {/* </motion.div> */}
                     </CarouselItem>))
                 }
             </CarouselContent>
@@ -75,7 +75,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
                 <CarouselPrevious className="text-black dark:bg-white right-1 top-1/2 -translate-y-1/2" />
                 <CarouselNext className="text-black dark:bg-white left-0 top-1/2 -translate-y-1/2" />
             </div>
-
+{/* 
             <AnimatePresence>
                 {data && selectedId && (
                     <motion.div className='relative w-full left-2 h-[320px] z-[1111]' layoutId={selectedId}>
@@ -132,7 +132,7 @@ export default function MediaSwiper({ data, loading, heading, upcoming, link }: 
                         </div>
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence> */}
         </Carousel >
     )
 }
