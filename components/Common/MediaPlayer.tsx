@@ -236,6 +236,7 @@ export default function VideoPlayer({
     media?.urls,
     media?.subtitles,
     media?.thumbnail,
+    media?.download,
     media?.logo,
   ]);
 
