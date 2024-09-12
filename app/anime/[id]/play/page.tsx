@@ -191,7 +191,10 @@ const AnimePlayerPage = () => {
                   streamingData.length >= 8 && (
                     <iframe
                       className='w-full overflow-y-hidden aspect-[1.78/1] outline-none'
-                      src={`${streamingData[10].headers.Referer || 'https://imvt.vercel.app'}`}
+                      src={`${
+                        streamingData[10].headers.Referer ||
+                        'https://imvt.vercel.app'
+                      }`}
                       sandbox='allow-same-origin allow-scripts'
                       referrerPolicy='strict-origin'
                       allow='autoplay; fullscreen; geolocation; display-capture; picture-in-picture'
@@ -479,7 +482,10 @@ const AnimePlayerPage = () => {
                           alt={`current media poster`}
                           width={300}
                           height={300}
-                          placeholder={`data:image/${shimmerBlurDataUrl(50, 75)}`}
+                          placeholder={`data:image/${shimmerBlurDataUrl(
+                            50,
+                            75
+                          )}`}
                         />
                       </div>
                       <CardTitle>

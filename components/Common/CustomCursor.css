@@ -12,7 +12,6 @@
   z-index: 111111111;
 }
 
-
 @media (max-width: 600px) {
   * {
     cursor: default !important;

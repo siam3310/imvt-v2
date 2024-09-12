@@ -1,19 +1,22 @@
-"use client"
+'use client'
+
 import React from 'react'
-import { gql, useQuery } from "@apollo/client";
-import SingleMediaPage from '@/components/Common/SingleMediaPage';
-import GetTvbyId from '@/graphql/queries/GetTvbyId.gql';
+import GetTvbyId from '@/graphql/queries/GetTvbyId.gql'
+import { gql, useQuery } from '@apollo/client'
+
+import SingleMediaPage from '@/components/Common/SingleMediaPage'
 
 const SingleTv = ({ id }: { id: string }) => {
-  const tmdbId = id;
+  const tmdbId = id
   const { data, loading } = useQuery(GetTvbyId, {
     variables: { tmdbId },
-  });
-  const tvData = data?.getTvbyId;
+  })
+  const tvData = data?.getTvbyId
 
-  return (<>
-    <SingleMediaPage mediaData={tvData} loading={loading} type="tv" />
-  </>
+  return (
+    <>
+      <SingleMediaPage mediaData={tvData} loading={loading} type='tv' />
+    </>
   )
 }
 

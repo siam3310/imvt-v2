@@ -1,45 +1,53 @@
-"use client"
-import React, { useState, useEffect } from "react";
-import MediaGrid from "@/components/Common/MediaGrid";
-import PaginationComponent from "@/components/Common/PaginationComponent";
-import { gql, useQuery } from "@apollo/client";
-import GetTvShowsData from "@/graphql/queries/GetTvShowsData.gql";
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import GetTvShowsData from '@/graphql/queries/GetTvShowsData.gql'
+import { gql, useQuery } from '@apollo/client'
+
+import MediaGrid from '@/components/Common/MediaGrid'
+import PaginationComponent from '@/components/Common/PaginationComponent'
 
 const TvCategoryPages = ({ category }: { category: string }) => {
-  const [heading, setHeading] = useState("")
+  const [heading, setHeading] = useState('')
   const [page, setPage] = useState(1)
   const { data, loading } = useQuery(GetTvShowsData, {
     variables: { page },
-  });
+  })
   const [mediaData, setMediaData] = useState({
     results: [],
-    hasNextPage: false
-  });
+    hasNextPage: false,
+  })
   useEffect(() => {
-    if (category === "trending") {
+    if (category === 'trending') {
       setMediaData(data?.getTvTrendingWeek)
-      setHeading("Trending Shows")
-    } else if (category === "popular") {
+      setHeading('Trending Shows')
+    } else if (category === 'popular') {
       setMediaData(data?.getTvPopular)
-      setHeading("Popular Shows")
-    } else if (category === "top-rated") {
+      setHeading('Popular Shows')
+    } else if (category === 'top-rated') {
       setMediaData(data?.getTvTopRated)
-      setHeading("Top Rated Shows")
-    } else if (category === "airing-today") {
+      setHeading('Top Rated Shows')
+    } else if (category === 'airing-today') {
       setMediaData(data?.getTvAiringToday)
-      setHeading("Shows Airing Today")
-    } else if (category === "on-the-air") {
+      setHeading('Shows Airing Today')
+    } else if (category === 'on-the-air') {
       setMediaData(data?.getTvOnTheAir)
-      setHeading("On the Air Shows")
+      setHeading('On the Air Shows')
     }
   }, [data, page, category])
   return (
     <>
-      <div className="w-full h-[100dvh] flex flex-col gap-y-3 p-5 ">
-        <h1 className="text-white text-center font-bold text-[2rem]">{heading}</h1>
-        <div className="overflow-scroll h-full pb-[150px] sm:pb-[30px]">
+      <div className='w-full h-[100dvh] flex flex-col gap-y-3 p-5 '>
+        <h1 className='text-white text-center font-bold text-[2rem]'>
+          {heading}
+        </h1>
+        <div className='overflow-scroll h-full pb-[150px] sm:pb-[30px]'>
           <MediaGrid mediaData={mediaData} loading={loading} />
-          <PaginationComponent mediaData={mediaData} page={page} setPage={setPage} />
+          <PaginationComponent
+            mediaData={mediaData}
+            page={page}
+            setPage={setPage}
+          />
         </div>
       </div>
     </>

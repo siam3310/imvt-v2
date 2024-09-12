@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
-import CustomCursor from '@/components/Common/CustomCursor'
-import BottomNav from '@/components/BottomNav'
-import Sidebar from '@/components/Sidebar'
 import Provider from '@/configs/Provider'
 import { siteInfo } from '@/configs/site'
 import { twMerge } from 'tailwind-merge'
-import { Toaster } from "@/components/ui/sonner"
+
+import { Toaster } from '@/components/ui/sonner'
+import BottomNav from '@/components/BottomNav'
+import CustomCursor from '@/components/Common/CustomCursor'
+import Sidebar from '@/components/Sidebar'
+
 import './globals.css'
 import './styles.css'
 
@@ -28,7 +30,7 @@ export default async function RootLayout({ children }: IChildren) {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-      <link rel="manifest" href="/manifest.json" />
+        <link rel='manifest' href='/manifest.json' />
       </head>
       <body>
         {/* <CustomCursor> */}
@@ -42,7 +44,7 @@ export default async function RootLayout({ children }: IChildren) {
             <div className='z-[11111111]'>
               <BottomNav />
             </div>
-            <div className="w-fit sm:block hidden z-[11111111]">
+            <div className='w-fit sm:block hidden z-[11111111]'>
               <Sidebar />
             </div>
             {children}

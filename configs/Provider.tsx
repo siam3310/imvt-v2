@@ -1,8 +1,8 @@
 'use client'
+
 import React from 'react'
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ThemeProvider } from 'next-themes'
-import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache } from "@apollo/client"
 
 export default function Provider({ children }: IChildren) {
   const client = new ApolloClient({
@@ -11,10 +11,8 @@ export default function Provider({ children }: IChildren) {
   })
 
   return (
-    <ThemeProvider attribute='class' value={{ light: 'light', dark: 'dark'}}>
-      <ApolloProvider client={client}>
-        {children}
-      </ApolloProvider>
+    <ThemeProvider attribute='class' value={{ light: 'light', dark: 'dark' }}>
+      <ApolloProvider client={client}>{children}</ApolloProvider>
     </ThemeProvider>
   )
 }

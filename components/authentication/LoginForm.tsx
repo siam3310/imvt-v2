@@ -117,15 +117,6 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(false)
   }
 
-  async function handleGuestLogin(event: React.SyntheticEvent) {
-    event.preventDefault()
-    setIsLoading(true)
-    setEmail(() => 'guestuser@gmail.com')
-    setPassword(() => 'password')
-    await handleSignInWithPassword()
-    setIsLoading(false)
-  }
-
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={handleFormSubmit}>
@@ -162,7 +153,9 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
                 value={password}
               />
               <div
-                className={`absolute right-0 inset-y-0 pr-3 flex items-center ${!showPassword && `text-muted-foreground`}`}
+                className={`absolute right-0 inset-y-0 pr-3 flex items-center ${
+                  !showPassword && `text-muted-foreground`
+                }`}
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <Eye /> : <EyeOff />}
@@ -193,7 +186,14 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             )}
             Sign In with Email
           </Button>
-          <Button onClick={(e) => handleGuestLogin(e)} disabled={isLoading}>
+          <Button
+            onClick={async (e) => {
+              setEmail(() => 'guestuser@gmail.com')
+              setPassword(() => 'password')
+              await handleFormSubmit(e)
+            }}
+            disabled={isLoading}
+          >
             {isLoading && (
               <span className='mr-2 h-4 w-4 my-2'>
                 <svg
