@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
-import { ClockIcon, PlayCircle, PlusCircle, Star, Users } from 'lucide-react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import { ClockIcon, PlayCircle, PlusCircle, Star, Users } from 'lucide-react'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
-import { singleMediaDataType } from '@/types/mediaData';
-import usehandleWatchlist from '@/hooks/usehandleWatchlist';
-import { Alert, AlertTitle } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { singleMediaDataType } from '@/types/mediaData'
+import usehandleWatchlist from '@/hooks/usehandleWatchlist'
+import { Alert, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import SelectAnimeDrawer from '@/components/Anime/SelectAnimeDrawer';
-import MediaDetailsTabs from '@/components/Common/MediaDetailsTabs';
+} from '@/components/ui/popover'
+import SelectAnimeDrawer from '@/components/Anime/SelectAnimeDrawer'
+import MediaDetailsTabs from '@/components/Common/MediaDetailsTabs'
 
-import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
-import { set } from 'react-hook-form';
+import { set } from 'react-hook-form'
 
 const SingleMediaPage = ({
   mediaData,
   loading,
   type,
 }: {
-  mediaData: singleMediaDataType;
-  loading: any;
-  type: any;
+  mediaData: singleMediaDataType
+  loading: any
+  type: any
 }) => {
   const ReleaseDate = new Date(
     mediaData?.release_date || mediaData?.first_air_date
-  );
-  const isUpcoming = ReleaseDate ? ReleaseDate > new Date() : null;
-  const [openAnimeDrawer, setOpenAnimeDrawer] = React.useState<boolean>(false);
+  )
+  const isUpcoming = ReleaseDate ? ReleaseDate > new Date() : null
+  const [openAnimeDrawer, setOpenAnimeDrawer] = React.useState<boolean>(false)
 
   useEffect(() => {
     if (
@@ -42,14 +42,14 @@ const SingleMediaPage = ({
       (mediaData?.original_language === 'ja' ||
         mediaData?.original_language === 'ko')
     ) {
-      setOpenAnimeDrawer(true);
+      setOpenAnimeDrawer(true)
     }
-  }, [mediaData]);
+  }, [mediaData])
 
   const { watchlistType, setWatchlistType } = usehandleWatchlist(
     mediaData?.id,
     mediaData?.name ? 'tv' : 'movie'
-  );
+  )
 
   const watchListNames = {
     completed: 'Completed',
@@ -58,9 +58,9 @@ const SingleMediaPage = ({
     on_hold: 'On Hold',
     dropped: 'Dropped',
     remove: 'watchlist',
-  };
+  }
 
-  if (loading || !mediaData) return <SingleMediaSkeleton />;
+  if (loading || !mediaData) return <SingleMediaSkeleton />
 
   return (
     <>
@@ -129,7 +129,7 @@ const SingleMediaPage = ({
                   <PopoverContent className='flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]'>
                     <Button
                       onClick={() => {
-                        setWatchlistType('completed');
+                        setWatchlistType('completed')
                       }}
                       variant={
                         watchlistType === 'completed' ? 'default' : 'outline'
@@ -139,7 +139,7 @@ const SingleMediaPage = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('watching');
+                        setWatchlistType('watching')
                       }}
                       variant={
                         watchlistType === 'watching' ? 'default' : 'outline'
@@ -149,7 +149,7 @@ const SingleMediaPage = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('plan_to_watch');
+                        setWatchlistType('plan_to_watch')
                       }}
                       variant={
                         watchlistType === 'plan_to_watch'
@@ -161,7 +161,7 @@ const SingleMediaPage = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('on_hold');
+                        setWatchlistType('on_hold')
                       }}
                       variant={
                         watchlistType === 'on_hold' ? 'default' : 'outline'
@@ -171,7 +171,7 @@ const SingleMediaPage = ({
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('dropped');
+                        setWatchlistType('dropped')
                       }}
                       variant={
                         watchlistType === 'dropped' ? 'default' : 'outline'
@@ -182,7 +182,7 @@ const SingleMediaPage = ({
                     {watchlistType && (
                       <Button
                         onClick={() => {
-                          setWatchlistType('');
+                          setWatchlistType('')
                         }}
                         variant={'destructive'}
                       >
@@ -261,9 +261,9 @@ const SingleMediaPage = ({
         </div>
       </div>
     </>
-  );
-};
-export default SingleMediaPage;
+  )
+}
+export default SingleMediaPage
 
 const SingleMediaSkeleton = () => {
   return (
@@ -320,5 +320,5 @@ const SingleMediaSkeleton = () => {
         </div>
       </div>
     </SkeletonTheme>
-  );
-};
+  )
+}

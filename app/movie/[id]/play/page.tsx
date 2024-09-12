@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import React from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
-import SingleMediaPlayer from '@/components/Common/SingleMediaPlayer';
+import SingleMediaPlayer from '@/components/Common/SingleMediaPlayer'
 
 const MoviePlayerPage = () => {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const id = pathname.split('/')[2];
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const id = pathname.split('/')[2]
   // const type = pathname.split('/')[1]
 
   return (
@@ -20,7 +20,7 @@ const MoviePlayerPage = () => {
         querySeason={1}
       />
     </div>
-  );
-};
+  )
+}
 
-export default MoviePlayerPage;
+export default MoviePlayerPage

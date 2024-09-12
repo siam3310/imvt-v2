@@ -21,18 +21,18 @@ const HOSTNAME_WHITELIST = [
   'fonts.gstatic.com',
   'fonts.googleapis.com',
   'cdn.jsdelivr.net',
-];
+]
 
 // The Util Function to hack URLs of intercepted requests
 const getFixedUrl = (req) => {
-  var now = Date.now();
-  var url = new URL(req.url);
+  var now = Date.now()
+  var url = new URL(req.url)
 
   // 1. fixed http URL
   // Just keep syncing with location.protocol
   // fetch(httpURL) belongs to active mixed content.
   // And fetch(httpRequest) is not supported yet.
-  url.protocol = self.location.protocol;
+  url.protocol = self.location.protocol
 
   // 2. add query for caching-busting.
   // Github Pages served with Cache-Control: max-age=600
@@ -40,10 +40,10 @@ const getFixedUrl = (req) => {
   // Until cache mode of Fetch API landed, we have to workaround cache-busting with query string.
   // Cache-Control-Bug: https://bugs.chromium.org/p/chromium/issues/detail?id=453190
   if (url.hostname === self.location.hostname) {
-    url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
+    url.search += (url.search ? '&' : '?') + 'cache-bust=' + now
   }
-  return url.href;
-};
+  return url.href
+}
 
 /**
  *  @Lifecycle Activate
@@ -52,8 +52,8 @@ const getFixedUrl = (req) => {
  *  waitUntil(): activating ====> activated
  */
 self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
-});
+  event.waitUntil(self.clients.claim())
+})
 
 /**
  *  @Functional Fetch
@@ -67,10 +67,10 @@ self.addEventListener('fetch', (event) => {
     // Stale-while-revalidate
     // similar to HTTP's stale-while-revalidate: https://www.mnot.net/blog/2007/12/12/stale
     // Upgrade from Jake's to Surma's: https://gist.github.com/surma/eb441223daaedf880801ad80006389f1
-    const cached = caches.match(event.request);
-    const fixedUrl = getFixedUrl(event.request);
-    const fetched = fetch(fixedUrl, { cache: 'no-store' });
-    const fetchedCopy = fetched.then((resp) => resp.clone());
+    const cached = caches.match(event.request)
+    const fixedUrl = getFixedUrl(event.request)
+    const fetched = fetch(fixedUrl, { cache: 'no-store' })
+    const fetchedCopy = fetched.then((resp) => resp.clone())
 
     // Call respondWith() with whatever we get first.
     // If the fetch fails (e.g disconnected), wait for the cache.
@@ -82,7 +82,7 @@ self.addEventListener('fetch', (event) => {
         .catch((_) => {
           /* eat any errors */
         })
-    );
+    )
 
     // Update the cache with the version we fetched (only for ok status)
     event.waitUntil(
@@ -94,6 +94,6 @@ self.addEventListener('fetch', (event) => {
         .catch((_) => {
           /* eat any errors */
         })
-    );
+    )
   }
-});
+})

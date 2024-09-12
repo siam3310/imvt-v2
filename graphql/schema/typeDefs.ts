@@ -598,4 +598,4 @@ type Query {
   getpeoplebyQuery(query: String!, page: Int): PaginatedPeople
   getpeoplebyId(id: ID!): People
 }
-  `;
+  `

@@ -1,31 +1,34 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
-import { Eye, EyeOff } from 'lucide-react';
-import { toast } from 'sonner';
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client'
+import { Eye, EyeOff } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function LoginForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const router = useRouter()
 
-  const supabase = createClient();
-  const handleSignInWithPassword = async () => {
+  const supabase = createClient()
+  const handleSignInWithPassword = async (
+    inputEmail?: string,
+    inputPassword?: string
+  ) => {
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+      email: inputEmail || email,
+      password: inputPassword || password,
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -35,14 +38,14 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
     } else {
-      router.push('/');
+      router.push('/')
     }
-  };
+  }
 
   const handleSignInWithGoogle = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -51,7 +54,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           prompt: 'consent',
         },
       },
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -61,18 +64,18 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const handleSignInWithGithub = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -82,18 +85,18 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const handleSignInWithDiscord = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'discord',
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -103,18 +106,25 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   async function handleFormSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-    await handleSignInWithPassword();
-    setIsLoading(false);
+    event.preventDefault()
+    setIsLoading(true)
+    await handleSignInWithPassword()
+    setIsLoading(false)
+  }
+
+  async function handleGuestLogin(event: React.SyntheticEvent) {
+    event.preventDefault()
+    setIsLoading(true)
+    await handleSignInWithPassword('guestuser@gmail.com', 'password')
+    setIsLoading(false)
   }
 
   return (
@@ -186,14 +196,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             )}
             Sign In with Email
           </Button>
-          <Button
-            onClick={async (e) => {
-              setEmail(() => 'guestuser@gmail.com');
-              setPassword(() => 'password');
-              await handleFormSubmit(e);
-            }}
-            disabled={isLoading}
-          >
+          <Button onClick={handleGuestLogin} disabled={isLoading}>
             {isLoading && (
               <span className='mr-2 h-4 w-4 my-2'>
                 <svg
@@ -234,7 +237,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
       <div className='grid gap-2'>
         <Button
           onClick={() => {
-            handleSignInWithGoogle();
+            handleSignInWithGoogle()
           }}
           variant='outline'
           type='button'
@@ -340,7 +343,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 
         <Button
           onClick={() => {
-            handleSignInWithDiscord();
+            handleSignInWithDiscord()
           }}
           variant='outline'
           type='button'
@@ -395,5 +398,5 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
         </Button>
       </div>
     </div>
-  );
+  )
 }

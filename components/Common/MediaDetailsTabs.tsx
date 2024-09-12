@@ -1,12 +1,12 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
-import { handleDownload } from '@/utils/downloadImage';
-import { PlayCircle, Star, Users } from 'lucide-react';
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import { handleDownload } from '@/utils/downloadImage'
+import { PlayCircle, Star, Users } from 'lucide-react'
 
-import { singleMediaDataType } from '@/types/mediaData';
-import { Button } from '@/components/ui/button';
+import { singleMediaDataType } from '@/types/mediaData'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -14,36 +14,36 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent';
+} from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
 
 export default function MediaDetailsTabs({
   mediaData,
   type,
 }: {
-  mediaData: singleMediaDataType;
-  type: any;
+  mediaData: singleMediaDataType
+  type: any
 }) {
-  const [basis, setBasis] = React.useState('50%');
+  const [basis, setBasis] = React.useState('50%')
 
   React.useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
+      const width = window.innerWidth
       if (width > 600) {
-        var newBasis = 100 / Math.floor(width / 200);
+        var newBasis = 100 / Math.floor(width / 200)
       } else {
-        var newBasis = 100 / Math.floor(width / 100);
+        var newBasis = 100 / Math.floor(width / 100)
       }
-      setBasis(`${newBasis}%`);
-    };
+      setBasis(`${newBasis}%`)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
-    handleResize();
+    handleResize()
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <Tabs defaultValue='casts' className='w-[95%] sm:w-[90%] dark'>
@@ -403,5 +403,5 @@ export default function MediaDetailsTabs({
         </TabsContent>
       )}
     </Tabs>
-  );
+  )
 }

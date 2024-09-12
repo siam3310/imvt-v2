@@ -1,37 +1,37 @@
-import React from 'react';
-import Image from 'next/image';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
-import { Star } from 'lucide-react';
+import React from 'react'
+import Image from 'next/image'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import { Star } from 'lucide-react'
 
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
-} from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent';
+} from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
 
 export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
-  const [basis, setBasis] = React.useState('50%');
+  const [basis, setBasis] = React.useState('50%')
 
   React.useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
+      const width = window.innerWidth
       if (width > 600) {
-        var newBasis = 100 / Math.floor(width / 200);
+        var newBasis = 100 / Math.floor(width / 200)
       } else {
-        var newBasis = 100 / Math.floor(width / 100);
+        var newBasis = 100 / Math.floor(width / 100)
       }
-      setBasis(`${newBasis}%`);
-    };
+      setBasis(`${newBasis}%`)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
-    handleResize();
+    handleResize()
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const monthNames = [
     'January',
@@ -46,7 +46,7 @@ export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
     'October',
     'November',
     'December',
-  ];
+  ]
 
   return (
     <Tabs defaultValue='more-details' className='w-[95%] sm:w-[90%] dark'>
@@ -297,5 +297,5 @@ export default function AnimeDetailsTabs({ animeData }: { animeData: any }) {
         </TabsContent>
       )}
     </Tabs>
-  );
+  )
 }

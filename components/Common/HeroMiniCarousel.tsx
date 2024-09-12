@@ -1,41 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import Autoplay from 'embla-carousel-autoplay';
-import { PlayCircle, PlusCircle } from 'lucide-react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import Autoplay from 'embla-carousel-autoplay'
+import { PlayCircle, PlusCircle } from 'lucide-react'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
-import { mediaData } from '@/types/mediaData';
-import usehandleWatchlist from '@/hooks/usehandleWatchlist';
-import { Button } from '@/components/ui/button';
+import { mediaData } from '@/types/mediaData'
+import usehandleWatchlist from '@/hooks/usehandleWatchlist'
+import { Button } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-} from '@/components/ui/carousel';
+} from '@/components/ui/carousel'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/components/ui/popover'
 
-import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
-import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl'
 
 export default function HeroMiniCarousel({
   data,
   loading,
 }: {
-  data: mediaData[] | undefined;
-  loading: boolean;
+  data: mediaData[] | undefined
+  loading: boolean
 }) {
   if (loading || !data)
     return (
       <SkeletonTheme baseColor='#202020' highlightColor='#444'>
         <HeroMiniSkeleton />
       </SkeletonTheme>
-    );
+    )
   return (
     <Carousel
       opts={{ align: 'center', loop: true }}
@@ -52,27 +52,27 @@ export default function HeroMiniCarousel({
         ))}
       </CarouselContent>
     </Carousel>
-  );
+  )
 }
 
 const HeroMiniCarouselSlide = ({
   mediaData,
   index,
 }: {
-  mediaData: mediaData;
-  index: React.Key | number;
+  mediaData: mediaData
+  index: React.Key | number
 }) => {
   const { watchlistType, setWatchlistType } = usehandleWatchlist(
     mediaData?.id,
     mediaData?.name ? 'tv' : 'movie'
-  );
-  let isUpcoming = false;
+  )
+  let isUpcoming = false
 
   if (
     new Date(mediaData?.release_date) >= new Date() ||
     new Date(mediaData?.first_air_date) >= new Date()
   ) {
-    isUpcoming = true;
+    isUpcoming = true
   }
   const watchListNames = {
     completed: 'Completed',
@@ -81,7 +81,7 @@ const HeroMiniCarouselSlide = ({
     on_hold: 'On Hold',
     dropped: 'Dropped',
     remove: '',
-  };
+  }
 
   return (
     <CarouselItem key={index} className={`h-fit transition-none`}>
@@ -155,7 +155,7 @@ const HeroMiniCarouselSlide = ({
             <PopoverContent className='flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]'>
               <Button
                 onClick={() => {
-                  setWatchlistType('completed');
+                  setWatchlistType('completed')
                 }}
                 variant={watchlistType === 'completed' ? 'default' : 'outline'}
               >
@@ -163,7 +163,7 @@ const HeroMiniCarouselSlide = ({
               </Button>
               <Button
                 onClick={() => {
-                  setWatchlistType('watching');
+                  setWatchlistType('watching')
                 }}
                 variant={watchlistType === 'watching' ? 'default' : 'outline'}
               >
@@ -171,7 +171,7 @@ const HeroMiniCarouselSlide = ({
               </Button>
               <Button
                 onClick={() => {
-                  setWatchlistType('plan_to_watch');
+                  setWatchlistType('plan_to_watch')
                 }}
                 variant={
                   watchlistType === 'plan_to_watch' ? 'default' : 'outline'
@@ -181,7 +181,7 @@ const HeroMiniCarouselSlide = ({
               </Button>
               <Button
                 onClick={() => {
-                  setWatchlistType('on_hold');
+                  setWatchlistType('on_hold')
                 }}
                 variant={watchlistType === 'on_hold' ? 'default' : 'outline'}
               >
@@ -189,7 +189,7 @@ const HeroMiniCarouselSlide = ({
               </Button>
               <Button
                 onClick={() => {
-                  setWatchlistType('dropped');
+                  setWatchlistType('dropped')
                 }}
                 variant={watchlistType === 'dropped' ? 'default' : 'outline'}
               >
@@ -198,7 +198,7 @@ const HeroMiniCarouselSlide = ({
               {watchlistType && (
                 <Button
                   onClick={() => {
-                    setWatchlistType('');
+                    setWatchlistType('')
                   }}
                   variant={'destructive'}
                 >
@@ -210,8 +210,8 @@ const HeroMiniCarouselSlide = ({
         </div>
       </div>
     </CarouselItem>
-  );
-};
+  )
+}
 
 const HeroMiniSkeleton = () => {
   return (
@@ -229,5 +229,5 @@ const HeroMiniSkeleton = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}

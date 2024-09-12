@@ -1,23 +1,23 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import Image from 'next/image'
+import Link from 'next/link'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
 
-import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser';
-import { Button } from '@/components/ui/button';
+import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser'
+import { Button } from '@/components/ui/button'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/components/ui/popover'
 
 export function ProfilePopover({
   userData,
   children,
 }: {
-  userData: any;
-  children: any;
+  userData: any
+  children: any
 }) {
-  const { handleSignOut } = useAuthenticatedUser();
+  const { handleSignOut } = useAuthenticatedUser()
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -61,5 +61,5 @@ export function ProfilePopover({
         </div>
       </PopoverContent>
     </Popover>
-  );
+  )
 }

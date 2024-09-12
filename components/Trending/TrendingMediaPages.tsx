@@ -1,38 +1,38 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import GetTrendingMediaData from '@/graphql/queries/GetTrendingMediaData.gql';
-import { gql, useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react'
+import GetTrendingMediaData from '@/graphql/queries/GetTrendingMediaData.gql'
+import { gql, useQuery } from '@apollo/client'
 
-import MediaGrid from '@/components/Common/MediaGrid';
-import PaginationComponent from '@/components/Common/PaginationComponent';
+import MediaGrid from '@/components/Common/MediaGrid'
+import PaginationComponent from '@/components/Common/PaginationComponent'
 
 const TrendingMediaPages = ({ type }: { type: string }) => {
-  const [heading, setHeading] = useState('');
-  const [page, setPage] = useState(1);
+  const [heading, setHeading] = useState('')
+  const [page, setPage] = useState(1)
   const { data, loading } = useQuery(GetTrendingMediaData, {
     variables: { page },
-  });
+  })
   const [mediaData, setMediaData] = useState({
     results: [],
     hasNextPage: false,
-  });
+  })
 
   useEffect(() => {
     if (type === 'all') {
-      setMediaData(data?.getAnyTrendingWeek);
-      setHeading('Trending Now');
+      setMediaData(data?.getAnyTrendingWeek)
+      setHeading('Trending Now')
     } else if (type === 'movies') {
-      setMediaData(data?.getMovieTrendingWeek);
-      setHeading('Trending Movies');
+      setMediaData(data?.getMovieTrendingWeek)
+      setHeading('Trending Movies')
     } else if (type === 'tv-shows') {
-      setMediaData(data?.getTvTrendingWeek);
-      setHeading('Trending TV Shows');
+      setMediaData(data?.getTvTrendingWeek)
+      setHeading('Trending TV Shows')
     } else if (type === 'people') {
-      setMediaData(data?.getPeopleTrendingWeek);
-      setHeading('Trending People');
+      setMediaData(data?.getPeopleTrendingWeek)
+      setHeading('Trending People')
     }
-  }, [data, page, type]);
+  }, [data, page, type])
 
   return (
     <>
@@ -50,7 +50,7 @@ const TrendingMediaPages = ({ type }: { type: string }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TrendingMediaPages;
+export default TrendingMediaPages

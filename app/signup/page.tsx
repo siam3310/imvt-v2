@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
 
-import AuthenticationPage from '@/components/authentication/AuthenticationPage';
+import AuthenticationPage from '@/components/authentication/AuthenticationPage'
 
 export default async function SignUpPage() {
   // const cookieStore = cookies();
@@ -20,5 +20,5 @@ export default async function SignUpPage() {
         description='Create your account'
       />
     </div>
-  );
+  )
 }

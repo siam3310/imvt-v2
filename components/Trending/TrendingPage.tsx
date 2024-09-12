@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import React from 'react';
-import GetTrendingData from '@/graphql/queries/GetTrendingData.gql';
-import { gql, useQuery } from '@apollo/client';
+import React from 'react'
+import GetTrendingData from '@/graphql/queries/GetTrendingData.gql'
+import { gql, useQuery } from '@apollo/client'
 
-import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
-import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel';
-import MediaSwiper from '@/components/Common/MediaSwiper';
+import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel'
+import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
+import MediaSwiper from '@/components/Common/MediaSwiper'
 
 const TrendingPage = () => {
-  const { data, loading } = useQuery(GetTrendingData);
+  const { data, loading } = useQuery(GetTrendingData)
 
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-7'>
@@ -46,7 +46,7 @@ const TrendingPage = () => {
         link='people'
       />
     </div>
-  );
-};
+  )
+}
 
-export default TrendingPage;
+export default TrendingPage

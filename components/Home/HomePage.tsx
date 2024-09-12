@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import React from 'react';
-import GetHomeData from '@/graphql/queries/GetHomeData.gql';
-import { gql, useQuery } from '@apollo/client';
-import { useTheme } from 'next-themes';
+import React from 'react'
+import GetHomeData from '@/graphql/queries/GetHomeData.gql'
+import { gql, useQuery } from '@apollo/client'
+import { useTheme } from 'next-themes'
 
-import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
-import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel';
-import MediaSwiper from '@/components/Common/MediaSwiper';
+import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel'
+import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
+import MediaSwiper from '@/components/Common/MediaSwiper'
 
 const HomePage = () => {
-  const { data, loading } = useQuery(GetHomeData);
-  const { theme, setTheme } = useTheme();
+  const { data, loading } = useQuery(GetHomeData)
+  const { theme, setTheme } = useTheme()
 
-  setTheme('dark');
+  setTheme('dark')
 
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-[120px] sm:pb-[30px]'>
@@ -50,7 +50,7 @@ const HomePage = () => {
         link='trending/people'
       />
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

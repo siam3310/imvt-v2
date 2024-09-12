@@ -1,37 +1,37 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import GetMoviesData from '@/graphql/queries/GetMoviesData.gql';
-import { gql, useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react'
+import GetMoviesData from '@/graphql/queries/GetMoviesData.gql'
+import { gql, useQuery } from '@apollo/client'
 
-import MediaGrid from '@/components/Common/MediaGrid';
-import PaginationComponent from '@/components/Common/PaginationComponent';
+import MediaGrid from '@/components/Common/MediaGrid'
+import PaginationComponent from '@/components/Common/PaginationComponent'
 
 const MovieCategoryPages = ({ category }: { category: string }) => {
-  const [heading, setHeading] = useState('');
-  const [page, setPage] = useState(1);
+  const [heading, setHeading] = useState('')
+  const [page, setPage] = useState(1)
   const { data, loading } = useQuery(GetMoviesData, {
     variables: { page },
-  });
+  })
   const [mediaData, setMediaData] = useState({
     results: [],
     hasNextPage: false,
-  });
+  })
   useEffect(() => {
     if (category === 'trending') {
-      setMediaData(data?.getMovieTrendingWeek);
-      setHeading('Trending');
+      setMediaData(data?.getMovieTrendingWeek)
+      setHeading('Trending')
     } else if (category === 'popular') {
-      setMediaData(data?.getMoviePopular);
-      setHeading('Popular');
+      setMediaData(data?.getMoviePopular)
+      setHeading('Popular')
     } else if (category === 'top-rated') {
-      setMediaData(data?.getMovieTopRated);
-      setHeading('Top Rated');
+      setMediaData(data?.getMovieTopRated)
+      setHeading('Top Rated')
     } else if (category === 'upcoming') {
-      setMediaData(data?.getMovieUpcoming);
-      setHeading('Upcoming');
+      setMediaData(data?.getMovieUpcoming)
+      setHeading('Upcoming')
     }
-  }, [data, page, category]);
+  }, [data, page, category])
 
   return (
     <>
@@ -49,7 +49,7 @@ const MovieCategoryPages = ({ category }: { category: string }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MovieCategoryPages;
+export default MovieCategoryPages

@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import Artplayer from 'artplayer';
-import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-import { type Option } from 'artplayer/types/option';
-import Hls from 'hls.js';
+import { useEffect } from 'react'
+import Artplayer from 'artplayer'
+import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality'
+import { type Option } from 'artplayer/types/option'
+import Hls from 'hls.js'
 
-import { iptvDataType } from '@/types/mediaData';
+import { iptvDataType } from '@/types/mediaData'
 
 export default function IptvPlayer(
   { playerData }: { playerData: iptvDataType },
@@ -24,16 +24,16 @@ export default function IptvPlayer(
           art: Artplayer
         ) {
           if (Hls.isSupported()) {
-            if (art.hls) art.hls.destroy();
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-            art.hls = hls;
-            art.on('destroy', () => hls.destroy());
+            if (art.hls) art.hls.destroy()
+            const hls = new Hls()
+            hls.loadSource(url)
+            hls.attachMedia(video)
+            art.hls = hls
+            art.on('destroy', () => hls.destroy())
           } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = url;
+            video.src = url
           } else {
-            art.notice.show = 'Unsupported playback format: m3u8';
+            art.notice.show = 'Unsupported playback format: m3u8'
           }
         },
       },
@@ -103,19 +103,19 @@ export default function IptvPlayer(
         indicator:
           '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>',
       },
-    };
+    }
 
-    const art = new Artplayer(option);
+    const art = new Artplayer(option)
 
     if (getInstance && typeof getInstance === 'function') {
-      getInstance(art);
+      getInstance(art)
     }
     return () => {
       if (art && art.destroy) {
-        art.destroy();
+        art.destroy()
       }
-    };
-  }, [playerData, getInstance]);
+    }
+  }, [playerData, getInstance])
 
-  return <></>;
+  return <></>
 }

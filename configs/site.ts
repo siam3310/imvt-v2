@@ -1,5 +1,5 @@
-export type TSiteInfo = typeof siteInfo;
-export type TNavItem = typeof siteInfo.navItems;
+export type TSiteInfo = typeof siteInfo
+export type TNavItem = typeof siteInfo.navItems
 export const siteInfo = {
   name: 'Imvt',
   description: 'Movies and TV Series Database App',
@@ -14,4 +14,4 @@ export const siteInfo = {
     { name: 'Movies', href: '/movies' },
     { name: 'TV', href: '/tv' },
   ],
-};
+}

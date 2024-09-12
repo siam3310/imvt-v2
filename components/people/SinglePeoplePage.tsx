@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
-import { handleDownload } from '@/utils/downloadImage';
-import { gql, useQuery } from '@apollo/client';
-import { Star, Users } from 'lucide-react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import { handleDownload } from '@/utils/downloadImage'
+import { gql, useQuery } from '@apollo/client'
+import { Star, Users } from 'lucide-react'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -16,42 +16,42 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+} from '@/components/ui/card'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
-import GetpeoplebyId from '@/graphql/queries/GetpeoplebyId.gql';
+import GetpeoplebyId from '@/graphql/queries/GetpeoplebyId.gql'
 
-import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent';
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
 
 const SinglePeoplePage = ({ id }: { id: string }) => {
-  const [basis, setBasis] = useState('50%');
+  const [basis, setBasis] = useState('50%')
 
-  const Id = id;
+  const Id = id
   const { data, loading } = useQuery(GetpeoplebyId, {
     variables: { Id },
-  });
-  const peopleData = data?.getpeoplebyId;
+  })
+  const peopleData = data?.getpeoplebyId
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
+      const width = window.innerWidth
       if (width > 600) {
-        var newBasis = 100 / Math.floor(width / 200);
+        var newBasis = 100 / Math.floor(width / 200)
       } else {
-        var newBasis = 100 / Math.floor(width / 150);
+        var newBasis = 100 / Math.floor(width / 150)
       }
-      setBasis(`${newBasis}%`);
-    };
+      setBasis(`${newBasis}%`)
+    }
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
-    handleResize();
+    handleResize()
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <SkeletonTheme baseColor='#202020' highlightColor='#444'>
@@ -128,7 +128,7 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
                         <CardDescription className='text-justify text-pretty text-lg'>
                           {akaName}
                         </CardDescription>
-                      );
+                      )
                     })}
                   </ScrollArea>
                 </>
@@ -303,7 +303,7 @@ const SinglePeoplePage = ({ id }: { id: string }) => {
         </Tabs>
       </div>
     </SkeletonTheme>
-  );
-};
+  )
+}
 
-export default SinglePeoplePage;
+export default SinglePeoplePage

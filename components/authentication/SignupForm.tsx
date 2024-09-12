@@ -1,33 +1,33 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Eye, EyeOff } from 'lucide-react';
-import { toast } from 'sonner';
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Eye, EyeOff } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function SignupForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
   // const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
-  const supabase = createClientComponentClient();
+  const router = useRouter()
+  const supabase = createClientComponentClient()
 
   const handleSignInWithPassword = async () => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -37,15 +37,15 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
       // setErrorMessage(error.message);
     } else {
-      router.push('/');
+      router.push('/')
     }
-  };
+  }
 
   const handleSignInWithGoogle = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -54,7 +54,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           prompt: 'consent',
         },
       },
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -64,19 +64,19 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
       // setErrorMessage(error.message);
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const handleSignInWithGithub = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -86,19 +86,19 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
       // setErrorMessage(error.message);
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const handleSignInWithDiscord = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'discord',
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -108,13 +108,13 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
       // setErrorMessage(error.message);
     } else {
-      router.push('/');
+      router.push('/')
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   const handleSignUp = async () => {
     const { error } = await supabase.auth.signUp({
@@ -126,7 +126,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           name: name,
         },
       },
-    });
+    })
     if (error) {
       toast('Error Logging in', {
         description: error.message,
@@ -136,19 +136,19 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
           color: '#fff',
         },
         icon: '❕',
-      });
+      })
       // setErrorMessage(error.message);
     } else {
-      router.refresh();
-      handleSignInWithPassword();
+      router.refresh()
+      handleSignInWithPassword()
     }
-  };
+  }
 
   async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-    await handleSignUp();
-    setIsLoading(false);
+    event.preventDefault()
+    setIsLoading(true)
+    await handleSignUp()
+    setIsLoading(false)
   }
 
   return (
@@ -251,7 +251,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
       <div className='grid gap-2'>
         <Button
           onClick={() => {
-            handleSignInWithGoogle();
+            handleSignInWithGoogle()
           }}
           variant='outline'
           type='button'
@@ -359,7 +359,7 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
 
         <Button
           onClick={() => {
-            handleSignInWithDiscord();
+            handleSignInWithDiscord()
           }}
           variant='outline'
           type='button'
@@ -415,5 +415,5 @@ export function SignupForm({ className, ...props }: UserAuthFormProps) {
         </Button>
       </div>
     </div>
-  );
+  )
 }

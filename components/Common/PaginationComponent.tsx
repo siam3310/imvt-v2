@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import {
   Pagination,
@@ -8,18 +8,18 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
+} from '@/components/ui/pagination'
 
 const PaginationComponent = ({
   mediaData,
   page,
   setPage,
 }: {
-  mediaData: any;
-  page: number;
-  setPage: Function;
+  mediaData: any
+  page: number
+  setPage: Function
 }) => {
-  const maxPage = mediaData?.total_pages > 500 ? 500 : mediaData?.total_pages;
+  const maxPage = mediaData?.total_pages > 500 ? 500 : mediaData?.total_pages
   return (
     <>
       {mediaData?.results && mediaData?.total_pages > 1 && (
@@ -85,7 +85,7 @@ const PaginationComponent = ({
         </Pagination>
       )}
     </>
-  );
-};
+  )
+}
 
-export default PaginationComponent;
+export default PaginationComponent

@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { UpdateUser } from '@/graphql/queries/GetUserData.gql';
-import { useUserDataStore } from '@/store/userDataStore';
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
-import { gql, useMutation } from '@apollo/client';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { UpdateUser } from '@/graphql/queries/GetUserData.gql'
+import { useUserDataStore } from '@/store/userDataStore'
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import { gql, useMutation } from '@apollo/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -21,20 +21,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/components/ui/popover'
 
 const DeleteUser = gql`
   mutation DeleteUser($userId: String = "") {
     deleteUser(userId: $userId)
   }
-`;
+`
 
 const profileFormSchema = z.object({
   name: z
@@ -51,15 +51,15 @@ const profileFormSchema = z.object({
     })
     .email(),
   profile_photo: z.string().url({ message: 'Please enter a valid URL.' }),
-});
+})
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
+type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export default function ProfileForm() {
-  const router = useRouter();
-  const { userData } = useUserDataStore();
-  const [deleteUser] = useMutation(DeleteUser);
-  const [updateUser] = useMutation(UpdateUser);
+  const router = useRouter()
+  const { userData } = useUserDataStore()
+  const [deleteUser] = useMutation(DeleteUser)
+  const [updateUser] = useMutation(UpdateUser)
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -68,15 +68,15 @@ export default function ProfileForm() {
       profile_photo: userData?.profile_photo || '',
     },
     mode: 'onChange',
-  });
+  })
 
   useEffect(() => {
     form.reset({
       name: userData?.name,
       email: userData?.email,
       profile_photo: userData?.profile_photo,
-    });
-  }, [userData, form]);
+    })
+  }, [userData, form])
 
   const onSubmit = async (data: ProfileFormValues) => {
     try {
@@ -86,7 +86,7 @@ export default function ProfileForm() {
           profile_photo: data.profile_photo,
           userId: userData?.id,
         },
-      });
+      })
       // console.log(response);
       toast('Profile Updated Successfully', {
         duration: 5000,
@@ -95,40 +95,40 @@ export default function ProfileForm() {
           color: '#fff',
         },
         icon: '✓',
-      });
+      })
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
-  const [inputLoading, setInputLoading] = useState(false);
+  const [inputLoading, setInputLoading] = useState(false)
   const postImage = async (inputPic: any) => {
-    setInputLoading(true);
+    setInputLoading(true)
     if (inputPic === undefined) {
-      alert('Please Select an Image!');
-      return;
+      alert('Please Select an Image!')
+      return
     }
     if (inputPic.type === 'image/jpeg' || inputPic.type === 'image/png') {
-      const data = new FormData();
-      data.append('file', inputPic);
+      const data = new FormData()
+      data.append('file', inputPic)
       data.append(
         'upload_preset',
         `${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}`
-      );
+      )
       data.append(
         'cloud_name',
         `${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}`
-      );
+      )
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
         {
           method: 'post',
           body: data,
         }
-      );
-      const imageData = await response.json();
-      setInputLoading(false);
-      return imageData.url.toString();
+      )
+      const imageData = await response.json()
+      setInputLoading(false)
+      return imageData.url.toString()
     } else {
       toast('Please Select an Image!', {
         duration: 5000,
@@ -137,11 +137,11 @@ export default function ProfileForm() {
           color: '#fff',
         },
         icon: '❕',
-      });
-      setInputLoading(false);
-      return;
+      })
+      setInputLoading(false)
+      return
     }
-  };
+  }
 
   return (
     <Form {...form}>
@@ -273,8 +273,8 @@ export default function ProfileForm() {
                         onChange={async (e) => {
                           const inputImage = await postImage(
                             e.target.files?.[0]
-                          );
-                          field.onChange(inputImage);
+                          )
+                          field.onChange(inputImage)
                         }}
                       />
                       {inputLoading ? (
@@ -416,16 +416,16 @@ export default function ProfileForm() {
                       variables: {
                         userId: userData?.id,
                       },
-                    });
+                    })
                     if (response?.data?.deleteUser) {
-                      toast.success('Your account has been deleted.');
-                      router.push('/login');
+                      toast.success('Your account has been deleted.')
+                      router.push('/login')
                     } else {
-                      toast.error('Something went wrong.');
+                      toast.error('Something went wrong.')
                     }
                   } catch (error) {
-                    console.error(error);
-                    toast.error('Something went wrong.');
+                    console.error(error)
+                    toast.error('Something went wrong.')
                   }
                 }}
               >
@@ -437,5 +437,5 @@ export default function ProfileForm() {
         </div>
       </form>
     </Form>
-  );
+  )
 }

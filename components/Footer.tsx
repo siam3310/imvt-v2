@@ -1,6 +1,6 @@
-import React from 'react';
-import Image from 'next/image';
-import Logo from '@/public/assets/logo.svg';
+import React from 'react'
+import Image from 'next/image'
+import Logo from '@/public/assets/logo.svg'
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
       </div>
       <div className='flex flex-col justify-end items-end'></div>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

@@ -1,8 +1,8 @@
-import React, { RefObject, use, useEffect, useRef, useState } from 'react';
-import Artplayer from 'artplayer';
-import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality';
-import artplayerPluginVttThumbnail from 'artplayer-plugin-thumbnail';
-import Hls from 'hls.js';
+import React, { RefObject, use, useEffect, useRef, useState } from 'react'
+import Artplayer from 'artplayer'
+import artplayerPluginHlsQuality from 'artplayer-plugin-hls-quality'
+import artplayerPluginVttThumbnail from 'artplayer-plugin-thumbnail'
+import Hls from 'hls.js'
 
 export default function VideoPlayer({
   media,
@@ -10,25 +10,25 @@ export default function VideoPlayer({
   className,
 }: {
   media: {
-    urls: { quality: string; url: string }[];
-    download?: string | null;
-    subtitles: { lang: string; url: string }[];
-    thumbnail: string;
-    logo: string;
-  };
-  getInstance?: any;
-  className: any;
+    urls: { quality: string; url: string }[]
+    download?: string | null
+    subtitles: { lang: string; url: string }[]
+    thumbnail: string
+    logo: string
+  }
+  getInstance?: any
+  className: any
 }) {
   // const [thumbnail, setThumbnail] = useState(media?.thumbnail || null);
   // console.log(media);
 
-  let SubtitleObj: any;
-  let QualityObj: any;
-  let thumbnail: any;
+  let SubtitleObj: any
+  let QualityObj: any
+  let thumbnail: any
   SubtitleObj = media?.subtitles?.map((subtitle: { lang: any; url: any }) => {
     if (subtitle.lang === 'Thumbnails') {
       // setThumbnail(subtitle.url)
-      thumbnail = subtitle.url;
+      thumbnail = subtitle.url
       return {
         default: false,
         html: 'No Subtitle',
@@ -40,7 +40,7 @@ export default function VideoPlayer({
           color: '#ffffff',
           'font-size': '1em',
         },
-      };
+      }
     } else if (subtitle.lang === media?.subtitles[0]?.lang) {
       return {
         default: true,
@@ -53,7 +53,7 @@ export default function VideoPlayer({
           color: '#ffffff',
           'font-size': '1em',
         },
-      };
+      }
     } else {
       return {
         html: subtitle.lang,
@@ -65,9 +65,9 @@ export default function VideoPlayer({
           color: '#ffffff',
           'font-size': '1em',
         },
-      };
+      }
     }
-  });
+  })
   // console.log(thumbnail)
   QualityObj = media?.urls?.map((quality: { quality: string; url: any }) => {
     if (quality?.quality === 'auto') {
@@ -75,14 +75,14 @@ export default function VideoPlayer({
         default: true,
         html: 'Auto',
         url: quality?.url,
-      };
+      }
     } else {
       return {
         html: quality?.quality || 'Auto',
         url: quality?.url,
-      };
+      }
     }
-  });
+  })
   useEffect(() => {
     const art = new Artplayer({
       container: '.artplayer-app',
@@ -100,16 +100,16 @@ export default function VideoPlayer({
           art: Artplayer
         ) {
           if (Hls.isSupported()) {
-            if (art.hls) art.hls.destroy();
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-            art.hls = hls;
-            art.on('destroy', () => hls.destroy());
+            if (art.hls) art.hls.destroy()
+            const hls = new Hls()
+            hls.loadSource(url)
+            hls.attachMedia(video)
+            art.hls = hls
+            art.on('destroy', () => hls.destroy())
           } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = url;
+            video.src = url
           } else {
-            art.notice.show = 'Unsupported playback format: m3u8';
+            art.notice.show = 'Unsupported playback format: m3u8'
           }
         },
       },
@@ -173,9 +173,9 @@ export default function VideoPlayer({
                   tooltip: 'Show',
                   switch: true,
                   onSwitch: function (item) {
-                    item.tooltip = item.switch ? 'Hide' : 'Show';
-                    art.subtitle.show = !item.switch;
-                    return !item.switch;
+                    item.tooltip = item.switch ? 'Hide' : 'Show'
+                    art.subtitle.show = !item.switch
+                    return !item.switch
                   },
                 },
                 ...SubtitleObj,
@@ -183,8 +183,8 @@ export default function VideoPlayer({
               onSelect: function (item) {
                 art.subtitle.switch(item.url, {
                   name: item.html,
-                });
-                return item.html;
+                })
+                return item.html
               },
             },
           ]
@@ -206,7 +206,7 @@ export default function VideoPlayer({
               tooltip: 'Download',
               position: 'right',
               click: function () {
-                window.open(media.download as string, '_blank');
+                window.open(media.download as string, '_blank')
               },
             },
           ]
@@ -217,17 +217,17 @@ export default function VideoPlayer({
         indicator:
           '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle"><circle cx="12" cy="12" r="10"/></svg>',
       },
-    });
+    })
 
     if (getInstance && typeof getInstance === 'function') {
-      getInstance(art);
+      getInstance(art)
     }
 
     return () => {
       if (art && art.destroy) {
-        art.destroy(false);
+        art.destroy(false)
       }
-    };
+    }
   }, [
     thumbnail,
     getInstance,
@@ -238,7 +238,7 @@ export default function VideoPlayer({
     media?.thumbnail,
     media?.download,
     media?.logo,
-  ]);
+  ])
 
-  return <div className={`artplayer-app ${className}`}></div>;
+  return <div className={`artplayer-app ${className}`}></div>
 }

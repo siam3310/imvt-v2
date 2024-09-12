@@ -1,22 +1,22 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { useUserDataStore } from '@/store/userDataStore';
+import React, { useEffect, useState } from 'react'
+import { useUserDataStore } from '@/store/userDataStore'
 
-import useWatchlist from '@/hooks/useWatchlist';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import MediaGrid from '@/components/Common/MediaGrid';
+import useWatchlist from '@/hooks/useWatchlist'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import MediaGrid from '@/components/Common/MediaGrid'
 
 const UserWatchlist = () => {
-  const [watchListData, setWatchListData] = useState([]);
-  const { userData } = useUserDataStore();
-  const { mediaList, loading } = useWatchlist(watchListData);
+  const [watchListData, setWatchListData] = useState([])
+  const { userData } = useUserDataStore()
+  const { mediaList, loading } = useWatchlist(watchListData)
 
   useEffect(() => {
     if (userData) {
-      setWatchListData(userData?.watchlist);
+      setWatchListData(userData?.watchlist)
     }
-  }, [userData]);
+  }, [userData])
 
   return (
     <div className='w-full h-full overflow-y-auto flex flex-col justify-start items-center space-y-6 pb-[120px] sm:pb-5'>
@@ -82,7 +82,7 @@ const UserWatchlist = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserWatchlist;
+export default UserWatchlist

@@ -1,25 +1,25 @@
-import { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import { LoginForm } from '@/components/authentication/LoginForm';
-import { SignupForm } from '@/components/authentication/SignupForm';
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '@/components/ui/button'
+import { LoginForm } from '@/components/authentication/LoginForm'
+import { SignupForm } from '@/components/authentication/SignupForm'
 
 export const metadata: Metadata = {
   title: 'Authentication',
   description: 'Authentication forms built using the components.',
-};
+}
 
 export default function AuthenticationPage({
   link,
   title,
   description,
 }: {
-  link: string;
-  title: string;
-  description: string;
+  link: string
+  title: string
+  description: string
 }) {
   return (
     <div className='w-full h-full overflow-y-scroll'>
@@ -65,5 +65,5 @@ export default function AuthenticationPage({
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowBigUp, MousePointer2, MousePointerClick } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react'
+import { ArrowBigUp, MousePointer2, MousePointerClick } from 'lucide-react'
 
-import './CustomCursor.css';
+import './CustomCursor.css'
 
 function App({ children }: { children: React.ReactNode }) {
-  const cursor = useRef<HTMLDivElement | null>(null);
-  const [isclickable, setIsclickable] = useState(false);
+  const cursor = useRef<HTMLDivElement | null>(null)
+  const [isclickable, setIsclickable] = useState(false)
   const changePosition = (e: { clientX: any; clientY: any }) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
+    const { clientX, clientY } = e
+    const { innerWidth, innerHeight } = window
     // Get the element that the mouse is over
-    const element = document.elementFromPoint(clientX, clientY);
+    const element = document.elementFromPoint(clientX, clientY)
     // Change the cursor icon based on the element that the mouse is over
     if (
       element &&
@@ -24,9 +24,9 @@ function App({ children }: { children: React.ReactNode }) {
         (element.parentElement &&
           element.parentElement.classList.contains('clickable')))
     ) {
-      setIsclickable(true);
+      setIsclickable(true)
     } else {
-      setIsclickable(false);
+      setIsclickable(false)
     }
     // Hide the cursor when it's at the edge of the browser
     if (
@@ -36,18 +36,18 @@ function App({ children }: { children: React.ReactNode }) {
       clientY >= innerHeight
     ) {
       if (cursor.current) {
-        cursor.current.style.display = 'none';
+        cursor.current.style.display = 'none'
       }
     } else {
       if (cursor.current) {
-        cursor.current.style.display = 'block';
-        cursor.current.style.top = `${clientY + 12}px`; // Subtract half the height of the icon
-        cursor.current.style.left = `${clientX + 12}px`;
+        cursor.current.style.display = 'block'
+        cursor.current.style.top = `${clientY + 12}px` // Subtract half the height of the icon
+        cursor.current.style.left = `${clientX + 12}px`
       }
     }
-  };
+  }
 
-  const [colorIndex, setColorIndex] = useState(0);
+  const [colorIndex, setColorIndex] = useState(0)
   const colors = [
     'white',
     'cyan',
@@ -57,12 +57,12 @@ function App({ children }: { children: React.ReactNode }) {
     'orange',
     'black',
     'gray',
-  ];
+  ]
 
   const changeColor = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setColorIndex((colorIndex + 1) % colors.length);
-  };
+    e.preventDefault()
+    setColorIndex((colorIndex + 1) % colors.length)
+  }
   return (
     <>
       <div
@@ -86,7 +86,7 @@ function App({ children }: { children: React.ReactNode }) {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

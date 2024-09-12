@@ -239,7 +239,7 @@ export const countriesList = [
   'Zambia',
   'Zimbabwe',
   'International',
-];
+]
 export const categoriesList = [
   'Undefined',
   'General',
@@ -347,4 +347,4 @@ export const categoriesList = [
   'Culture;Documentary;Education;Kids;Lifestyle;Science',
   'General;Kids',
   'Education;Science',
-];
+]

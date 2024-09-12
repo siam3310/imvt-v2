@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from '@/components/ui/card'
 import {
   Drawer,
   DrawerClose,
@@ -18,10 +18,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/components/ui/drawer';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ScrollArea } from '@/components/ui/scroll-area';
+} from '@/components/ui/drawer'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Select,
   SelectContent,
@@ -30,23 +30,23 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import ExploreResults from '@/components/Explore/ExploreResults';
+} from '@/components/ui/select'
+import { Switch } from '@/components/ui/switch'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import ExploreResults from '@/components/Explore/ExploreResults'
 
 export default function ExplorePage() {
-  const [type, setType] = useState('movie');
-  const [sort, setSort] = useState('popularity.desc');
-  const [genres, setGenres] = useState<string[]>([]);
-  const [includeAllGenres, setIncludeAllGenres] = useState<boolean>(true);
-  const [dategte, setDategte] = useState<string>('');
-  const [datelte, setDatelte] = useState<string>('');
-  const [page, setPage] = useState(1);
-  const [votesAvglte, setVotesAvglte] = useState<number | undefined>();
-  const [votesAvggte, setVotesAvggte] = useState<number | undefined>();
-  const [votesCountlte, setVotesCountlte] = useState<number | undefined>();
-  const [votesCountgte, setVotesCountgte] = useState<number | undefined>();
+  const [type, setType] = useState('movie')
+  const [sort, setSort] = useState('popularity.desc')
+  const [genres, setGenres] = useState<string[]>([])
+  const [includeAllGenres, setIncludeAllGenres] = useState<boolean>(true)
+  const [dategte, setDategte] = useState<string>('')
+  const [datelte, setDatelte] = useState<string>('')
+  const [page, setPage] = useState(1)
+  const [votesAvglte, setVotesAvglte] = useState<number | undefined>()
+  const [votesAvggte, setVotesAvggte] = useState<number | undefined>()
+  const [votesCountlte, setVotesCountlte] = useState<number | undefined>()
+  const [votesCountgte, setVotesCountgte] = useState<number | undefined>()
 
   return (
     <>
@@ -67,9 +67,9 @@ export default function ExplorePage() {
               <CardContent>
                 <Select
                   onValueChange={(e) => {
-                    setType(e);
-                    setGenres([]);
-                    setPage(1);
+                    setType(e)
+                    setGenres([])
+                    setPage(1)
                   }}
                 >
                   <SelectTrigger className=' text-white'>
@@ -79,7 +79,7 @@ export default function ExplorePage() {
                     <SelectGroup
                       ref={(ref) =>
                         ref?.addEventListener('touchend', (e) => {
-                          e.preventDefault();
+                          e.preventDefault()
                         })
                       }
                     >
@@ -98,8 +98,8 @@ export default function ExplorePage() {
               <CardContent>
                 <Select
                   onValueChange={(e) => {
-                    setSort(e);
-                    setPage(1);
+                    setSort(e)
+                    setPage(1)
                   }}
                 >
                   <SelectTrigger className=' text-white'>
@@ -109,7 +109,7 @@ export default function ExplorePage() {
                     <SelectGroup
                       ref={(ref) =>
                         ref?.addEventListener('touchend', (e) => {
-                          e.preventDefault();
+                          e.preventDefault()
                         })
                       }
                     >
@@ -147,8 +147,8 @@ export default function ExplorePage() {
                     <CardDescription>From</CardDescription>
                     <Input
                       onChange={(e) => {
-                        setDategte(e.target.value);
-                        setPage(1);
+                        setDategte(e.target.value)
+                        setPage(1)
                       }}
                       type='date'
                     />
@@ -179,8 +179,8 @@ export default function ExplorePage() {
                       onChange={(e) => {
                         setVotesAvggte(
                           parseFloat(parseFloat(e.target.value).toFixed(1))
-                        );
-                        setPage(1);
+                        )
+                        setPage(1)
                       }}
                       step={0.1}
                       type='number'
@@ -193,8 +193,8 @@ export default function ExplorePage() {
                       onChange={(e) => {
                         setVotesAvglte(
                           parseFloat(parseFloat(e.target.value).toFixed(1))
-                        );
-                        setPage(1);
+                        )
+                        setPage(1)
                       }}
                       step={0.1}
                       type='number'
@@ -210,8 +210,8 @@ export default function ExplorePage() {
                     <Input
                       value={votesCountgte}
                       onChange={(e) => {
-                        setVotesCountgte(parseInt(e.target.value));
-                        setPage(1);
+                        setVotesCountgte(parseInt(e.target.value))
+                        setPage(1)
                       }}
                       type='number'
                       min={0}
@@ -220,8 +220,8 @@ export default function ExplorePage() {
                     <Input
                       value={votesCountlte}
                       onChange={(e) => {
-                        setVotesCountlte(parseInt(e.target.value));
-                        setPage(1);
+                        setVotesCountlte(parseInt(e.target.value))
+                        setPage(1)
                       }}
                       type='number'
                       min={0}
@@ -239,8 +239,8 @@ export default function ExplorePage() {
               <CardDescription className='flex gap-x-2 justify-start items-center mt-5'>
                 <Switch
                   onClick={(e) => {
-                    setIncludeAllGenres(!includeAllGenres);
-                    setPage(1);
+                    setIncludeAllGenres(!includeAllGenres)
+                    setPage(1)
                   }}
                   checked={includeAllGenres}
                   id='genre-mode'
@@ -252,8 +252,8 @@ export default function ExplorePage() {
               <ToggleGroup
                 value={genres}
                 onValueChange={(e) => {
-                  setGenres(e);
-                  setPage(1);
+                  setGenres(e)
+                  setPage(1)
                 }}
                 variant={'outline'}
                 className=' flex justify-start items-center flex-wrap gap-2'
@@ -462,5 +462,5 @@ export default function ExplorePage() {
         </ScrollArea>
       </Card>
     </>
-  );
+  )
 }
