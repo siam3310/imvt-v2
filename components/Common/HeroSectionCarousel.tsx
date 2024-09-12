@@ -1,69 +1,69 @@
-'use client'
+'use client';
 
-import React, { useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import Autoplay from 'embla-carousel-autoplay'
-import useEmblaCarousel from 'embla-carousel-react'
-import { PlayCircle, PlusCircle, Star, Users } from 'lucide-react'
-import { useTheme } from 'next-themes'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import Autoplay from 'embla-carousel-autoplay';
+import useEmblaCarousel from 'embla-carousel-react';
+import { PlayCircle, PlusCircle, Star, Users } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { mediaData } from '@/types/mediaData'
-import usehandleWatchlist from '@/hooks/usehandleWatchlist'
-import { Button } from '@/components/ui/button'
+import { mediaData } from '@/types/mediaData';
+import usehandleWatchlist from '@/hooks/usehandleWatchlist';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
+} from '@/components/ui/popover';
 
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const HeroSectionCarousel = ({
   data,
   loading,
 }: {
-  data: mediaData[] | undefined
-  loading: boolean
+  data: mediaData[] | undefined;
+  loading: boolean;
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 5000 }),
-  ])
+  ]);
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
-  })
+  });
 
   const onThumbClick = useCallback(
     (index: number) => {
-      if (!emblaMainApi || !emblaThumbsApi) return
-      emblaMainApi.scrollTo(index)
+      if (!emblaMainApi || !emblaThumbsApi) return;
+      emblaMainApi.scrollTo(index);
     },
     [emblaMainApi, emblaThumbsApi]
-  )
+  );
 
   const onSelect = useCallback(() => {
-    if (!emblaMainApi || !emblaThumbsApi) return
-    setSelectedIndex(emblaMainApi.selectedScrollSnap())
-    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap())
-  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex])
+    if (!emblaMainApi || !emblaThumbsApi) return;
+    setSelectedIndex(emblaMainApi.selectedScrollSnap());
+    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
+  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex]);
 
   useEffect(() => {
-    if (!emblaMainApi) return
-    onSelect()
-    emblaMainApi.on('select', onSelect)
-    emblaMainApi.on('reInit', onSelect)
-  }, [emblaMainApi, onSelect])
+    if (!emblaMainApi) return;
+    onSelect();
+    emblaMainApi.on('select', onSelect);
+    emblaMainApi.on('reInit', onSelect);
+  }, [emblaMainApi, onSelect]);
 
   if (loading || !data)
     return (
       <SkeletonTheme baseColor='#202020' highlightColor='#444'>
         <HeroSkeleton />
       </SkeletonTheme>
-    )
+    );
 
   return (
     <div className='Carousel hidden sm:block text-white'>
@@ -97,31 +97,31 @@ const HeroSectionCarousel = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HeroSectionCarousel
+export default HeroSectionCarousel;
 
 const HeroSectionCarouselSlide = ({
   mediaData,
   index,
 }: {
-  mediaData: mediaData
-  index: React.Key | number
+  mediaData: mediaData;
+  index: React.Key | number;
 }) => {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
   const { watchlistType, setWatchlistType } = usehandleWatchlist(
     mediaData?.id,
     mediaData?.name ? 'tv' : 'movie'
-  )
+  );
 
-  let isUpcoming = false
+  let isUpcoming = false;
 
   if (
     new Date(mediaData?.release_date) >= new Date() ||
     new Date(mediaData?.first_air_date) >= new Date()
   ) {
-    isUpcoming = true
+    isUpcoming = true;
   }
 
   const watchListNames = {
@@ -131,7 +131,7 @@ const HeroSectionCarouselSlide = ({
     on_hold: 'On Hold',
     dropped: 'Dropped',
     remove: '',
-  }
+  };
 
   return (
     <div
@@ -221,7 +221,7 @@ const HeroSectionCarouselSlide = ({
               <PopoverContent className='flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]'>
                 <Button
                   onClick={() => {
-                    setWatchlistType('completed')
+                    setWatchlistType('completed');
                   }}
                   variant={
                     watchlistType === 'completed' ? 'default' : 'outline'
@@ -231,7 +231,7 @@ const HeroSectionCarouselSlide = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setWatchlistType('watching')
+                    setWatchlistType('watching');
                   }}
                   variant={watchlistType === 'watching' ? 'default' : 'outline'}
                 >
@@ -239,7 +239,7 @@ const HeroSectionCarouselSlide = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setWatchlistType('plan_to_watch')
+                    setWatchlistType('plan_to_watch');
                   }}
                   variant={
                     watchlistType === 'plan_to_watch' ? 'default' : 'outline'
@@ -249,7 +249,7 @@ const HeroSectionCarouselSlide = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setWatchlistType('on_hold')
+                    setWatchlistType('on_hold');
                   }}
                   variant={watchlistType === 'on_hold' ? 'default' : 'outline'}
                 >
@@ -257,7 +257,7 @@ const HeroSectionCarouselSlide = ({
                 </Button>
                 <Button
                   onClick={() => {
-                    setWatchlistType('dropped')
+                    setWatchlistType('dropped');
                   }}
                   variant={watchlistType === 'dropped' ? 'default' : 'outline'}
                 >
@@ -266,7 +266,7 @@ const HeroSectionCarouselSlide = ({
                 {watchlistType && (
                   <Button
                     onClick={() => {
-                      setWatchlistType('')
+                      setWatchlistType('');
                     }}
                     variant={'destructive'}
                   >
@@ -288,8 +288,8 @@ const HeroSectionCarouselSlide = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Thumb = ({
   selected,
@@ -298,11 +298,11 @@ const Thumb = ({
   onClick,
   title,
 }: {
-  selected: boolean
-  backdropSrc: string
-  posterSrc: string
-  onClick: any
-  title: string
+  selected: boolean;
+  backdropSrc: string;
+  posterSrc: string;
+  onClick: any;
+  title: string;
 }) => {
   return (
     <div
@@ -342,11 +342,11 @@ const Thumb = ({
         />
       </button>
     </div>
-  )
-}
+  );
+};
 
 const HeroSkeleton = () => {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   return (
     <div className='Carousel sm:block hidden'>
       <div className='embla'>
@@ -370,5 +370,5 @@ const HeroSkeleton = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

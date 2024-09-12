@@ -1,61 +1,61 @@
-'use client'
+'use client';
 
-import React, { Key, useEffect, useState } from 'react'
-import Image from 'next/image'
+import React, { Key, useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
   GET_MOVIE_BY_ID,
   GET_STREAMING_DATA,
   GET_TV_BY_ID,
-} from '@/graphql/queries/MediaPlayerData.gql'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { gql, useQuery } from '@apollo/client'
+} from '@/graphql/queries/MediaPlayerData.gql';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { gql, useQuery } from '@apollo/client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/components/ui/card';
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from '@/components/ui/resizable'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import MediaPlayer from '@/components/Common/MediaPlayer'
+} from '@/components/ui/resizable';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import MediaPlayer from '@/components/Common/MediaPlayer';
 
 type MediaPlayerDataType = {
-  release_date: string
-  first_air_date: string
-  overview: string
-  poster_path: string
-  backdrop_path: string
-  id: string
-  number_of_seasons: number
-  number_of_episodes: number
-  seasons: any[]
-  Images: { logos: { file_path: string }[] }
-}
+  release_date: string;
+  first_air_date: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  id: string;
+  number_of_seasons: number;
+  number_of_episodes: number;
+  seasons: any[];
+  Images: { logos: { file_path: string }[] };
+};
 const SingleMediaPlayer = ({
   id,
   type,
   querySeason,
   queryEpisode,
 }: {
-  id: string
-  type: string
-  querySeason: number
-  queryEpisode: number
+  id: string;
+  type: string;
+  querySeason: number;
+  queryEpisode: number;
 }) => {
-  const [seasonNumber, setSeasonNumber] = useState<number>(querySeason | 1)
-  const [streamingId, setStreamingId] = useState('')
-  const [episodeNumber, setEpisodeNumber] = useState<number>(queryEpisode || 1)
-  const [episodeId, setEpisodeId] = useState('')
-  const [isMediaPlayer, setIsMediaPlayer] = useState(true)
-  const [serverNumber, setServerNumber] = useState<number>(3)
-  const [iframeSrc, setIframeSrc] = useState('')
+  const [seasonNumber, setSeasonNumber] = useState<number>(querySeason | 1);
+  const [streamingId, setStreamingId] = useState('');
+  const [episodeNumber, setEpisodeNumber] = useState<number>(queryEpisode || 1);
+  const [episodeId, setEpisodeId] = useState('');
+  const [isMediaPlayer, setIsMediaPlayer] = useState(true);
+  const [serverNumber, setServerNumber] = useState<number>(3);
+  const [iframeSrc, setIframeSrc] = useState('');
 
   // const [loading, setLoading] = useState<boolean>(false)
 
@@ -70,15 +70,15 @@ const SingleMediaPlayer = ({
     number_of_episodes: 0,
     seasons: [],
     Images: { logos: [{ file_path: '' }] },
-  })
+  });
   const [streamingData, setStreamingData] = useState<
     {
-      sources: { url: string; quality: string }[]
-      subtitles: { url: string; lang: string }[]
+      sources: { url: string; quality: string }[];
+      subtitles: { url: string; lang: string }[];
     }[]
   >(() => [
     { sources: [{ url: '', quality: '' }], subtitles: [{ url: '', lang: '' }] },
-  ])
+  ]);
 
   const IframeButtonDetails = [
     {
@@ -139,55 +139,55 @@ const SingleMediaPlayer = ({
           : ''
       }`,
     },
-  ]
+  ];
 
-  const tmdbId = id
+  const tmdbId = id;
 
   const { data, loading } = useQuery(
     type === 'movie' ? GET_MOVIE_BY_ID : GET_TV_BY_ID,
     { variables: { tmdbId } }
-  )
+  );
 
   // console.log(data);
 
   useEffect(() => {
-    if (loading) return
+    if (loading) return;
     if (type === 'movie') {
       setmediaData({
         ...data?.getMoviebyId,
         number_of_seasons: 0,
         number_of_episodes: 0,
         seasons: [],
-      })
-      setStreamingId(data?.getMoviebyId?.streamingId)
-      const array = data?.getMoviebyId?.streamingId?.split('-')
-      setEpisodeId(array?.length > 1 ? array[array.length - 1] : '')
+      });
+      setStreamingId(data?.getMoviebyId?.streamingId);
+      const array = data?.getMoviebyId?.streamingId?.split('-');
+      setEpisodeId(array?.length > 1 ? array[array.length - 1] : '');
     } else {
-      setmediaData(data?.getTvbyId)
-      setStreamingId(data?.getTvbyId?.streamingId)
+      setmediaData(data?.getTvbyId);
+      setStreamingId(data?.getTvbyId?.streamingId);
       setEpisodeId(
         data?.getTvbyId?.seasons[seasonNumber - 1]?.episodes[episodeNumber - 1]
           ?.id
-      )
+      );
     }
     // setLoading(loading);
-  }, [data, loading, type, episodeNumber, seasonNumber])
+  }, [data, loading, type, episodeNumber, seasonNumber]);
 
   const { data: mediaPlayerStreamingData, loading: streamingLoading } =
     useQuery(GET_STREAMING_DATA, {
       variables: { episodeId, streamingId },
       skip: !episodeId || !streamingId,
-    })
+    });
 
   useEffect(() => {
-    setStreamingData([])
+    setStreamingData([]);
     if (mediaPlayerStreamingData) {
-      setStreamingData(mediaPlayerStreamingData?.mediaPlayerStreamingData)
+      setStreamingData(mediaPlayerStreamingData?.mediaPlayerStreamingData);
     }
     // console.log("refetching the sources");
-  }, [mediaPlayerStreamingData])
+  }, [mediaPlayerStreamingData]);
 
-  if (!mediaData || !mediaData.seasons) return <div>Loading...</div>
+  if (!mediaData || !mediaData.seasons) return <div>Loading...</div>;
 
   return (
     <div className='dark:bg-black'>
@@ -217,9 +217,9 @@ const SingleMediaPlayer = ({
                               {mediaData?.seasons.map(
                                 (
                                   season: {
-                                    image: any
-                                    season: string
-                                    episodes: any[]
+                                    image: any;
+                                    season: string;
+                                    episodes: any[];
                                   },
                                   index: React.Key | number
                                 ) => (
@@ -261,8 +261,8 @@ const SingleMediaPlayer = ({
                                           : 'secondary'
                                       }
                                       onClick={() => {
-                                        setSeasonNumber((index as number) + 1)
-                                        setEpisodeNumber(1)
+                                        setSeasonNumber((index as number) + 1);
+                                        setEpisodeNumber(1);
                                       }}
                                       className='w-full whitespace-nowrap overflow-hidden text-ellipsis'
                                     >
@@ -290,9 +290,9 @@ const SingleMediaPlayer = ({
                                 ]?.episodes?.map(
                                   (
                                     episode: {
-                                      id: string
-                                      title: any
-                                      episode: string
+                                      id: string;
+                                      title: any;
+                                      episode: string;
                                     },
                                     index: number | null | undefined
                                   ) => (
@@ -304,8 +304,8 @@ const SingleMediaPlayer = ({
                                           : 'secondary'
                                       }
                                       onClick={() => {
-                                        setEpisodeNumber((index as number) + 1)
-                                        setEpisodeId(episode.id)
+                                        setEpisodeNumber((index as number) + 1);
+                                        setEpisodeId(episode.id);
                                       }}
                                       title={
                                         episode.title ||
@@ -403,8 +403,8 @@ const SingleMediaPlayer = ({
                   <div className='flex flex-wrap items-center justify-start gap-3'>
                     <Button
                       onClick={(e) => {
-                        setServerNumber(3)
-                        setIsMediaPlayer(true)
+                        setServerNumber(3);
+                        setIsMediaPlayer(true);
                       }}
                       variant={
                         isMediaPlayer && serverNumber === 3
@@ -417,8 +417,8 @@ const SingleMediaPlayer = ({
                     </Button>
                     <Button
                       onClick={(e) => {
-                        setServerNumber(1)
-                        setIsMediaPlayer(true)
+                        setServerNumber(1);
+                        setIsMediaPlayer(true);
                       }}
                       variant={
                         isMediaPlayer && serverNumber === 1
@@ -431,8 +431,8 @@ const SingleMediaPlayer = ({
                     </Button>
                     <Button
                       onClick={(e) => {
-                        setServerNumber(2)
-                        setIsMediaPlayer(true)
+                        setServerNumber(2);
+                        setIsMediaPlayer(true);
                       }}
                       variant={
                         isMediaPlayer && serverNumber === 2
@@ -445,8 +445,8 @@ const SingleMediaPlayer = ({
                     </Button>
                     <Button
                       onClick={(e) => {
-                        setServerNumber(4)
-                        setIsMediaPlayer(true)
+                        setServerNumber(4);
+                        setIsMediaPlayer(true);
                       }}
                       variant={
                         isMediaPlayer && serverNumber === 4
@@ -483,14 +483,14 @@ const SingleMediaPlayer = ({
                           key={index}
                           title={button.name}
                           onClick={() => {
-                            setIframeSrc(button.url.toString())
-                            setIsMediaPlayer(false)
+                            setIframeSrc(button.url.toString());
+                            setIsMediaPlayer(false);
                           }}
                           className='w-28'
                         >
                           {button.name}
                         </Button>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -515,9 +515,9 @@ const SingleMediaPlayer = ({
                             {mediaData?.seasons.map(
                               (
                                 season: {
-                                  image: any
-                                  season: string | null | undefined
-                                  episodes: any[]
+                                  image: any;
+                                  season: string | null | undefined;
+                                  episodes: any[];
                                 },
                                 index: React.Key | number | undefined
                               ) => (
@@ -559,8 +559,8 @@ const SingleMediaPlayer = ({
                                         : 'secondary'
                                     }
                                     onClick={() => {
-                                      setSeasonNumber((index as number) + 1)
-                                      setEpisodeNumber(1)
+                                      setSeasonNumber((index as number) + 1);
+                                      setEpisodeNumber(1);
                                     }}
                                     className='w-full whitespace-nowrap overflow-hidden text-ellipsis'
                                   >
@@ -588,9 +588,9 @@ const SingleMediaPlayer = ({
                               ]?.episodes?.map(
                                 (
                                   episode: {
-                                    id: string
-                                    title: any
-                                    episode: string
+                                    id: string;
+                                    title: any;
+                                    episode: string;
                                   },
                                   index: number | null | undefined
                                 ) => (
@@ -602,8 +602,8 @@ const SingleMediaPlayer = ({
                                         : 'secondary'
                                     }
                                     onClick={() => {
-                                      setEpisodeNumber((index as number) + 1)
-                                      setEpisodeId(episode.id)
+                                      setEpisodeNumber((index as number) + 1);
+                                      setEpisodeId(episode.id);
                                     }}
                                     title={
                                       episode.title ||
@@ -746,7 +746,7 @@ const SingleMediaPlayer = ({
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
-  )
-}
+  );
+};
 
-export default SingleMediaPlayer
+export default SingleMediaPlayer;

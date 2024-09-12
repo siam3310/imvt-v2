@@ -1,50 +1,50 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import {
   GetAnimePlayerData,
   GetAnimeStreamingData,
-} from '@/graphql/queries/GetAnime.gql'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { useQuery } from '@apollo/client'
+} from '@/graphql/queries/GetAnime.gql';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { useQuery } from '@apollo/client';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/components/ui/card';
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from '@/components/ui/resizable'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
-import ErrorPage from '@/components/Common/ErrorPage'
-import MediaPlayer from '@/components/Common/MediaPlayer'
+} from '@/components/ui/resizable';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import ErrorPage from '@/components/Common/ErrorPage';
+import MediaPlayer from '@/components/Common/MediaPlayer';
 
 const AnimePlayerPage = () => {
-  const pathname = usePathname()
-  const id = pathname.split('/')[2]
-  const [isAnimePlayer, setIsAnimePlayer] = useState<boolean>(true)
-  const [episodeNumber, setEpisodeNumber] = useState<number>(1)
-  const [anilistId, setAnilistId] = useState<string>('')
-  const [zoroId, setZoroId] = useState<string>('')
-  const [serverNumber, setServerNumber] = useState<number>(9)
+  const pathname = usePathname();
+  const id = pathname.split('/')[2];
+  const [isAnimePlayer, setIsAnimePlayer] = useState<boolean>(true);
+  const [episodeNumber, setEpisodeNumber] = useState<number>(1);
+  const [anilistId, setAnilistId] = useState<string>('');
+  const [zoroId, setZoroId] = useState<string>('');
+  const [serverNumber, setServerNumber] = useState<number>(9);
   const [animeData, setAnimeData] = useState<any>({
     episodes: [{ id: '', title: '', description: '', image: '', number: '' }],
     zoroEpisodes: [{ zoroId: '' }],
-  })
+  });
   const [streamingData, setStreamingData] = useState<
     {
-      headers: { Referer: string }
-      download?: string | null
-      sources: { url: string; quality: string }[]
-      subtitles: { url: string; lang: string }[]
+      headers: { Referer: string };
+      download?: string | null;
+      sources: { url: string; quality: string }[];
+      subtitles: { url: string; lang: string }[];
     }[]
   >(() => [
     {
@@ -53,18 +53,18 @@ const AnimePlayerPage = () => {
       subtitles: [{ url: '', lang: '' }],
       download: null,
     },
-  ])
+  ]);
 
   const { data, loading, error } = useQuery(GetAnimePlayerData, {
     variables: { id },
-  })
+  });
 
   useEffect(() => {
-    if (loading) return
-    setAnimeData(data?.getAnimebyId)
-    setAnilistId(data?.getAnimebyId?.episodes[episodeNumber - 1]?.id)
-    setZoroId(data?.getAnimebyId?.zoroEpisodes[episodeNumber - 1]?.id)
-  }, [data, loading, episodeNumber])
+    if (loading) return;
+    setAnimeData(data?.getAnimebyId);
+    setAnilistId(data?.getAnimebyId?.episodes[episodeNumber - 1]?.id);
+    setZoroId(data?.getAnimebyId?.zoroEpisodes[episodeNumber - 1]?.id);
+  }, [data, loading, episodeNumber]);
 
   const {
     data: animeStreamingData,
@@ -73,14 +73,14 @@ const AnimePlayerPage = () => {
   } = useQuery(GetAnimeStreamingData, {
     variables: { anilistId, zoroId: zoroId || '' },
     skip: !animeData || (!anilistId && !zoroId),
-  })
+  });
 
   useEffect(() => {
-    setStreamingData([])
+    setStreamingData([]);
     if (animeStreamingData) {
-      setStreamingData(animeStreamingData.animePlayerStreamingData)
+      setStreamingData(animeStreamingData.animePlayerStreamingData);
     }
-  }, [animeStreamingData])
+  }, [animeStreamingData]);
 
   if (loading)
     return (
@@ -95,11 +95,11 @@ const AnimePlayerPage = () => {
           />
         </div>
       </div>
-    )
+    );
 
   if (error) {
-    console.log(error)
-    return <ErrorPage />
+    console.log(error);
+    return <ErrorPage />;
   }
 
   return (
@@ -129,10 +129,10 @@ const AnimePlayerPage = () => {
                           {animeData?.episodes?.map(
                             (
                               episode: {
-                                id: string
-                                title: any
-                                episode: string
-                                number: string
+                                id: string;
+                                title: any;
+                                episode: string;
+                                number: string;
                               },
                               index: number
                             ) => (
@@ -144,9 +144,9 @@ const AnimePlayerPage = () => {
                                     : 'secondary'
                                 }
                                 onClick={() => {
-                                  setEpisodeNumber((index as number) + 1)
-                                  setZoroId(animeData?.zoroEpisodes[index]?.id)
-                                  setAnilistId(episode.id)
+                                  setEpisodeNumber((index as number) + 1);
+                                  setZoroId(animeData?.zoroEpisodes[index]?.id);
+                                  setAnilistId(episode.id);
                                 }}
                                 title={
                                   `EP ${episode.number} ` + episode.title ||
@@ -261,8 +261,8 @@ const AnimePlayerPage = () => {
                     <div className='flex flex-wrap items-center justify-start gap-3'>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(10)
-                          setIsAnimePlayer(true)
+                          setServerNumber(10);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 10
@@ -275,8 +275,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(11)
-                          setIsAnimePlayer(true)
+                          setServerNumber(11);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 11
@@ -289,8 +289,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(12)
-                          setIsAnimePlayer(true)
+                          setServerNumber(12);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 12
@@ -303,8 +303,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(5)
-                          setIsAnimePlayer(true)
+                          setServerNumber(5);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 5
@@ -317,8 +317,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(1)
-                          setIsAnimePlayer(true)
+                          setServerNumber(1);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 1
@@ -331,8 +331,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(9)
-                          setIsAnimePlayer(true)
+                          setServerNumber(9);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 9
@@ -353,8 +353,8 @@ const AnimePlayerPage = () => {
                     <div className='flex flex-wrap items-center justify-start gap-3'>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(6)
-                          setIsAnimePlayer(true)
+                          setServerNumber(6);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 6
@@ -367,8 +367,8 @@ const AnimePlayerPage = () => {
                       </Button>
                       <Button
                         onClick={(e) => {
-                          setServerNumber(2)
-                          setIsAnimePlayer(true)
+                          setServerNumber(2);
+                          setIsAnimePlayer(true);
                         }}
                         variant={
                           isAnimePlayer && serverNumber === 2
@@ -389,7 +389,7 @@ const AnimePlayerPage = () => {
                     <div className='flex flex-wrap items-center justify-start gap-3'>
                       <Button
                         onClick={(e) => {
-                          setIsAnimePlayer(false)
+                          setIsAnimePlayer(false);
                         }}
                         variant={!isAnimePlayer ? 'default' : 'secondary'}
                         className='w-28'
@@ -413,10 +413,10 @@ const AnimePlayerPage = () => {
                             {animeData?.episodes?.map(
                               (
                                 episode: {
-                                  id: string
-                                  title: any
-                                  episode: string
-                                  number: string
+                                  id: string;
+                                  title: any;
+                                  episode: string;
+                                  number: string;
                                 },
                                 index: number
                               ) => (
@@ -428,11 +428,11 @@ const AnimePlayerPage = () => {
                                       : 'secondary'
                                   }
                                   onClick={() => {
-                                    setEpisodeNumber((index as number) + 1)
+                                    setEpisodeNumber((index as number) + 1);
                                     setZoroId(
                                       animeData?.zoroEpisodes[index]?.id
-                                    )
-                                    setAnilistId(episode.id)
+                                    );
+                                    setAnilistId(episode.id);
                                   }}
                                   title={
                                     `EP ${episode.number} ` + episode.title ||
@@ -566,7 +566,7 @@ const AnimePlayerPage = () => {
         </ResizablePanelGroup>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AnimePlayerPage
+export default AnimePlayerPage;

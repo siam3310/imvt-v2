@@ -1,18 +1,18 @@
-import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
-import Provider from '@/configs/Provider'
-import { siteInfo } from '@/configs/site'
-import { twMerge } from 'tailwind-merge'
+import type { Metadata } from 'next';
+import { Nunito } from 'next/font/google';
+import Provider from '@/configs/Provider';
+import { siteInfo } from '@/configs/site';
+import { twMerge } from 'tailwind-merge';
 
-import { Toaster } from '@/components/ui/sonner'
-import BottomNav from '@/components/BottomNav'
-import CustomCursor from '@/components/Common/CustomCursor'
-import Sidebar from '@/components/Sidebar'
+import { Toaster } from '@/components/ui/sonner';
+import BottomNav from '@/components/BottomNav';
+import CustomCursor from '@/components/Common/CustomCursor';
+import Sidebar from '@/components/Sidebar';
 
-import './globals.css'
-import './styles.css'
+import './globals.css';
+import './styles.css';
 
-const inter = Nunito({ subsets: ['latin'] })
+const inter = Nunito({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: {
     default: siteInfo.name,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
-}
+};
 
 export default async function RootLayout({ children }: IChildren) {
   return (
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: IChildren) {
         {/* </CustomCursor> */}
       </body>
     </html>
-  )
+  );
 }
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';

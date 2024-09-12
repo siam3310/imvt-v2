@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { categoriesList, countriesList } from '@/utils/iptvGroups'
-import { Search, XCircle } from 'lucide-react'
-import { FieldValues, set, SubmitHandler, useForm } from 'react-hook-form'
+import React, { useEffect, useMemo, useState } from 'react';
+import { categoriesList, countriesList } from '@/utils/iptvGroups';
+import { Search, XCircle } from 'lucide-react';
+import { FieldValues, set, SubmitHandler, useForm } from 'react-hook-form';
 
-import { iptvDataType } from '@/types/mediaData'
-import { Input } from '@/components/ui/input'
+import { iptvDataType } from '@/types/mediaData';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -15,33 +15,33 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import IptvChannels from '@/components/Iptv/IptvChannels'
-import IptvPlayer from '@/components/Iptv/IptvPlayer'
+} from '@/components/ui/select';
+import IptvChannels from '@/components/Iptv/IptvChannels';
+import IptvPlayer from '@/components/Iptv/IptvPlayer';
 
 export default function IptvPage(): React.JSX.Element {
   const [iptvPlayerData, setIptvPlayerData] = useState<iptvDataType>({
     url: '',
     inf: { title: '', tvgLogo: '', groupTitle: '' },
-  })
-  const [loadingPage, setLoadingPage] = useState(true)
-  const [query, setQuery] = useState('')
-  const [group, setGroup] = useState('')
-  const [page, setPage] = useState(1)
-  const [searchBy, setSearchBy] = useState('country')
+  });
+  const [loadingPage, setLoadingPage] = useState(true);
+  const [query, setQuery] = useState('');
+  const [group, setGroup] = useState('');
+  const [page, setPage] = useState(1);
+  const [searchBy, setSearchBy] = useState('country');
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   useEffect(() => {
-    setPage(1)
-  }, [query, group, searchBy])
+    setPage(1);
+  }, [query, group, searchBy]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setQuery(data.search)
-  }
+    setQuery(data.search);
+  };
 
   return (
     <div className='w-full h-full max-h-[100dvh] overflow-scroll'>
@@ -78,8 +78,8 @@ export default function IptvPage(): React.JSX.Element {
           <div className='shrink-1'>
             <Select
               onValueChange={(e) => {
-                setSearchBy(e)
-                setPage(1)
+                setSearchBy(e);
+                setPage(1);
               }}
             >
               <SelectTrigger
@@ -92,7 +92,7 @@ export default function IptvPage(): React.JSX.Element {
                 <SelectGroup
                   ref={(ref) =>
                     ref?.addEventListener('touchend', (e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                     })
                   }
                 >
@@ -107,8 +107,8 @@ export default function IptvPage(): React.JSX.Element {
             <Select
               key={searchBy}
               onValueChange={(e) => {
-                setGroup(e)
-                setPage(1)
+                setGroup(e);
+                setPage(1);
               }}
             >
               <SelectTrigger className='w-fit sm:w-[180px] dark:bg-white dark:text-black'>
@@ -118,7 +118,7 @@ export default function IptvPage(): React.JSX.Element {
                 <SelectGroup
                   ref={(ref) =>
                     ref?.addEventListener('touchend', (e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                     })
                   }
                 >
@@ -141,8 +141,8 @@ export default function IptvPage(): React.JSX.Element {
               <XCircle
                 className='cursor-pointer'
                 onClick={(e) => {
-                  setGroup('')
-                  setPage(1)
+                  setGroup('');
+                  setPage(1);
                 }}
               />
             )}
@@ -163,5 +163,5 @@ export default function IptvPage(): React.JSX.Element {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import React from 'react'
-import GetTvData from '@/graphql/queries/GetTvData.gql'
-import { gql, useQuery } from '@apollo/client'
+import React from 'react';
+import GetTvData from '@/graphql/queries/GetTvData.gql';
+import { gql, useQuery } from '@apollo/client';
 
-import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel'
-import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
-import MediaSwiper from '@/components/Common/MediaSwiper'
+import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
+import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel';
+import MediaSwiper from '@/components/Common/MediaSwiper';
 
 const TvPage = () => {
-  const { data, loading, error } = useQuery(GetTvData)
+  const { data, loading, error } = useQuery(GetTvData);
 
-  if (error) return <p>Error : {error.message}</p>
+  if (error) return <p>Error : {error.message}</p>;
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-[120px] sm:pb-[30px]'>
       <HeroSectionCarousel
@@ -53,7 +53,7 @@ const TvPage = () => {
         link='/tv-shows/top-rated'
       />
     </div>
-  )
-}
+  );
+};
 
-export default TvPage
+export default TvPage;

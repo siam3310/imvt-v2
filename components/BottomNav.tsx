@@ -1,17 +1,24 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Clapperboard, Compass, Film, HomeIcon, Search, Tv } from 'lucide-react'
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  Clapperboard,
+  Compass,
+  Film,
+  HomeIcon,
+  Search,
+  Tv,
+} from 'lucide-react';
 
-import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser'
-import { ProfilePopover } from '@/components/user/ProfilePopover'
+import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser';
+import { ProfilePopover } from '@/components/user/ProfilePopover';
 
 const BottomNav = () => {
-  const { userData, loading } = useAuthenticatedUser()
-  const pathname = usePathname()
-  if (pathname === '/login' || pathname === '/signup') return <></>
+  const { userData, loading } = useAuthenticatedUser();
+  const pathname = usePathname();
+  if (pathname === '/login' || pathname === '/signup') return <></>;
 
   return (
     <div className='sm:hidden absolute bottom-0 z-50 w-full -translate-x-1/2 dark:bg-[#0b0b0b] border-t left-1/2 dark:border-gray-600'>
@@ -117,7 +124,7 @@ const BottomNav = () => {
         </ProfilePopover>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BottomNav
+export default BottomNav;

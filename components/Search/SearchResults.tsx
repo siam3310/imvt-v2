@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import GetbyQuery from '@/graphql/queries/GetbyQuery.gql'
-import { gql, useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react';
+import GetbyQuery from '@/graphql/queries/GetbyQuery.gql';
+import { gql, useQuery } from '@apollo/client';
 
-import MediaGrid from '@/components/Common/MediaGrid'
-import PaginationComponent from '@/components/Common/PaginationComponent'
+import MediaGrid from '@/components/Common/MediaGrid';
+import PaginationComponent from '@/components/Common/PaginationComponent';
 
 const SearchResults = ({
   query,
@@ -11,32 +11,32 @@ const SearchResults = ({
   page,
   setPage,
 }: {
-  query: string
-  searchType: string
-  page: number
-  setPage: (page: number) => void
+  query: string;
+  searchType: string;
+  page: number;
+  setPage: (page: number) => void;
 }) => {
   const { data, loading } = useQuery(GetbyQuery, {
     variables: { query, page },
-  })
+  });
   const [mediaData, setMediaData] = useState({
     results: [],
     hasNextPage: false,
     total_results: 0,
     total_pages: 0,
     currentPage: 0,
-  })
+  });
   useEffect(() => {
     if (searchType === 'any') {
-      setMediaData(data?.getAnybyQuery)
+      setMediaData(data?.getAnybyQuery);
     } else if (searchType === 'movie') {
-      setMediaData(data?.getMoviebyQuery)
+      setMediaData(data?.getMoviebyQuery);
     } else if (searchType === 'tv') {
-      setMediaData(data?.getTvbyQuery)
+      setMediaData(data?.getTvbyQuery);
     } else if (searchType === 'people') {
-      setMediaData(data?.getpeoplebyQuery)
+      setMediaData(data?.getpeoplebyQuery);
     }
-  }, [data, query, searchType, page])
+  }, [data, query, searchType, page]);
   return (
     <>
       <div className='w-full max-h-[100dvh] flex flex-col gap-y-3'>
@@ -55,7 +55,7 @@ const SearchResults = ({
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SearchResults
+export default SearchResults;

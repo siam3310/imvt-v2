@@ -1,16 +1,16 @@
-import React, { Key, useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { ExternalLink, Info, PlayCircle, PlusCircle } from 'lucide-react'
+import React, { Key, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { ExternalLink, Info, PlayCircle, PlusCircle } from 'lucide-react';
 
-import usehandleWatchlist from '@/hooks/usehandleWatchlist'
-import { Button } from '@/components/ui/button'
+import usehandleWatchlist from '@/hooks/usehandleWatchlist';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
+} from '@/components/ui/popover';
 
 const MediaThumbnailComponent = ({
   children,
@@ -25,24 +25,24 @@ const MediaThumbnailComponent = ({
   type,
   title2 = null,
 }: {
-  children: React.ReactNode
-  id: string
-  link: string
-  title: string
-  poster: string
-  index: Key | null | undefined
-  width: number
-  height: number
-  release_date?: string
-  type: string
-  title2?: any
+  children: React.ReactNode;
+  id: string;
+  link: string;
+  title: string;
+  poster: string;
+  index: Key | null | undefined;
+  width: number;
+  height: number;
+  release_date?: string;
+  type: string;
+  title2?: any;
 }) => {
-  let isUpcoming = false
+  let isUpcoming = false;
 
   if (type !== 'people' && new Date(release_date) >= new Date()) {
-    isUpcoming = true
+    isUpcoming = true;
   }
-  const { watchlistType, setWatchlistType } = usehandleWatchlist(id, type)
+  const { watchlistType, setWatchlistType } = usehandleWatchlist(id, type);
 
   const watchListNames = {
     completed: 'Completed',
@@ -51,7 +51,7 @@ const MediaThumbnailComponent = ({
     on_hold: 'On Hold',
     dropped: 'Dropped',
     remove: '',
-  }
+  };
 
   return (
     <div className='group clickable'>
@@ -148,7 +148,7 @@ const MediaThumbnailComponent = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MediaThumbnailComponent
+export default MediaThumbnailComponent;

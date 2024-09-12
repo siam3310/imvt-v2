@@ -1,55 +1,55 @@
-import React, { Key, useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Info, PlayCircle, Star } from 'lucide-react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import React, { Key, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Info, PlayCircle, Star } from 'lucide-react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent';
 
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const MediaGrid = ({
   mediaData,
   loading,
   type,
 }: {
-  mediaData: any
-  loading: boolean
-  type?: string
+  mediaData: any;
+  loading: boolean;
+  type?: string;
 }) => {
-  const [basis, setBasis] = React.useState('')
-  const [selectedId, setSelectedId] = useState<null | string>(null)
-  const [selectedIndex, setSelectedIndex] = useState<number>(0)
-  console.log(mediaData)
+  const [basis, setBasis] = React.useState('');
+  const [selectedId, setSelectedId] = useState<null | string>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  console.log(mediaData);
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth
+      const width = window.innerWidth;
       if (width > 600) {
-        var newBasis = 100 / Math.floor(width / 200)
+        var newBasis = 100 / Math.floor(width / 200);
       } else {
-        var newBasis = 100 / Math.floor(width / 150)
+        var newBasis = 100 / Math.floor(width / 150);
       }
-      setBasis(`${newBasis}%`)
-    }
+      setBasis(`${newBasis}%`);
+    };
 
     // Attach resize listener
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     // Call handler right away so state gets updated with initial window size
-    handleResize()
+    handleResize();
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   if (loading)
     return (
       <SkeletonTheme baseColor='#202020' highlightColor='#444'>
         <MediaGridSkeleton basis={basis} />
       </SkeletonTheme>
-    )
+    );
   if (type === 'anime')
     return (
       <div className='w-full h-fit'>
@@ -58,13 +58,13 @@ const MediaGrid = ({
             {mediaData?.results.map(
               (
                 post: {
-                  title: any
-                  id: string
-                  image: string
-                  type: string
-                  rating: number
-                  releaseDate: string
-                  totalEpisodes: number
+                  title: any;
+                  id: string;
+                  image: string;
+                  type: string;
+                  rating: number;
+                  releaseDate: string;
+                  totalEpisodes: number;
                 },
                 index: React.Key | null | undefined
               ) => (
@@ -118,7 +118,7 @@ const MediaGrid = ({
           </div>
         </div>
       </div>
-    )
+    );
 
   return (
     <div className='w-full h-fit'>
@@ -127,16 +127,16 @@ const MediaGrid = ({
           {mediaData?.results.map(
             (
               post: {
-                __typename: string
-                title: any
-                id: any
-                vote_average: number
-                poster_path: string
-                name: any
-                known_for_department: string
-                profile_path: string
-                release_date: string
-                first_air_date: string
+                __typename: string;
+                title: any;
+                id: any;
+                vote_average: number;
+                poster_path: string;
+                name: any;
+                known_for_department: string;
+                profile_path: string;
+                release_date: string;
+                first_air_date: string;
               },
               index: React.Key | null | undefined
             ) =>
@@ -260,10 +260,10 @@ const MediaGrid = ({
                 </AnimatePresence> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MediaGrid
+export default MediaGrid;
 
 const MediaGridSkeleton = ({ basis }: { basis: string }) => {
   return (
@@ -288,5 +288,5 @@ const MediaGridSkeleton = ({ basis }: { basis: string }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

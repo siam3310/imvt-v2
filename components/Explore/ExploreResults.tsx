@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import DiscoverMedia from '@/graphql/queries/DiscoverMedia.gql'
-import { gql, useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react';
+import DiscoverMedia from '@/graphql/queries/DiscoverMedia.gql';
+import { gql, useQuery } from '@apollo/client';
 
-import MediaGrid from '@/components/Common/MediaGrid'
-import PaginationComponent from '@/components/Common/PaginationComponent'
+import MediaGrid from '@/components/Common/MediaGrid';
+import PaginationComponent from '@/components/Common/PaginationComponent';
 
 const ExploreResults = ({
   type,
@@ -18,17 +18,17 @@ const ExploreResults = ({
   page,
   setPage,
 }: {
-  type: string
-  dategte: string
-  datelte: string
-  votesAvglte: number | undefined
-  votesAvggte: number | undefined
-  votesCountlte: number | undefined
-  votesCountgte: number | undefined
-  sort: string
-  genres: string
-  page: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  type: string;
+  dategte: string;
+  datelte: string;
+  votesAvglte: number | undefined;
+  votesAvggte: number | undefined;
+  votesCountlte: number | undefined;
+  votesCountgte: number | undefined;
+  sort: string;
+  genres: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const { data, loading } = useQuery(DiscoverMedia, {
     variables: {
@@ -43,7 +43,7 @@ const ExploreResults = ({
       genres,
       page,
     },
-  })
+  });
 
   const [mediaData, setMediaData] = useState({
     results: [],
@@ -51,10 +51,10 @@ const ExploreResults = ({
     total_results: 0,
     total_pages: 0,
     currentPage: 0,
-  })
+  });
   useEffect(() => {
-    setMediaData(data?.discoverMedia)
-  }, [data, page])
+    setMediaData(data?.discoverMedia);
+  }, [data, page]);
 
   return (
     <>
@@ -74,7 +74,7 @@ const ExploreResults = ({
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ExploreResults
+export default ExploreResults;

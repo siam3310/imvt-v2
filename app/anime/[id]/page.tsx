@@ -1,38 +1,38 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useQuery } from '@apollo/client'
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useQuery } from '@apollo/client';
 
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
-import { GetAnimePageData } from '@/graphql/queries/GetAnime.gql'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { PlayCircle, PlusCircle, Star } from 'lucide-react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { GetAnimePageData } from '@/graphql/queries/GetAnime.gql';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { PlayCircle, PlusCircle, Star } from 'lucide-react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import usehandleWatchlist from '@/hooks/usehandleWatchlist'
-import { Button } from '@/components/ui/button'
+import usehandleWatchlist from '@/hooks/usehandleWatchlist';
+import { Button } from '@/components/ui/button';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import AnimeDetailsTabs from '@/components/Anime/AnimeDetailsTabs'
-import ErrorPage from '@/components/Common/ErrorPage'
+} from '@/components/ui/popover';
+import AnimeDetailsTabs from '@/components/Anime/AnimeDetailsTabs';
+import ErrorPage from '@/components/Common/ErrorPage';
 
 const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
-  const id = params.id
+  const id = params.id;
   const { data, loading, error } = useQuery(GetAnimePageData, {
     variables: { id },
-  })
-  const animeData = data?.getAnimebyId
+  });
+  const animeData = data?.getAnimebyId;
 
   const { watchlistType, setWatchlistType } = usehandleWatchlist(
     animeData?.id,
     'anime'
-  )
+  );
 
   const watchListNames = {
     completed: 'Completed',
@@ -41,12 +41,12 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
     on_hold: 'On Hold',
     dropped: 'Dropped',
     remove: 'watchlist',
-  }
+  };
 
-  if (loading) return <AnimeSkeleton />
+  if (loading) return <AnimeSkeleton />;
   if (error) {
-    console.log(error)
-    return <ErrorPage />
+    console.log(error);
+    return <ErrorPage />;
   }
 
   return (
@@ -105,7 +105,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                   <PopoverContent className='flex flex-col w-full h-full gap-1 p-2 z-[11111111111111]'>
                     <Button
                       onClick={() => {
-                        setWatchlistType('completed')
+                        setWatchlistType('completed');
                       }}
                       variant={
                         watchlistType === 'completed' ? 'default' : 'outline'
@@ -115,7 +115,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('watching')
+                        setWatchlistType('watching');
                       }}
                       variant={
                         watchlistType === 'watching' ? 'default' : 'outline'
@@ -125,7 +125,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('plan_to_watch')
+                        setWatchlistType('plan_to_watch');
                       }}
                       variant={
                         watchlistType === 'plan_to_watch'
@@ -137,7 +137,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('on_hold')
+                        setWatchlistType('on_hold');
                       }}
                       variant={
                         watchlistType === 'on_hold' ? 'default' : 'outline'
@@ -147,7 +147,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                     </Button>
                     <Button
                       onClick={() => {
-                        setWatchlistType('dropped')
+                        setWatchlistType('dropped');
                       }}
                       variant={
                         watchlistType === 'dropped' ? 'default' : 'outline'
@@ -158,7 +158,7 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
                     {watchlistType && (
                       <Button
                         onClick={() => {
-                          setWatchlistType('')
+                          setWatchlistType('');
                         }}
                         variant={'destructive'}
                       >
@@ -250,10 +250,10 @@ const AnimePage = ({ params }: { params: { id: number } }): JSX.Element => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AnimePage
+export default AnimePage;
 
 const AnimeSkeleton = () => {
   return (
@@ -307,5 +307,5 @@ const AnimeSkeleton = () => {
         </div>
       </div>
     </SkeletonTheme>
-  )
-}
+  );
+};

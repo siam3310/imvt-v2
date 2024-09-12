@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import React, { createContext, useContext, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import Logo from '@/public/assets/logo.svg'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import React, { createContext, useContext, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Logo from '@/public/assets/logo.svg';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 import {
   Clapperboard,
   Compass,
@@ -18,11 +18,11 @@ import {
   PanelRightClose,
   Tv,
   XCircle,
-} from 'lucide-react'
+} from 'lucide-react';
 
-import { cn } from '@/lib/utils'
-import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser'
-import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils';
+import { useAuthenticatedUser } from '@/hooks/useAuthenticatedUser';
+import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -31,18 +31,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/custom-sidebar-nav-menu'
-import { ProfilePopover } from '@/components/user/ProfilePopover'
+} from '@/components/ui/custom-sidebar-nav-menu';
+import { ProfilePopover } from '@/components/user/ProfilePopover';
 
-const SidebarContext = createContext({ expanded: false })
+const SidebarContext = createContext({ expanded: false });
 
 export default function Sidebar() {
-  const [expanded, setExpanded] = useState<boolean>(false)
-  const [hideSidebar, setHideSidebar] = useState<boolean>(false)
-  const { userData, loading } = useAuthenticatedUser()
-  const pathname = usePathname()
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const [hideSidebar, setHideSidebar] = useState<boolean>(false);
+  const { userData, loading } = useAuthenticatedUser();
+  const pathname = usePathname();
 
-  if (pathname === '/login' || pathname === '/signup') return <></>
+  if (pathname === '/login' || pathname === '/signup') return <></>;
 
   return (
     <aside
@@ -51,8 +51,8 @@ export default function Sidebar() {
       {hideSidebar && (
         <button
           onClick={() => {
-            setHideSidebar((curr) => !curr)
-            setExpanded(false)
+            setHideSidebar((curr) => !curr);
+            setExpanded(false);
           }}
           className={`absolute top-4 left-4 z-10 clickable p-1.5 rounded-lg bg-gray-50 dark:text-black hover:bg-gray-100`}
         >
@@ -89,9 +89,9 @@ export default function Sidebar() {
             <button
               onClick={() => {
                 if (expanded) {
-                  setHideSidebar(true)
-                  setExpanded(false)
-                } else setExpanded(true)
+                  setHideSidebar(true);
+                  setExpanded(false);
+                } else setExpanded(true);
               }}
               className={`clickable p-1 rounded-lg bg-gray-50 dark:text-black hover:bg-gray-100`}
             >
@@ -472,7 +472,7 @@ export default function Sidebar() {
         )}
       </nav>
     </aside>
-  )
+  );
 }
 
 const ListItem = React.forwardRef<
@@ -501,9 +501,9 @@ const ListItem = React.forwardRef<
         </Link>
       </NavigationMenuLink>
     </li>
-  )
-})
-ListItem.displayName = 'ListItem'
+  );
+});
+ListItem.displayName = 'ListItem';
 
 export function SidebarItem({
   icon,
@@ -512,7 +512,7 @@ export function SidebarItem({
   alert,
   link,
 }: SidebarItemProps) {
-  const { expanded } = useContext(SidebarContext)
+  const { expanded } = useContext(SidebarContext);
 
   return (
     <Link
@@ -546,13 +546,13 @@ export function SidebarItem({
         />
       )}
     </Link>
-  )
+  );
 }
 
 interface SidebarItemProps {
-  icon: JSX.Element
-  text: string
-  active?: boolean
-  alert?: boolean
-  link: string
+  icon: JSX.Element;
+  text: string;
+  active?: boolean;
+  alert?: boolean;
+  link: string;
 }

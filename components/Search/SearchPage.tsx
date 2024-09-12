@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { LayoutGrid, LayoutList, LayoutPanelLeft } from 'lucide-react'
+import React, { useState } from 'react';
+import { LayoutGrid, LayoutList, LayoutPanelLeft } from 'lucide-react';
 
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -10,13 +10,13 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import SearchResults from '@/components/Search/SearchResults'
+} from '@/components/ui/select';
+import SearchResults from '@/components/Search/SearchResults';
 
 export default function DiscoverPage() {
-  const [query, setQuery] = useState('')
-  const [page, setPage] = useState(1)
-  const [searchType, setSearchType] = useState('any')
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [searchType, setSearchType] = useState('any');
   return (
     <div className='w-full h-full max-h-[100dvh] overflow-scroll'>
       <div className='flex gap-y-10 flex-col min-h-[100dvh] h-fit items-center justify-start p-6'>
@@ -35,8 +35,8 @@ export default function DiscoverPage() {
           <div className='shrink-1'>
             <Select
               onValueChange={(e) => {
-                setSearchType(e)
-                setPage(1)
+                setSearchType(e);
+                setPage(1);
               }}
             >
               <SelectTrigger className='w-fit sm:w-[180px] outline-none dark:bg-white dark:text-black'>
@@ -46,7 +46,7 @@ export default function DiscoverPage() {
                 <SelectGroup
                   ref={(ref) =>
                     ref?.addEventListener('touchend', (e) => {
-                      e.preventDefault()
+                      e.preventDefault();
                     })
                   }
                 >
@@ -76,5 +76,5 @@ export default function DiscoverPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

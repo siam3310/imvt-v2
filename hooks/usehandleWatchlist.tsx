@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
   AddToWatchList,
   DeleteWatchList,
   UpdateWatchList,
-} from '@/graphql/queries/GetUserData.gql'
-import { useUserDataStore } from '@/store/userDataStore'
-import { useWatchlistDataStore } from '@/store/watchlistDataStore'
-import { useMutation } from '@apollo/client'
+} from '@/graphql/queries/GetUserData.gql';
+import { useUserDataStore } from '@/store/userDataStore';
+import { useWatchlistDataStore } from '@/store/watchlistDataStore';
+import { useMutation } from '@apollo/client';
 
 const usehandleWatchlist = (mediaId: string, type: string) => {
-  const { userData } = useUserDataStore()
-  const { watchlistState, setWatchlistState } = useWatchlistDataStore()
+  const { userData } = useUserDataStore();
+  const { watchlistState, setWatchlistState } = useWatchlistDataStore();
   const [watchlistType, setWatchlistType] = useState<
     | null
     | ''
@@ -19,13 +19,13 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
     | 'plan_to_watch'
     | 'on_hold'
     | 'dropped'
-  >(null)
-  const [addToWatchList] = useMutation(AddToWatchList)
-  const [updateWatchlistItem] = useMutation(UpdateWatchList)
-  const [deleteWatchlistItem] = useMutation(DeleteWatchList)
+  >(null);
+  const [addToWatchList] = useMutation(AddToWatchList);
+  const [updateWatchlistItem] = useMutation(UpdateWatchList);
+  const [deleteWatchlistItem] = useMutation(DeleteWatchList);
   const watchlistItem = watchlistState?.find(
     (watchlistItem: any) => watchlistItem.mediaId === mediaId
-  )
+  );
 
   useEffect(() => {
     const handleAddToWatchlist = async () => {
@@ -37,48 +37,48 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
             watchListType: watchlistType,
             userId: userData?.id,
           },
-        })
+        });
         if (response.errors) {
-          return response
+          return response;
         }
         // console.log("add to watchlist")
-        setWatchlistState([...watchlistState, response.data.addWatchlistItem])
+        setWatchlistState([...watchlistState, response.data.addWatchlistItem]);
         // console.log([...watchlistState, response.data.addWatchlistItem])
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
     const handleDeleteWatchlist = async (watchlistItem: any) => {
       try {
         setWatchlistState(
           watchlistState.filter((item: any) => item.id !== watchlistItem.id)
-        )
+        );
         // console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
         const response = await deleteWatchlistItem({
           variables: {
             itemId: watchlistItem.id,
             userId: userData?.id,
           },
-        })
+        });
         setWatchlistState(
           watchlistState.filter((item: any) => item.id !== watchlistItem.id)
-        )
+        );
         // console.log(watchlistState.filter((item: any) => item.id !== watchlistItem.id))
         // console.log(response?.data?.deleteWatchlistItem)
-        return response
+        return response;
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
     const handleUpdateWatchlist = async (watchlistItem: any) => {
       try {
         const updatedWatchlist = watchlistState.filter(
           (item: any) => item.id !== watchlistItem.id
-        )
+        );
         setWatchlistState([
           ...updatedWatchlist,
           { ...watchlistItem, watchListType: watchlistType },
-        ])
+        ]);
         // console.log("updateWatchlistItem")
         // console.log([...updatedWatchlist, { ...watchlistItem, watchListType: watchlistType }])
         return await updateWatchlistItem({
@@ -87,20 +87,20 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
             watchListType: watchlistType,
             userId: userData?.id,
           },
-        })
+        });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
     // console.log("running this useEffect")
     if (!watchlistItem && watchlistType) {
       // console.log("Initial watchlistState")
       // console.log(watchlistState)
-      handleAddToWatchlist()
+      handleAddToWatchlist();
     } else if (watchlistItem && watchlistType === '') {
       // console.log("Initial watchlistState")
       // console.log(watchlistState)
-      handleDeleteWatchlist(watchlistItem)
+      handleDeleteWatchlist(watchlistItem);
     } else if (
       watchlistItem &&
       watchlistType &&
@@ -108,20 +108,20 @@ const usehandleWatchlist = (mediaId: string, type: string) => {
     ) {
       // console.log("Initial watchlistState")
       // console.log(watchlistState)
-      handleUpdateWatchlist(watchlistItem)
+      handleUpdateWatchlist(watchlistItem);
     }
-  }, [watchlistType, mediaId, type])
+  }, [watchlistType, mediaId, type]);
 
   useEffect(() => {
     // console.log("running this 2nd useEffect")
     if (!watchlistItem) {
-      setWatchlistType('')
+      setWatchlistType('');
     }
     if (watchlistItem) {
-      setWatchlistType(watchlistItem.watchListType)
+      setWatchlistType(watchlistItem.watchListType);
     }
-  }, [watchlistItem, mediaId])
+  }, [watchlistItem, mediaId]);
 
-  return { watchlistType, setWatchlistType }
-}
-export default usehandleWatchlist
+  return { watchlistType, setWatchlistType };
+};
+export default usehandleWatchlist;

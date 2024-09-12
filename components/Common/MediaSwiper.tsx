@@ -1,31 +1,31 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Info, PlayCircle, Star } from 'lucide-react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { blurDataUrl, shimmerBlurDataUrl } from '@/utils/blurDataUrl';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Info, PlayCircle, Star } from 'lucide-react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { mediaPeopleData } from '@/types/mediaData'
+import { mediaPeopleData } from '@/types/mediaData';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel'
-import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent'
+} from '@/components/ui/carousel';
+import MediaThumbnailComponent from '@/components/Common/MediaThumbnailComponent';
 
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface MediaSwiperProps {
-  data: mediaPeopleData[]
-  loading: boolean
-  heading: string
-  upcoming?: boolean
-  link: string
+  data: mediaPeopleData[];
+  loading: boolean;
+  heading: string;
+  upcoming?: boolean;
+  link: string;
 }
 export default function MediaSwiper({
   data,
@@ -34,35 +34,35 @@ export default function MediaSwiper({
   upcoming,
   link,
 }: MediaSwiperProps) {
-  const [basis, setBasis] = useState<string>('')
-  const [selectedId, setSelectedId] = useState<null | string>(null)
-  const [selectedIndex, setSelectedIndex] = useState<number>(0)
+  const [basis, setBasis] = useState<string>('');
+  const [selectedId, setSelectedId] = useState<null | string>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth
-      let newBasis: number
+      const width = window.innerWidth;
+      let newBasis: number;
       if (width > 600) {
-        newBasis = 100 / Math.floor(width / 200)
+        newBasis = 100 / Math.floor(width / 200);
       } else {
-        newBasis = 100 / Math.floor(width / 160)
+        newBasis = 100 / Math.floor(width / 160);
       }
-      setBasis(`${newBasis}%`)
-    }
+      setBasis(`${newBasis}%`);
+    };
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
-    handleResize()
+    handleResize();
 
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loading || !data)
     return (
       <SkeletonTheme baseColor='#202020' highlightColor='#444'>
         <MediaSwiperSkeleton basis={basis} heading={heading} link={link} />
       </SkeletonTheme>
-    )
+    );
 
   return (
     <Carousel
@@ -203,7 +203,7 @@ export default function MediaSwiper({
                 )}
             </AnimatePresence> */}
     </Carousel>
-  )
+  );
 }
 
 const MediaSwiperSkeleton = ({
@@ -211,9 +211,9 @@ const MediaSwiperSkeleton = ({
   heading,
   link,
 }: {
-  basis: any
-  heading: any
-  link: any
+  basis: any;
+  heading: any;
+  link: any;
 }) => {
   return (
     <Carousel className='w-full flex flex-col h-fit gap-y-5 pl-3 pr-5'>
@@ -249,5 +249,5 @@ const MediaSwiperSkeleton = ({
         <CarouselNext className='text-black dark:bg-white left-0 top-1/2 -translate-y-1/2' />
       </div>
     </Carousel>
-  )
-}
+  );
+};

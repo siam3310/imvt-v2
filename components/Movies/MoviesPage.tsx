@@ -1,17 +1,17 @@
-import React from 'react'
-import GetMovieData from '@/graphql/queries/GetMovieData.gql'
-import { gql, useQuery } from '@apollo/client'
-import { useTheme } from 'next-themes'
+import React from 'react';
+import GetMovieData from '@/graphql/queries/GetMovieData.gql';
+import { gql, useQuery } from '@apollo/client';
+import { useTheme } from 'next-themes';
 
-import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel'
-import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel'
-import MediaSwiper from '@/components/Common/MediaSwiper'
+import HeroMiniCarousel from '@/components/Common/HeroMiniCarousel';
+import HeroSectionCarousel from '@/components/Common/HeroSectionCarousel';
+import MediaSwiper from '@/components/Common/MediaSwiper';
 
 const MoviesPage = () => {
-  const { data, loading, error } = useQuery(GetMovieData)
-  const { theme, setTheme } = useTheme()
-  setTheme('dark')
-  if (error) return <p>Error : {error.message}</p>
+  const { data, loading, error } = useQuery(GetMovieData);
+  const { theme, setTheme } = useTheme();
+  setTheme('dark');
+  if (error) return <p>Error : {error.message}</p>;
   return (
     <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-[120px] sm:pb-[30px]'>
       <HeroSectionCarousel
@@ -48,7 +48,7 @@ const MoviesPage = () => {
         link='movies/upcoming'
       />
     </div>
-  )
-}
+  );
+};
 
-export default MoviesPage
+export default MoviesPage;

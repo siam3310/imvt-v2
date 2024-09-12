@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { useUserDataStore } from '@/store/userDataStore'
+import React, { useEffect, useState } from 'react';
+import { useUserDataStore } from '@/store/userDataStore';
 
-import ProfileForm from '@/components/user/ProfileForm'
+import ProfileForm from '@/components/user/ProfileForm';
 
 const UserProfilePage = () => {
-  const { userData } = useUserDataStore()
+  const { userData } = useUserDataStore();
 
   return (
     <div className='w-full h-full flex flex-col justify-start items-center space-y-6'>
@@ -19,7 +19,7 @@ const UserProfilePage = () => {
         <ProfileForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserProfilePage
+export default UserProfilePage;

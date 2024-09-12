@@ -1,19 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   GET_IPTV_CATEGORY_DATA,
   GET_IPTV_COUNTRY_DATA,
-} from '@/graphql/queries/GetIptvData.gql'
-import { gql, useQuery } from '@apollo/client'
-import { PlayCircle, XCircle } from 'lucide-react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+} from '@/graphql/queries/GetIptvData.gql';
+import { gql, useQuery } from '@apollo/client';
+import { PlayCircle, XCircle } from 'lucide-react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { paginatedIptvDataType } from '@/types/mediaData'
-import PaginationComponent from '@/components/Common/PaginationComponent'
+import { paginatedIptvDataType } from '@/types/mediaData';
+import PaginationComponent from '@/components/Common/PaginationComponent';
 
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
 
-import Image from 'next/image'
-import { shimmerBlurDataUrl } from '@/utils/blurDataUrl'
+import Image from 'next/image';
+import { shimmerBlurDataUrl } from '@/utils/blurDataUrl';
 
 const IptvChannels = ({
   query,
@@ -26,52 +26,52 @@ const IptvChannels = ({
   loadingPage,
   setLoadingPage,
 }: {
-  query: string
-  setQuery: React.Dispatch<React.SetStateAction<string>>
-  setIptvPlayerData: React.Dispatch<React.SetStateAction<any>>
-  searchBy: string
-  group: string
-  page: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
-  loadingPage: boolean
-  setLoadingPage: React.Dispatch<React.SetStateAction<any>>
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  setIptvPlayerData: React.Dispatch<React.SetStateAction<any>>;
+  searchBy: string;
+  group: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  loadingPage: boolean;
+  setLoadingPage: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const [iptvData, setIptvData] = useState<paginatedIptvDataType>({
     results: [{ url: '', inf: { title: '', groupTitle: '', tvgLogo: '' } }],
     totalPages: 0,
     totalResults: 0,
-  })
-  const [basis, setBasis] = React.useState('')
+  });
+  const [basis, setBasis] = React.useState('');
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth
+      const width = window.innerWidth;
       if (width > 600) {
-        var newBasis = 100 / Math.floor(width / 200)
+        var newBasis = 100 / Math.floor(width / 200);
       } else {
-        var newBasis = 100 / Math.floor(width / 150)
+        var newBasis = 100 / Math.floor(width / 150);
       }
-      setBasis(`${newBasis}%`)
-    }
+      setBasis(`${newBasis}%`);
+    };
 
     // Attach resize listener
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', handleResize);
 
     // Call handler right away so state gets updated with initial window size
-    handleResize()
+    handleResize();
 
     // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const search = query
+  const search = query;
   const { data: countryData, loading: countryLoading } = useQuery(
     GET_IPTV_COUNTRY_DATA,
     {
       variables: { search, group, page },
       skip: searchBy !== 'country', // Skip this query if searchBy is not 'country'
     }
-  )
+  );
 
   const { data: categoryData, loading: categoryLoading } = useQuery(
     GET_IPTV_CATEGORY_DATA,
@@ -79,26 +79,26 @@ const IptvChannels = ({
       variables: { search, group, page },
       skip: searchBy !== 'category', // Skip this query if searchBy is not 'category'
     }
-  )
+  );
 
   useEffect(() => {
     if (searchBy === 'country') {
-      setIptvData(countryData?.iptvCountry)
+      setIptvData(countryData?.iptvCountry);
     } else {
-      setIptvData(categoryData?.iptvCategory)
+      setIptvData(categoryData?.iptvCategory);
     }
-  }, [searchBy, countryData, categoryData, setIptvData])
+  }, [searchBy, countryData, categoryData, setIptvData]);
 
   useEffect(() => {
-    setLoadingPage(countryLoading || categoryLoading)
-  }, [countryLoading, categoryLoading, setLoadingPage])
+    setLoadingPage(countryLoading || categoryLoading);
+  }, [countryLoading, categoryLoading, setLoadingPage]);
 
   if (loadingPage || !iptvData)
     return (
       <SkeletonTheme baseColor='#202020' highlightColor='#444'>
         <ChannelsGridSkeleton basis={basis} />
       </SkeletonTheme>
-    )
+    );
 
   return (
     <div className='w-full max-h-[100dvh] flex flex-col gap-y-3'>
@@ -175,10 +175,10 @@ const IptvChannels = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default IptvChannels
+export default IptvChannels;
 
 const ChannelsGridSkeleton = ({ basis }: { basis: string }) => {
   return (
@@ -203,5 +203,5 @@ const ChannelsGridSkeleton = ({ basis }: { basis: string }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

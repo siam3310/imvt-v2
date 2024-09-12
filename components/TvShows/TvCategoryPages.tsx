@@ -1,40 +1,40 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import GetTvShowsData from '@/graphql/queries/GetTvShowsData.gql'
-import { gql, useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react';
+import GetTvShowsData from '@/graphql/queries/GetTvShowsData.gql';
+import { gql, useQuery } from '@apollo/client';
 
-import MediaGrid from '@/components/Common/MediaGrid'
-import PaginationComponent from '@/components/Common/PaginationComponent'
+import MediaGrid from '@/components/Common/MediaGrid';
+import PaginationComponent from '@/components/Common/PaginationComponent';
 
 const TvCategoryPages = ({ category }: { category: string }) => {
-  const [heading, setHeading] = useState('')
-  const [page, setPage] = useState(1)
+  const [heading, setHeading] = useState('');
+  const [page, setPage] = useState(1);
   const { data, loading } = useQuery(GetTvShowsData, {
     variables: { page },
-  })
+  });
   const [mediaData, setMediaData] = useState({
     results: [],
     hasNextPage: false,
-  })
+  });
   useEffect(() => {
     if (category === 'trending') {
-      setMediaData(data?.getTvTrendingWeek)
-      setHeading('Trending Shows')
+      setMediaData(data?.getTvTrendingWeek);
+      setHeading('Trending Shows');
     } else if (category === 'popular') {
-      setMediaData(data?.getTvPopular)
-      setHeading('Popular Shows')
+      setMediaData(data?.getTvPopular);
+      setHeading('Popular Shows');
     } else if (category === 'top-rated') {
-      setMediaData(data?.getTvTopRated)
-      setHeading('Top Rated Shows')
+      setMediaData(data?.getTvTopRated);
+      setHeading('Top Rated Shows');
     } else if (category === 'airing-today') {
-      setMediaData(data?.getTvAiringToday)
-      setHeading('Shows Airing Today')
+      setMediaData(data?.getTvAiringToday);
+      setHeading('Shows Airing Today');
     } else if (category === 'on-the-air') {
-      setMediaData(data?.getTvOnTheAir)
-      setHeading('On the Air Shows')
+      setMediaData(data?.getTvOnTheAir);
+      setHeading('On the Air Shows');
     }
-  }, [data, page, category])
+  }, [data, page, category]);
   return (
     <>
       <div className='w-full h-[100dvh] flex flex-col gap-y-3 p-5 '>
@@ -51,7 +51,7 @@ const TvCategoryPages = ({ category }: { category: string }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default TvCategoryPages
+export default TvCategoryPages;
