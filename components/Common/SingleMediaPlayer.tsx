@@ -82,11 +82,9 @@ const SingleMediaPlayer = ({
 
   const IframeButtonDetails = [
     {
-      name: 'BlackVid',
-      url: `https://blackvid.space/embed?tmdb=${id}${
-        type !== 'movie'
-          ? `&season=${seasonNumber}&episode=${episodeNumber}`
-          : ''
+      name: 'Movies API',
+      url: `https://moviesapi.club/${type === 'movie' ? 'movie' : 'tv'}/${id}${
+        type !== 'movie' ? `-${seasonNumber}-${episodeNumber}` : ''
       }`,
     },
     {
@@ -110,35 +108,44 @@ const SingleMediaPlayer = ({
       }`,
     },
     {
+      name: 'BlackVid',
+      url: `https://blackvid.space/embed?tmdb=${id}${
+        type !== 'movie'
+          ? `&season=${seasonNumber}&episode=${episodeNumber}`
+          : ''
+      }`,
+    },
+    {
       name: 'tvembed',
       url: `https://tvembed.cc/${type}/${id}${
         type !== 'movie' ? `/${seasonNumber}/${episodeNumber}` : ''
       }`,
     },
     {
-      name: 'Player S',
+      name: 'Smashystream',
+      // name: 'Player S',
       url: `https://embed.smashystream.com/playere.php?dplayer=S&tmdb=${id}${
         type !== 'movie'
           ? `&season=${seasonNumber}&episode=${episodeNumber}`
           : ''
       }`,
     },
-    {
-      name: 'Player F',
-      url: `https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}${
-        type !== 'movie'
-          ? `&season=${seasonNumber}&episode=${episodeNumber}`
-          : ''
-      }`,
-    },
-    {
-      name: 'Hindi Player',
-      url: `https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}${
-        type !== 'movie'
-          ? `&season=${seasonNumber}&episode=${episodeNumber}`
-          : ''
-      }`,
-    },
+    // {
+    //   name: 'Player F',
+    //   url: `https://embed.smashystream.com/playere.php?dplayer=F&tmdb=${id}${
+    //     type !== 'movie'
+    //       ? `&season=${seasonNumber}&episode=${episodeNumber}`
+    //       : ''
+    //   }`,
+    // },
+    // {
+    //   name: 'Hindi Player',
+    //   url: `https://embed.smashystream.com/playere.php?dplayer=D&tmdb=${id}${
+    //     type !== 'movie'
+    //       ? `&season=${seasonNumber}&episode=${episodeNumber}`
+    //       : ''
+    //   }`,
+    // },
   ]
 
   const tmdbId = id
