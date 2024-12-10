@@ -16,7 +16,7 @@ const HomePage = () => {
   setTheme('dark')
 
   return (
-    <div className='flex flex-col w-[100%] h-full overflow-y-scroll pb-[120px] sm:pb-[30px]'>
+    <>
       <HeroSectionCarousel
         data={data?.getAnyTrendingToday?.results}
         loading={loading}
@@ -49,7 +49,7 @@ const HomePage = () => {
         heading='Trending People'
         link='trending/people'
       />
-    </div>
+    </>
   )
 }
 
