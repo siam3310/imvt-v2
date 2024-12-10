@@ -117,7 +117,17 @@ export default function Sidebar() {
               {/* Home */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                  <SidebarItem link='/' text='Home' icon={<HomeIcon />} />
+                  <SidebarItem
+                    links={[
+                      '/',
+                      '/trending/all',
+                      '/trending/movies',
+                      '/trending/tv-shows',
+                      '/trending/people',
+                    ]}
+                    text='Home'
+                    icon={<HomeIcon />}
+                  />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className='grid gap-3 p-4 w-[500px] grid-cols-[.75fr_1fr]'>
@@ -169,7 +179,7 @@ export default function Sidebar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
                   <SidebarItem
-                    link='/search'
+                    links={['/search', '/explore']}
                     text='Search'
                     icon={<Compass />}
                   />
@@ -182,7 +192,7 @@ export default function Sidebar() {
                           <div className='absolute inset-0 bg-gradient-to-b from-muted/50 to-muted z-[2] pointer-events-none'></div>
                           <Link
                             style={{
-                              backgroundImage: `URL(https://i.ebayimg.com/images/g/Xs4AAOSw8GJcpfD0/s-l1200.jpg)`,
+                              backgroundImage: `URL(https://help.apple.com/assets/66E35283F4657A2118066184/66E3528772AEC8C5E2071904/en_US/d008b3d64c1c096eb4ab1fa1ed629129.png)`,
                               backgroundRepeat: `no-repeat`,
                               backgroundPosition: `center`,
                               backgroundSize: `cover`,
@@ -236,7 +246,13 @@ export default function Sidebar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
                   <SidebarItem
-                    link='/movies'
+                    links={[
+                      '/movies',
+                      '/movies/trending',
+                      '/movies/popular',
+                      '/movies/top-rated',
+                      '/movies/upcoming',
+                    ]}
                     text='Movies'
                     icon={<Clapperboard />}
                   />
@@ -289,7 +305,14 @@ export default function Sidebar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
                   <SidebarItem
-                    link='/tv-shows'
+                    links={[
+                      '/tv-shows',
+                      '/tv-shows/trending',
+                      '/tv-shows/popular',
+                      '/tv-shows/top-rated',
+                      '/tv-shows/on-the-air',
+                      '/tv-shows/airing-today',
+                    ]}
                     text='TV Shows'
                     icon={<Film />}
                   />
@@ -344,44 +367,10 @@ export default function Sidebar() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {/* Trending */}
-              {/* <NavigationMenuItem>
-                <NavigationMenuTrigger><SidebarItem link="/trending" text="Trending" icon={<Flame />} /></NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                    <li className="row-span-3">
-                      <NavigationMenuLink asChild>
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          href="/"
-                        >
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            shadcn/ui
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Beautifully designed components built with Radix UI and
-                            Tailwind CSS.
-                          </p>
-                        </a>
-                      </NavigationMenuLink>
-                    </li>
-                    <ListItem href="/docs" title="Introduction">
-                      Re-usable components built using Radix UI and Tailwind CSS.
-                    </ListItem>
-                    <ListItem href="/docs/installation" title="Installation">
-                      How to install dependencies and structure your app.
-                    </ListItem>
-                    <ListItem href="/docs/primitives/typography" title="Typography">
-                      Styles for headings, paragraphs, lists...etc
-                    </ListItem>
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem> */}
-
               {/* Iptv */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger>
-                  <SidebarItem link='/iptv' text='Live TV' icon={<Tv />} />
+                  <SidebarItem links={['/iptv']} text='Live TV' icon={<Tv />} />
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className='grid gap-3 p-4 w-[300px] grid-cols-[1fr]'>
@@ -414,12 +403,6 @@ export default function Sidebar() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-
-              {/* <SidebarItem link="/iptv" text="Live TV" icon={<Tv />} /> */}
-              {/* <SidebarItem link="/trending" text="Trending" icon={<Flame />} /> */}
-              {/* <SidebarItem link="/search" text="Search" icon={<Search />} />
-              <SidebarItem link="/movies" text="Movies" icon={<Clapperboard />} />
-              <SidebarItem link="/tv-shows" text="TV Shows" icon={<Film />} /> */}
             </NavigationMenuList>
           </NavigationMenu>
         </SidebarContext.Provider>
@@ -479,13 +462,14 @@ const ListItem = React.forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
+  const pathname = usePathname()
   return (
     <li>
       <NavigationMenuLink asChild>
         <Link
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            `block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground`,
             className
           )}
           href={props.href || '/'}
@@ -510,17 +494,19 @@ export function SidebarItem({
   text,
   active,
   alert,
-  link,
+  links,
 }: SidebarItemProps) {
   const { expanded } = useContext(SidebarContext)
+  const pathname = usePathname()
 
   return (
     <Link
-      href={link}
+      href={links[0]}
       className={`z-[2]
         relative flex items-center py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
         transition-colors clickable group
+         ${links.includes(pathname) && 'bg-indigo-50'}
         ${
           active
             ? 'bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800'
@@ -554,5 +540,5 @@ interface SidebarItemProps {
   text: string
   active?: boolean
   alert?: boolean
-  link: string
+  links: string[]
 }
