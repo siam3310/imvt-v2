@@ -17,13 +17,13 @@ export function useAuthenticatedUser() {
   useEffect(() => {
     const getUserSession = async () => {
       const { data } = await supabase.auth.getSession()
-      if (
-        !data?.session?.user &&
-        pathname !== '/login' &&
-        pathname !== '/signup'
-      ) {
-        router.push('/login')
-      }
+      // if (
+      //   !data?.session?.user &&
+      //   pathname !== '/login' &&
+      //   pathname !== '/signup'
+      // ) {
+      //   router.push('/login')
+      // }
       setUserSession(data?.session)
     }
     getUserSession()
